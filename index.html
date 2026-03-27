@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Hunters Vadodara — Cafes, Events & Experiences Worth Your Time</title>
+  <meta name="description" content="Discover the best cafes, events, and weekend experiences in Vadodara. Curated, honest, no sponsorships." />
+  <meta name="keywords" content="Vadodara cafes, things to do in Vadodara, Vadodara events, weekend Vadodara, best cafes Vadodara" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://hunters.vadodara.in/" />
+
+  <!-- Open Graph (WhatsApp / social previews) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Hunters Vadodara — Find What's Worth It" />
+  <meta property="og:description" content="Top cafes, live events, open mics and more — curated for Vadodara." />
+  <meta property="og:url" content="https://hunters.vadodara.in/" />
+  <meta property="og:locale" content="en_IN" />
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hunters Vadodara" />
+  <meta name="twitter:description" content="Curated cafes & events in Vadodara. No sponsorships." />
+
+  <!-- Fonts — display swap for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #000000;
+      --ink:      #f2ede6;
+      --dim:      rgba(242,237,230,0.55);   /* bumped from 0.45 — better readability */
+      --dimmer:   rgba(242,237,230,0.28);   /* bumped from 0.2  */
+      --border:   rgba(242,237,230,0.10);   /* slightly more visible */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+      /* Fluid type scale — clamp(min, preferred, max) */
+      --text-xs:   clamp(10px, 1.2vw, 11px);
+      --text-sm:   clamp(12px, 1.4vw, 13px);
+      --text-base: clamp(14px, 1.6vw, 16px);
+      --text-md:   clamp(15px, 1.8vw, 17px);
+      --text-lg:   clamp(17px, 2vw, 20px);
+      --text-xl:   clamp(24px, 3vw, 32px);
+      --text-2xl:  clamp(30px, 4.5vw, 52px);
+      --text-hero: clamp(38px, 6vw, 88px);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: var(--text-base);
+      line-height: 1.6;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Film grain — kept but opacity slightly reduced for readability */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.025'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 10px 20px 10px 16px;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+    }
+
+    .nav-logo {
+      font-size: var(--text-sm);
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-cta {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #000;
+      background: var(--ink);
+      padding: 8px 16px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.82; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,255,255,0.045) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.7s var(--ease-out) 0.1s both;
+    }
+
+    .hero h1 {
+      font-size: var(--text-hero);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      max-width: 840px;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease-out) 0.25s both;
+    }
+
+    .hero h1 em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero-sub {
+      margin-top: 24px;
+      font-size: var(--text-md);
+      font-weight: 400;
+      color: var(--dim);
+      max-width: 440px;
+      line-height: 1.65;
+      opacity: 0;
+      animation: fadeUp 0.7s var(--ease-out) 0.4s both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeUp 0.7s var(--ease-out) 0.55s both;
+    }
+
+    .btn-primary {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #000;
+      background: var(--ink);
+      padding: 13px 26px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s var(--ease-out);
+    }
+
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+
+    .btn-outline {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 13px 26px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s var(--ease-out);
+    }
+
+    .btn-outline:hover { border-color: rgba(242,237,230,0.3); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.7s var(--ease-out) 1s both;
+    }
+
+    .hero-scroll span {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--dimmer), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 1; }
+    }
+
+    /* ── SECTIONS ── */
+    .sec {
+      padding: 120px 24px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .sec-eyebrow {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      margin-bottom: 18px;
+    }
+
+    .sec-title {
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 52px;
+    }
+
+    .sec-title em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* ── CAFE LIST (AnimatedList) ── */
+    .cafe-list-wrap {
+      position: relative;
+      max-height: 520px;
+    }
+
+    .cafe-list {
+      display: flex;
+      flex-direction: column;
+      max-height: 520px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(242,237,230,0.15) transparent;
+    }
+
+    .cafe-list::-webkit-scrollbar { width: 4px; }
+    .cafe-list::-webkit-scrollbar-track { background: transparent; }
+    .cafe-list::-webkit-scrollbar-thumb { background: rgba(242,237,230,0.15); border-radius: 2px; }
+
+    .cafe-list-gradient {
+      position: absolute;
+      left: 0; right: 0;
+      height: 72px;
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity 0.3s;
+    }
+
+    .cafe-list-gradient.top {
+      top: 0;
+      background: linear-gradient(to bottom, var(--bg), transparent);
+    }
+
+    .cafe-list-gradient.bottom {
+      bottom: 0;
+      background: linear-gradient(to top, var(--bg), transparent);
+    }
+
+    .cafe-row {
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 22px 10px;
+      border-bottom: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      /* AnimatedList: scale+opacity driven by JS */
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.2s ease, transform 0.2s ease, background 0.18s;
+      margin-bottom: 2px;
+    }
+
+    .cafe-row.al-visible  { opacity: 1; transform: scale(1); }
+    .cafe-row.al-selected { background: rgba(242,237,230,0.07); }
+    .cafe-row:last-child  { border-bottom: none; }
+
+    .cafe-num {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--dimmer);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cafe-name {
+      font-size: var(--text-base);   /* was hardcoded 15px — now scales */
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    .cafe-area {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--dimmer);
+      margin-top: 3px;
+    }
+
+    .cafe-rating {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--dimmer);
+      white-space: nowrap;
+    }
+
+    .cafe-rating.high { color: rgba(100,220,160,0.82); }
+
+    /* ── EVENTS GRID ── */
+    .events-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .event-card {
+      padding: 26px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(242,237,230,0.03);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), background 0.2s, border-color 0.2s;
+    }
+
+    .event-card.visible { opacity: 1; transform: translateY(0); }
+
+    .event-card:hover {
+      background: rgba(242,237,230,0.06);
+      border-color: rgba(242,237,230,0.16);
+      transform: translateY(-3px);
+    }
+
+    .event-freq {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      background: rgba(242,237,230,0.07);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+    }
+
+    .event-name {
+      font-size: var(--text-md);     /* bumped from hardcoded 16px */
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .event-venue {
+      font-size: var(--text-sm);
+      color: var(--dimmer);
+      font-weight: 500;
+    }
+
+    .event-why {
+      font-size: var(--text-sm);     /* bumped from 12.5px — cleaner scale */
+      color: rgba(242,237,230,0.44); /* slightly brighter for legibility */
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* ── END SECTION ── */
+    .end-sec {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px;
+      position: relative;
+      overflow: hidden;
+      background: #000000;
+    }
+
+    .end-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .end-sec h2 {
+      font-size: var(--text-hero);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      max-width: 720px;
+      position: relative;
+    }
+
+    .end-sec h2 em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .end-sec p {
+      margin-top: 22px;
+      font-size: var(--text-md);
+      color: var(--dim);
+      max-width: 400px;
+      line-height: 1.65;
+      position: relative;
+    }
+
+    /* ── STEPPER ── */
+    .stepper-wrap {
+      width: 100%;
+      max-width: 440px;
+      text-align: left;
+    }
+
+    .stp-card {
+      background: rgba(242,237,230,0.04);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .stp-header {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 28px 28px 0;
+    }
+
+    .stp-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .stp-circle.inactive  { background: #1a1a1a; color: rgba(242,237,230,0.3); }
+    .stp-circle.active    { background: var(--ink); color: #000; }
+    .stp-circle.complete  { background: var(--ink); color: #000; }
+
+    .stp-line {
+      flex: 1;
+      height: 1px;
+      background: #1a1a1a;
+      margin: 0 8px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .stp-line-fill {
+      position: absolute;
+      left: 0; top: 0; height: 100%;
+      background: var(--ink);
+      width: 0%;
+      transition: width 0.4s var(--ease-out);
+    }
+
+    .stp-body {
+      padding: 28px;
+      min-height: 160px;
+    }
+
+    .stp-step { display: none; }
+    .stp-step.active { display: block; animation: fadeUp 0.35s var(--ease-out) both; }
+
+    .stp-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      margin-bottom: 10px;
+    }
+
+    .stp-q {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .stp-input, .stp-select, .stp-textarea {
+      width: 100%;
+      background: rgba(242,237,230,0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: var(--text-base);
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    .stp-input::placeholder, .stp-textarea::placeholder { color: var(--dimmer); }
+    .stp-input:focus, .stp-select:focus, .stp-textarea:focus { border-color: rgba(242,237,230,0.3); }
+
+    .stp-textarea { resize: none; min-height: 80px; line-height: 1.5; }
+
+    .stp-select { cursor: pointer; }
+    .stp-select option { background: #111; color: var(--ink); }
+
+    .stp-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 28px 28px;
+    }
+
+    .stp-back {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--dimmer);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+
+    .stp-back:hover { color: var(--ink); }
+    .stp-back:disabled { opacity: 0; pointer-events: none; }
+
+    .stp-next {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #000;
+      background: var(--ink);
+      border: none;
+      border-radius: 100px;
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s var(--ease-out);
+    }
+
+    .stp-next:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .stp-done {
+      text-align: center;
+      padding: 48px 28px;
+      animation: fadeUp 0.4s var(--ease-out) both;
+    }
+
+    .stp-done-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .stp-done h3 {
+      font-size: var(--text-xl);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .stp-done p {
+      font-size: var(--text-sm);
+      color: var(--dimmer);
+      line-height: 1.6;
+    }
+
+    /* ── IMAGE TRAIL ── */
+    .hero { cursor: none; }
+
+    .trail-container {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .trail-container.active { pointer-events: none; }
+
+    .hero > *:not(.hero-bg):not(.trail-container) { position: relative; z-index: 2; }
+
+    .content__img {
+      width: 190px;
+      aspect-ratio: 1.1;
+      border-radius: 15px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      overflow: hidden;
+      will-change: transform, filter;
+      pointer-events: none;
+    }
+
+    .content__img-inner {
+      background-position: 50% 50%;
+      width: calc(100% + 20px);
+      height: calc(100% + 20px);
+      background-size: cover;
+      position: absolute;
+      top: -10px;
+      left: -10px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      /* Nav */
+      nav { gap: 12px; padding: 8px 12px 8px 14px; top: 10px; }
+      .nav-links { display: none; }
+      .nav-cta { padding: 7px 13px; font-size: 10px; }
+
+      /* Hero */
+      .hero { padding: 0 20px; min-height: 100svh; }
+      .hero h1 { font-size: clamp(34px, 10vw, 52px); letter-spacing: -0.03em; }
+      .hero-sub { font-size: var(--text-base); margin-top: 16px; }
+      .hero-ctas { flex-direction: column; align-items: center; width: 100%; gap: 10px; margin-top: 28px; }
+      .btn-primary, .btn-outline { width: 100%; text-align: center; padding: 14px 20px; }
+      .hero-scroll { display: none; }
+
+      /* Sections */
+      .sec { padding: 72px 20px; }
+      .sec-title { font-size: clamp(28px, 8vw, 40px); margin-bottom: 36px; }
+
+      /* Cafe list */
+      .cafe-list-wrap { max-height: 420px; }
+      .cafe-list { max-height: 420px; }
+      .cafe-row { padding: 18px 8px; gap: 12px; }
+      .cafe-num { font-size: 11px; }
+
+      /* Events */
+      .events-grid { grid-template-columns: 1fr; gap: 10px; }
+      .event-card { padding: 20px; }
+
+      /* End section */
+      .end-sec { padding: 80px 20px 60px; min-height: 100svh; }
+      .end-sec h2 { font-size: clamp(28px, 8vw, 40px); }
+      .end-sec > p { font-size: var(--text-sm); }
+
+      /* Stepper */
+      .stepper-wrap { max-width: 100%; }
+      .stp-card { border-radius: 18px; }
+      .stp-header { padding: 22px 20px 0; }
+      .stp-body { padding: 22px 20px; min-height: 140px; }
+      .stp-footer { padding: 0 20px 22px; }
+      .stp-q { font-size: var(--text-base); }
+      .stp-next { padding: 12px 22px; }
+    }
+
+    /* ── ACCESSIBILITY ── */
+    :focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .cafe-row, .event-card { opacity: 1; transform: none; }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav aria-label="Main navigation">
+    <a class="nav-logo" href="#">Hunters</a>
+    <ul class="nav-links" role="list">
+      <li><a href="#cafes">Cafes</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#suggest">Suggest</a></li>
+    </ul>
+    <a class="nav-cta" href="#suggest">Submit a Spot</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="trail-container" id="trailContainer" aria-hidden="true"></div>
+    <h1>Life is more than just<br>work and <em>bed rotting.</em></h1>
+    <p class="hero-sub">Discover the best cafes, events, and experiences worth your time.</p>
+    <div class="hero-ctas">
+      <a href="#cafes" class="btn-primary">Start Hunting →</a>
+      <a href="#suggest" class="btn-outline">Submit a Spot</a>
+    </div>
+
+  </section>
+
+  <!-- TOP 10 CAFES -->
+  <section class="sec" id="cafes" aria-labelledby="cafes-heading">
+    <div class="sec-eyebrow">Curated · No sponsorships</div>
+    <h2 class="sec-title" id="cafes-heading">My Fav<br><em>Places.</em></h2>
+    <div class="cafe-list-wrap">
+      <div class="cafe-list-gradient top"  id="cafeGradTop"    style="opacity:0"></div>
+      <div class="cafe-list"               id="cafeList"       role="list"></div>
+      <div class="cafe-list-gradient bottom" id="cafeGradBottom" style="opacity:1"></div>
+    </div>
+    <div style="margin-top: 12px; padding: 18px 20px; border: 1px solid var(--border); border-radius: 12px; background: rgba(242,237,230,0.04); display: flex; align-items: center; gap: 14px;">
+      <span style="font-size: 22px;">🌿</span>
+      <div>
+        <div style="font-size: var(--text-base); font-weight: 700; color: var(--ink); letter-spacing: -0.01em;">Gaane Ka Juice</div>
+        <div style="font-size: var(--text-sm); color: var(--dimmer); margin-top: 2px;">Bada glass. Always.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="sec" id="events" aria-labelledby="events-heading">
+    <div class="sec-eyebrow">Confirmed · Happening now</div>
+    <h2 class="sec-title" id="events-heading">Sidequests to do<br><em>this weekend.</em></h2>
+    <div class="events-grid" id="eventGrid"></div>
+  </section>
+
+  <!-- SUGGEST A SPOT -->
+  <section class="end-sec" id="suggest" aria-labelledby="suggest-heading">
+    <div class="end-bg" aria-hidden="true"></div>
+    <h2 id="suggest-heading" style="position:relative;">Submit <em>a spot.</em></h2>
+    <p style="position:relative; margin-top:16px; margin-bottom:48px;">Tell us about a cafe, event, or experience you think Vadodara needs to know about.</p>
+
+    <!-- Stepper -->
+    <div class="stepper-wrap" id="stepperRoot" style="position:relative;"></div>
+  </section>
+
+  <script>
+    // ── IMAGE TRAIL (Hero) ──
+    (function() {
+      const trailImages = [
+        'https://picsum.photos/id/287/300/300',
+        'https://picsum.photos/id/1001/300/300',
+        'https://picsum.photos/id/1025/300/300',
+        'https://picsum.photos/id/1026/300/300',
+        'https://picsum.photos/id/1027/300/300',
+        'https://picsum.photos/id/1028/300/300',
+        'https://picsum.photos/id/1029/300/300',
+        'https://picsum.photos/id/1030/300/300',
+        'https://picsum.photos/id/103/300/300',
+        'https://picsum.photos/id/106/300/300',
+      ];
+
+      const container = document.getElementById('trailContainer');
+
+      // Build img elements
+      const imgEls = trailImages.map(url => {
+        const wrap = document.createElement('div');
+        wrap.className = 'content__img';
+        const inner = document.createElement('div');
+        inner.className = 'content__img-inner';
+        inner.style.backgroundImage = `url(${url})`;
+        wrap.appendChild(inner);
+        container.appendChild(wrap);
+        return { el: wrap, inner, rect: null };
+      });
+
+      // Cache rects
+      function cacheRects() {
+        imgEls.forEach(img => img.rect = img.el.getBoundingClientRect());
+      }
+      cacheRects();
+      window.addEventListener('resize', cacheRects);
+
+      function lerp(a, b, n) { return (1 - n) * a + n * b; }
+      function dist(p1, p2) { return Math.hypot(p1.x - p2.x, p1.y - p2.y); }
+
+      let mousePos    = { x: 0, y: 0 };
+      let lastMouse   = { x: 0, y: 0 };
+      let cachePos    = { x: 0, y: 0 };
+      let imgPos      = 0;
+      let zVal        = 1;
+      let activeCount = 0;
+      let isIdle      = true;
+      const threshold = 80;
+      const hero      = document.querySelector('.hero');
+
+      hero.addEventListener('mousemove', e => {
+        const r = hero.getBoundingClientRect();
+        mousePos = { x: e.clientX - r.left, y: e.clientY - r.top };
+      });
+
+      function showNext() {
+        zVal++;
+        imgPos = imgPos < imgEls.length - 1 ? imgPos + 1 : 0;
+        const img = imgEls[imgPos];
+        if (!img.rect) return;
+
+        gsap.killTweensOf(img.el);
+        activeCount++;
+        isIdle = false;
+
+        gsap.timeline({
+          onComplete: () => {
+            activeCount--;
+            if (activeCount === 0) isIdle = true;
+          }
+        })
+        .fromTo(img.el,
+          { opacity: 1, scale: 1, zIndex: zVal,
+            x: cachePos.x - img.rect.width / 2,
+            y: cachePos.y - img.rect.height / 2 },
+          { duration: 0.4, ease: 'power1',
+            x: mousePos.x - img.rect.width / 2,
+            y: mousePos.y - img.rect.height / 2 }, 0)
+        .to(img.el,
+          { duration: 0.4, ease: 'power3', opacity: 0, scale: 0.2 }, 0.4);
+      }
+
+      let started = false;
+      hero.addEventListener('mousemove', () => {
+        if (!started) {
+          cachePos = { ...mousePos };
+          started = true;
+          requestAnimationFrame(loop);
+        }
+      }, { once: true });
+
+      function loop() {
+        const d = dist(mousePos, lastMouse);
+        cachePos.x = lerp(cachePos.x, mousePos.x, 0.1);
+        cachePos.y = lerp(cachePos.y, mousePos.y, 0.1);
+        if (d > threshold) { showNext(); lastMouse = { ...mousePos }; }
+        if (isIdle && zVal !== 1) zVal = 1;
+        requestAnimationFrame(loop);
+      }
+    })();
+
+    // ── CAFE & EVENT DATA ──
+    const cafes = [
+      { rank: 1,  name: "0256 Burgers & Gelato", area: "Alkapuri",       rating: "—"   },
+      { rank: 2,  name: "Jay Ranchod",            area: "Vadodara",       rating: "—"   },
+      { rank: 3,  name: "Sudha",                  area: "Vadodara",       rating: "—"   },
+      { rank: 4,  name: "Jashan De Paratha",      area: "Near MN Soda",   rating: "—"   },
+      { rank: 5,  name: "The Dhaba",              area: "Vadodara",       rating: "—"   },
+      { rank: 6,  name: "Shozo Cafe",             area: "Vasna-Bhayli",   rating: "4.7" },
+      { rank: 7,  name: "Soul Brew",              area: "Vasna Road",     rating: "4.5" },
+      { rank: 8,  name: "Curators Coffee",        area: "Jetalpur",       rating: "4.6" },
+      { rank: 9,  name: "1331 Cafe",              area: "Vadodara",       rating: "—"   },
+    ];
+
+    const events = [
+      { name: "Chal Dod × Green Belly", venue: "Green Belly Smoothies, Diwalipura", freq: "This Sunday", why: "Morning run with a Car DJ and smoothies — community fitness with a vibe." },
+      { name: "Harox Run Crew",         venue: "Vadodara",                           freq: "This Sunday", why: "3km community run followed by an intense hybrid workout. Full experience, not just a run." },
+      { name: "Frisbee Social Run",     venue: "Kamati Bagh, Sayajiganj",            freq: "This Sunday · 7:00 AM", why: "Run, frisbee, meet people. Beginner-friendly, no-pressure morning outdoors." },
+      { name: "We The Flea",            venue: "Wageshwari Farms", freq: "Monthly",       why: "Massive stalls, live music, art and food — best youth gathering." },
+      { name: "Vocal Vibes Open Mic",   venue: "Various Cafes",    freq: "Bi-Weekly",     why: "Primary platform for Vadodara's local musicians and poets." },
+      { name: "The Brewery Live Music", venue: "Alembic Colony",   freq: "Every Weekend", why: "Casual non-alcoholic live music — great for first-time attendees." },
+      { name: "MIC BY NO ONE Open Mic", venue: "Fatehgunj",        freq: "Weekly",        why: "Inclusive stage for everyone — booming scene for young performers." },
+      { name: "Alembic Art Workshops",  venue: "Alembic City",     freq: "Every Weekend", why: "Coolest industrial space for pottery, painting, and design." },
+      { name: "Late Night Comedy",      venue: "Chaibugs Elevate", freq: "Weekly",        why: "Recurring late-night comedy/roast format — good for spontaneous plans." },
+    ];
+
+    // ── ANIMATED LIST (cafe section) ──
+    (function() {
+      const cafeList    = document.getElementById('cafeList');
+      const gradTop     = document.getElementById('cafeGradTop');
+      const gradBottom  = document.getElementById('cafeGradBottom');
+      let selectedIndex = -1;
+      const rows        = [];
+
+      // Render rows
+      cafes.forEach((c, i) => {
+        const row = document.createElement('div');
+        row.className = 'cafe-row';
+        row.setAttribute('role', 'listitem');
+        row.setAttribute('tabindex', '0');
+        row.dataset.index = i;
+        const isHigh = parseFloat(c.rating) >= 4.5;
+        row.innerHTML = `
+          <span class="cafe-num" aria-hidden="true">${String(c.rank).padStart(2,'0')}</span>
+          <div class="cafe-info">
+            <div class="cafe-name">${c.name}</div>
+            <div class="cafe-area">${c.area}</div>
+          </div>
+          <span class="cafe-rating ${isHigh ? 'high' : ''}" aria-label="Rating: ${c.rating !== '—' ? c.rating + ' out of 5' : 'not yet rated'}">${c.rating !== '—' ? '★ ' + c.rating : '—'}</span>
+        `;
+        row.addEventListener('mouseenter', () => setSelected(i));
+        row.addEventListener('click',      () => setSelected(i));
+        cafeList.appendChild(row);
+        rows.push(row);
+      });
+
+      // Selection
+      function setSelected(index) {
+        if (selectedIndex >= 0) rows[selectedIndex].classList.remove('al-selected');
+        selectedIndex = index;
+        if (selectedIndex >= 0) rows[selectedIndex].classList.add('al-selected');
+      }
+
+      // Scroll gradients
+      cafeList.addEventListener('scroll', () => {
+        const { scrollTop, scrollHeight, clientHeight } = cafeList;
+        gradTop.style.opacity    = Math.min(scrollTop / 50, 1);
+        const bottom = scrollHeight - (scrollTop + clientHeight);
+        gradBottom.style.opacity = scrollHeight <= clientHeight ? 0 : Math.min(bottom / 50, 1);
+      });
+
+      // Keyboard navigation
+      window.addEventListener('keydown', e => {
+        const focused = document.activeElement;
+        if (!cafeList.contains(focused) && focused !== document.body) return;
+        if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey && cafeList.matches(':focus-within'))) {
+          e.preventDefault();
+          const next = Math.min(selectedIndex + 1, rows.length - 1);
+          setSelected(next);
+          scrollToRow(next);
+        } else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey && cafeList.matches(':focus-within'))) {
+          e.preventDefault();
+          const prev = Math.max(selectedIndex - 1, 0);
+          setSelected(prev);
+          scrollToRow(prev);
+        }
+      });
+
+      function scrollToRow(index) {
+        const row = rows[index];
+        if (!row) return;
+        const extraMargin = 50;
+        const top  = row.offsetTop;
+        const bot  = top + row.offsetHeight;
+        const cTop = cafeList.scrollTop;
+        const cH   = cafeList.clientHeight;
+        if (top < cTop + extraMargin) {
+          cafeList.scrollTo({ top: top - extraMargin, behavior: 'smooth' });
+        } else if (bot > cTop + cH - extraMargin) {
+          cafeList.scrollTo({ top: bot - cH + extraMargin, behavior: 'smooth' });
+        }
+      }
+
+      // IntersectionObserver — scale+opacity reveal (AnimatedList style)
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const idx = parseInt(entry.target.dataset.index);
+              setTimeout(() => entry.target.classList.add('al-visible'), idx * 55);
+            } else {
+              entry.target.classList.remove('al-visible');
+            }
+          });
+        }, { threshold: 0.5, root: cafeList });
+        rows.forEach(r => io.observe(r));
+      } else {
+        rows.forEach(r => r.classList.add('al-visible'));
+      }
+    })();
+
+    // Render events
+    const eventGrid = document.getElementById('eventGrid');
+    events.forEach(e => {
+      const card = document.createElement('div');
+      card.className = 'event-card';
+      card.innerHTML = `
+        <span class="event-freq">${e.freq}</span>
+        <div class="event-name">${e.name}</div>
+        <div class="event-venue">${e.venue}</div>
+        <div class="event-why">${e.why}</div>
+      `;
+      eventGrid.appendChild(card);
+    });
+
+    // ── STEPPER ──
+    (function() {
+      const steps = [
+        {
+          label: 'Step 1 of 3',
+          question: "What's the name of the spot?",
+          field: { type: 'input', placeholder: 'e.g. The Hidden Brew, Fatehgunj', id: 'stp_name' }
+        },
+        {
+          label: 'Step 2 of 3',
+          question: "What type of spot is it?",
+          field: { type: 'select', id: 'stp_type', options: ['Cafe / Coffee', 'Restaurant', 'Event / Gathering', 'Art / Workshop', 'Bar / Lounge', 'Other'] }
+        },
+        {
+          label: 'Step 3 of 3',
+          question: "Why should Vadodara know about it?",
+          field: { type: 'textarea', placeholder: 'What makes it worth visiting? Vibe, food, crowd...', id: 'stp_why' }
+        }
+      ];
+
+      let current = 0;
+
+      const formData = { name: '', type: 'Cafe / Coffee', why: '' };
+
+      function render() {
+        const root = document.getElementById('stepperRoot');
+        root.innerHTML = `
+          <div class="stp-card">
+            <div class="stp-header">
+              ${steps.map((_, i) => `
+                <div class="stp-circle ${i < current ? 'complete' : i === current ? 'active' : 'inactive'}" data-step="${i}">
+                  ${i < current ? '✓' : i + 1}
+                </div>
+                ${i < steps.length - 1 ? `<div class="stp-line"><div class="stp-line-fill" style="width:${i < current ? '100' : '0'}%"></div></div>` : ''}
+              `).join('')}
+            </div>
+
+            <div class="stp-body">
+              ${steps.map((s, i) => `
+                <div class="stp-step ${i === current ? 'active' : ''}" id="step_${i}">
+                  <div class="stp-label">${s.label}</div>
+                  <div class="stp-q">${s.question}</div>
+                  ${s.field.type === 'input'    ? `<input  class="stp-input"    id="${s.field.id}" placeholder="${s.field.placeholder}" value="${i === 0 ? formData.name : ''}" />` : ''}
+                  ${s.field.type === 'textarea' ? `<textarea class="stp-textarea" id="${s.field.id}" placeholder="${s.field.placeholder}">${i === 2 ? formData.why : ''}</textarea>` : ''}
+                  ${s.field.type === 'select'   ? `<select class="stp-select" id="${s.field.id}">${s.field.options.map(o => `<option ${o === formData.type ? 'selected' : ''}>${o}</option>`).join('')}</select>` : ''}
+                </div>
+              `).join('')}
+            </div>
+
+            <div class="stp-footer">
+              <button class="stp-back" id="stpBack" ${current === 0 ? 'disabled' : ''}>← Back</button>
+              <button class="stp-next" id="stpNext">${current === steps.length - 1 ? 'Submit →' : 'Continue →'}</button>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('stpNext').addEventListener('click', () => {
+          // Save current field value before moving
+          if (current === 0) formData.name = document.getElementById('stp_name')?.value.trim() || '';
+          if (current === 1) formData.type = document.getElementById('stp_type')?.value || 'Cafe / Coffee';
+          if (current === 2) formData.why  = document.getElementById('stp_why')?.value.trim()  || '';
+
+          if (current < steps.length - 1) {
+            current++;
+            render();
+          } else {
+            submitForm();
+          }
+        });
+
+        document.getElementById('stpBack').addEventListener('click', () => {
+          if (current > 0) { current--; render(); }
+        });
+
+        // Step circles clickable (go back only)
+        root.querySelectorAll('.stp-circle').forEach(el => {
+          el.addEventListener('click', () => {
+            const s = parseInt(el.dataset.step);
+            if (s < current) { current = s; render(); }
+          });
+        });
+
+
+      }
+
+      function submitForm() {
+        fetch('https://formspree.io/f/xzdkbqob', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ 'Spot Name': formData.name, 'Type': formData.type, 'Why Vadodara Should Know': formData.why })
+        })
+        .then(res => res.ok ? showDone() : showError())
+        .catch(() => showError());
+      }
+
+      function showError() {
+        document.getElementById('stepperRoot').innerHTML = `
+          <div class="stp-card">
+            <div class="stp-done">
+              <div class="stp-done-icon">⚠️</div>
+              <h3>Something went wrong.</h3>
+              <p>Please try again in a moment.</p>
+            </div>
+          </div>
+        `;
+      }
+
+      function showDone() {
+        document.getElementById('stepperRoot').innerHTML = `
+          <div class="stp-card">
+            <div class="stp-done">
+
+              <h3>Got it. Thanks!</h3>
+              <p>We'll check it out and if it makes the cut,<br>it'll show up right here.</p>
+            </div>
+          </div>
+        `;
+      }
+
+      render();
+    })();
+
+    // Scroll reveal for event cards — respects reduced-motion preference
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const revealEls = document.querySelectorAll('.event-card');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const idx = Array.from(revealEls).indexOf(e.target);
+            setTimeout(() => e.target.classList.add('visible'), (idx % 10) * 55);
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      revealEls.forEach(el => observer.observe(el));
+    } else {
+      document.querySelectorAll('.event-card').forEach(el => el.classList.add('visible'));
+    }
+  </script>
+
+</body>
+</html>
