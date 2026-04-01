@@ -3,6 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Vadodara Discovery",
+    "description": "Life is more than just work and bed rotting. Discover the best cafes, events, and experiences worth your time in Vadodara.",
+    "url": "https://rauljiyashraj.me",
+    "author": {
+      "@type": "Person",
+      "name": "Yash",
+      "url": "https://rauljiyashraj.me"
+    },
+    "inLanguage": "en",
+    "keywords": "Vadodara cafes, Vadodara events, curated experiences, local discovery",
+    "about": {
+      "@type": "Thing",
+      "name": "Local curation platform",
+      "description": "Ruthlessly curated cafes and events. No sponsorships. Only places worth your time."
+    }
+  }
+  </script>
  
   <!-- SEO -->
   <title>Hunters Vadodara — Cafes, Events & Experiences Worth Your Time</title>
@@ -600,9 +622,117 @@
       color: var(--dimmer);
       line-height: 1.6;
     }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #000;
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 48px;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .footer-sub {
+      font-size: var(--text-sm);
+      color: var(--dimmer);
+      margin-top: 4px;
+    }
+
+    .col-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      margin-bottom: 16px;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .links a {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .links a:hover,
+    .email:hover {
+      color: var(--ink);
+    }
+
+    .email {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+    }
+
+    .ai-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ai-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.9;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .ai-icon:hover {
+      opacity: 0.78;
+      transform: scale(1.1);
+    }
+
+    .ai-icon:focus-visible {
+      outline: 2px solid rgba(242,237,230,0.55);
+      outline-offset: 2px;
+    }
+
+    .ai-icon img {
+      width: auto;
+      height: 32px;
+      max-width: 32px;
+      object-fit: contain;
+      display: block;
+    }
  
     /* ── IMAGE TRAIL ── */
-    @media (hover: hover) { .hero { cursor: none; } }
+    @media (hover: hover) {
+      .hero { cursor: none; }
+      .hero a,
+      .hero button,
+      .hero [role="button"] { cursor: pointer; }
+    }
  
     .trail-container {
       position: absolute;
@@ -694,6 +824,13 @@
       .stp-q { font-size: 15px; }
       .stp-next { padding: 12px 22px; font-size: 14px; }
       .stp-input, .stp-select, .stp-textarea { font-size: 16px; } /* 16px prevents iOS zoom */
+
+      /* Footer */
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 60px 20px 44px;
+      }
     }
  
     @media (max-width: 400px) {
@@ -780,6 +917,47 @@
     <!-- Stepper -->
     <div class="stepper-wrap" id="stepperRoot" style="position:relative;"></div>
   </section>
+
+  <footer class="footer" aria-label="Site footer">
+    <div class="footer-top">
+      <div>
+        <div class="brand-name">Hunters</div>
+        <div class="footer-sub">Vadodara, Gujarat.</div>
+      </div>
+
+      <div>
+        <div class="col-label">Explore</div>
+        <div class="links">
+          <a href="#cafes">Cafes</a>
+          <a href="#events">Events</a>
+          <a href="#suggest">Submit a Spot</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-label">Contact</div>
+        <a class="email" href="mailto:connectwyashraj@gmail.com">connectwyashraj@gmail.com</a>
+        <div class="col-label">Find us on AI</div>
+        <div class="ai-row">
+          <a class="ai-icon" href="https://claude.ai/new?q=What%20is%20rauljiyashraj.me%3F%20Explain%20the%20concept%2C%20curation%20model%2C%20and%20design%20approach." target="_blank" rel="noopener noreferrer" aria-label="Claude">
+            <img src="images/icon/claude.png" alt="Claude" loading="lazy">
+          </a>
+          <a class="ai-icon" href="https://chat.openai.com/?q=What%20is%20rauljiyashraj.me%3F%20Explain%20the%20concept%2C%20curation%20model%2C%20and%20design%20approach." target="_blank" rel="noopener noreferrer" aria-label="ChatGPT">
+            <img src="images/icon/chatgpt.png" alt="ChatGPT" loading="lazy">
+          </a>
+          <a class="ai-icon" href="https://x.com/i/grok?q=What%20is%20rauljiyashraj.me%3F%20Explain%20the%20concept%2C%20curation%20model%2C%20and%20design%20approach." target="_blank" rel="noopener noreferrer" aria-label="Grok">
+            <img src="images/icon/grok.png" alt="Grok" loading="lazy">
+          </a>
+          <a class="ai-icon" href="https://gemini.google.com/app?q=What%20is%20rauljiyashraj.me%3F%20Explain%20the%20concept%2C%20curation%20model%2C%20and%20design%20approach." target="_blank" rel="noopener noreferrer" aria-label="Gemini">
+            <img src="images/icon/gemini.png" alt="Gemini" loading="lazy">
+          </a>
+          <a class="ai-icon" href="https://www.perplexity.ai/?q=What%20is%20rauljiyashraj.me%3F%20Explain%20the%20concept%2C%20curation%20model%2C%20and%20design%20approach." target="_blank" rel="noopener noreferrer" aria-label="Perplexity">
+            <img src="images/icon/perplexity.png" alt="Perplexity" loading="lazy">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
  
   <script>
     // ── IMAGE TRAIL (Hero — desktop/hover only) ──
@@ -789,16 +967,20 @@
       gsapScript.onload = function() {
       (function() {
       const trailImages = [
-        'https://picsum.photos/id/287/300/300',
-        'https://picsum.photos/id/1001/300/300',
-        'https://picsum.photos/id/1025/300/300',
-        'https://picsum.photos/id/1026/300/300',
-        'https://picsum.photos/id/1027/300/300',
-        'https://picsum.photos/id/1028/300/300',
-        'https://picsum.photos/id/1029/300/300',
-        'https://picsum.photos/id/1030/300/300',
-        'https://picsum.photos/id/103/300/300',
-        'https://picsum.photos/id/106/300/300',
+        'images/index-hero/1.jpg',
+        'images/index-hero/2.jpg',
+        'images/index-hero/3.jpg',
+        'images/index-hero/4.jpg',
+        'images/index-hero/5.jpg',
+        'images/index-hero/6.jpg',
+        'images/index-hero/7.jpg',
+        'images/index-hero/8.jpg',
+        'images/index-hero/9.jpg',
+        'images/index-hero/10.jpg',
+        'images/index-hero/11.jpg',
+        'images/index-hero/12.jpg',
+        'images/index-hero/13.jpg',
+        'images/index-hero/14.jpg',
       ];
  
       const container = document.getElementById('trailContainer');
@@ -834,8 +1016,10 @@
       let isIdle      = true;
       const threshold = 80;
       const hero      = document.querySelector('.hero');
+      const interactiveSelector = 'a, button, [role="button"], input, textarea, select';
  
       hero.addEventListener('mousemove', e => {
+        if (e.target.closest(interactiveSelector)) return;
         const r = hero.getBoundingClientRect();
         mousePos = { x: e.clientX - r.left, y: e.clientY - r.top };
       });
