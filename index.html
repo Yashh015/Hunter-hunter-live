@@ -1,30 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RJXHPJ8229"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RJXHPJ8229');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Vadodara Discovery",
-    "description": "Life is more than just work and bed rotting. Discover the best cafes, events, and experiences worth your time in Vadodara.",
-    "url": "https://rauljiyashraj.me",
-    "author": {
-      "@type": "Person",
-      "name": "Yash",
-      "url": "https://rauljiyashraj.me"
-    },
-    "inLanguage": "en",
-    "keywords": "Vadodara cafes, Vadodara events, curated experiences, local discovery",
-    "about": {
-      "@type": "Thing",
-      "name": "Local curation platform",
-      "description": "Ruthlessly curated cafes and events. No sponsorships. Only places worth your time."
-    }
-  }
-  </script>
  
   <!-- SEO -->
   <title>Hunters Vadodara — Cafes, Events & Experiences Worth Your Time</title>
@@ -628,6 +615,7 @@
       background: #000;
       color: var(--ink);
       overflow: hidden;
+      border-top: 1px solid var(--border);
     }
 
     .footer-top {
@@ -696,21 +684,25 @@
     .ai-row {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       flex-wrap: wrap;
     }
 
     .ai-icon {
+      width: 34px;
+      height: 34px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      border-radius: 10px;
       opacity: 0.9;
-      transition: opacity 0.2s, transform 0.2s;
+      transition: opacity 0.2s, transform 0.2s, background-color 0.2s;
     }
 
     .ai-icon:hover {
-      opacity: 0.78;
-      transform: scale(1.1);
+      opacity: 1;
+      transform: translateY(-1px);
+      background: rgba(242,237,230,0.06);
     }
 
     .ai-icon:focus-visible {
@@ -719,20 +711,14 @@
     }
 
     .ai-icon img {
-      width: auto;
-      height: 32px;
-      max-width: 32px;
+      width: 22px;
+      height: 22px;
       object-fit: contain;
       display: block;
     }
  
     /* ── IMAGE TRAIL ── */
-    @media (hover: hover) {
-      .hero { cursor: none; }
-      .hero a,
-      .hero button,
-      .hero [role="button"] { cursor: pointer; }
-    }
+    @media (hover: hover) { .hero { cursor: none; } }
  
     .trail-container {
       position: absolute;
@@ -921,6 +907,7 @@
   <footer class="footer" aria-label="Site footer">
     <div class="footer-top">
       <div>
+        <div class="brand-name">Hunters</div>
         <div class="footer-sub">Vadodara, Gujarat.</div>
       </div>
 
@@ -938,20 +925,20 @@
         <a class="email" href="mailto:connectwyashraj@gmail.com">connectwyashraj@gmail.com</a>
         <div class="col-label">Find us on AI</div>
         <div class="ai-row">
-          <a class="ai-icon" href="https://claude.ai/new?q=What%20is%20rauljiyashraj.me%3F%20Explain%20the%20concept%2C%20curation%20model%2C%20and%20design%20approach." target="_blank" rel="noopener noreferrer" aria-label="Claude">
-            <img src="images/icon/claude.png" alt="Claude" loading="lazy">
+          <a class="ai-icon" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" aria-label="OpenAI">
+            <img src="https://cdn.simpleicons.org/openai/f2ede6" alt="OpenAI" loading="lazy">
           </a>
-          <a class="ai-icon" href="https://chat.openai.com/?q=What%20is%20rauljiyashraj.me%3F%20Explain%20the%20concept%2C%20curation%20model%2C%20and%20design%20approach." target="_blank" rel="noopener noreferrer" aria-label="ChatGPT">
-            <img src="images/icon/chatgpt.png" alt="ChatGPT" loading="lazy">
+          <a class="ai-icon" href="https://claude.ai" target="_blank" rel="noopener noreferrer" aria-label="Anthropic Claude">
+            <img src="https://cdn.simpleicons.org/anthropic/f2ede6" alt="Anthropic" loading="lazy">
           </a>
-          <a class="ai-icon" href="https://x.com/i/grok?q=What%20is%20rauljiyashraj.me%3F%20Explain%20the%20concept%2C%20curation%20model%2C%20and%20design%20approach." target="_blank" rel="noopener noreferrer" aria-label="Grok">
-            <img src="images/icon/grok.png" alt="Grok" loading="lazy">
+          <a class="ai-icon" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" aria-label="Google Gemini">
+            <img src="https://cdn.simpleicons.org/googlegemini/f2ede6" alt="Gemini" loading="lazy">
           </a>
-          <a class="ai-icon" href="https://gemini.google.com/app?q=What%20is%20rauljiyashraj.me%3F%20Explain%20the%20concept%2C%20curation%20model%2C%20and%20design%20approach." target="_blank" rel="noopener noreferrer" aria-label="Gemini">
-            <img src="images/icon/gemini.png" alt="Gemini" loading="lazy">
+          <a class="ai-icon" href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" aria-label="Perplexity">
+            <img src="https://cdn.simpleicons.org/perplexity/f2ede6" alt="Perplexity" loading="lazy">
           </a>
-          <a class="ai-icon" href="https://www.perplexity.ai/?q=What%20is%20rauljiyashraj.me%3F%20Explain%20the%20concept%2C%20curation%20model%2C%20and%20design%20approach." target="_blank" rel="noopener noreferrer" aria-label="Perplexity">
-            <img src="images/icon/perplexity.png" alt="Perplexity" loading="lazy">
+          <a class="ai-icon" href="https://mistral.ai" target="_blank" rel="noopener noreferrer" aria-label="Mistral AI">
+            <img src="https://cdn.simpleicons.org/mistralai/f2ede6" alt="Mistral AI" loading="lazy">
           </a>
         </div>
       </div>
@@ -966,20 +953,16 @@
       gsapScript.onload = function() {
       (function() {
       const trailImages = [
-        'images/index-hero/1.jpg',
-        'images/index-hero/2.jpg',
-        'images/index-hero/3.jpg',
-        'images/index-hero/4.jpg',
-        'images/index-hero/5.jpg',
-        'images/index-hero/6.jpg',
-        'images/index-hero/7.jpg',
-        'images/index-hero/8.jpg',
-        'images/index-hero/9.jpg',
-        'images/index-hero/10.jpg',
-        'images/index-hero/11.jpg',
-        'images/index-hero/12.jpg',
-        'images/index-hero/13.jpg',
-        'images/index-hero/14.jpg',
+        'https://picsum.photos/id/287/300/300',
+        'https://picsum.photos/id/1001/300/300',
+        'https://picsum.photos/id/1025/300/300',
+        'https://picsum.photos/id/1026/300/300',
+        'https://picsum.photos/id/1027/300/300',
+        'https://picsum.photos/id/1028/300/300',
+        'https://picsum.photos/id/1029/300/300',
+        'https://picsum.photos/id/1030/300/300',
+        'https://picsum.photos/id/103/300/300',
+        'https://picsum.photos/id/106/300/300',
       ];
  
       const container = document.getElementById('trailContainer');
@@ -1015,10 +998,8 @@
       let isIdle      = true;
       const threshold = 80;
       const hero      = document.querySelector('.hero');
-      const interactiveSelector = 'a, button, [role="button"], input, textarea, select';
  
       hero.addEventListener('mousemove', e => {
-        if (e.target.closest(interactiveSelector)) return;
         const r = hero.getBoundingClientRect();
         mousePos = { x: e.clientX - r.left, y: e.clientY - r.top };
       });
