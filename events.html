@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RJXHPJ8229"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RJXHPJ8229');
+  </script>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Host Your Event — Hunters Vadodara</title>
+  <meta name="description" content="List your event on Hunters. Get RSVPs, build community, and reach Vadodara's most engaged audience." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --bg:       #000000;
+      --ink:      #f2ede6;
+      --dim:      rgba(242,237,230,0.55);
+      --dimmer:   rgba(242,237,230,0.28);
+      --border:   rgba(242,237,230,0.10);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      
+      --text-xs:   clamp(10px, 1.2vw, 11px);
+      --text-sm:   clamp(12px, 1.4vw, 13px);
+      --text-base: clamp(14px, 1.6vw, 16px);
+      --text-md:   clamp(15px, 1.8vw, 17px);
+      --text-lg:   clamp(17px, 2vw, 20px);
+      --text-xl:   clamp(24px, 3vw, 32px);
+      --text-2xl:  clamp(30px, 4.5vw, 52px);
+      --text-hero: clamp(38px, 6vw, 88px);
+    }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: var(--text-base);
+      line-height: 1.6;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    
+    /* Film grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.025'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+    
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 10px 20px 10px 16px;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+    }
+    
+    .nav-logo {
+      font-size: var(--text-sm);
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .nav-links a:hover { color: var(--ink); }
+    
+    /* HERO SECTION */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,255,255,0.045) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 840px;
+    }
+    
+    .hero h1 {
+      font-size: var(--text-hero);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease-out) 0.25s both;
+    }
+    
+    .hero h1 em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+    
+    .hero-sub {
+      margin-top: 24px;
+      font-size: var(--text-md);
+      font-weight: 400;
+      color: var(--dim);
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.65;
+      opacity: 0;
+      animation: fadeUp 0.7s var(--ease-out) 0.4s both;
+    }
+    
+    .hero-cta {
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeUp 0.7s var(--ease-out) 0.55s both;
+    }
+    
+    .btn-primary {
+      font-size: clamp(13px, 1.5vw, 15px);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #000;
+      background: var(--ink);
+      padding: 13px 26px;
+      border-radius: 100px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s var(--ease-out);
+      display: inline-block;
+    }
+    
+    .btn-primary:hover { 
+      opacity: 0.85; 
+      transform: translateY(-2px); 
+    }
+
+    /* EVENT FORM SECTION */
+    .event-form-sec {
+      min-height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 90px 24px 120px;
+      margin-top: 90px;
+      position: relative;
+      overflow: hidden;
+      background: #000000;
+    }
+
+    .end-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .event-form-sec h2 {
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      max-width: 720px;
+      position: relative;
+    }
+
+    .event-form-sec h2 em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .event-form-sec p {
+      margin-top: 18px;
+      font-size: var(--text-md);
+      color: var(--dim);
+      max-width: 480px;
+      line-height: 1.65;
+      position: relative;
+      margin-bottom: 44px;
+    }
+
+    /* STEPPER */
+    .stepper-wrap {
+      width: 100%;
+      max-width: 440px;
+      text-align: left;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stp-card {
+      background: rgba(242,237,230,0.04);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .stp-header {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 28px 28px 0;
+    }
+
+    .stp-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .stp-circle.inactive  { background: #1a1a1a; color: rgba(242,237,230,0.3); }
+    .stp-circle.active    { background: var(--ink); color: #000; }
+    .stp-circle.complete  { background: var(--ink); color: #000; }
+
+    .stp-line {
+      flex: 1;
+      height: 1px;
+      background: #1a1a1a;
+      margin: 0 8px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .stp-line-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: var(--ink);
+      width: 0%;
+      transition: width 0.4s var(--ease-out);
+    }
+
+    .stp-body {
+      padding: 28px;
+      min-height: 200px;
+    }
+
+    .stp-step { display: none; }
+    .stp-step.active { display: block; animation: fadeUp 0.35s var(--ease-out) both; }
+
+    .stp-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      margin-bottom: 10px;
+    }
+
+    .stp-q {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .stp-input, .stp-textarea {
+      width: 100%;
+      background: rgba(242,237,230,0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: var(--text-base);
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    .stp-input::placeholder, .stp-textarea::placeholder { color: var(--dimmer); }
+    .stp-input:focus, .stp-textarea:focus { border-color: rgba(242,237,230,0.3); }
+
+    .stp-textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.5;
+    }
+
+    .stp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stp-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .stp-field-label {
+      font-size: var(--text-xs);
+      color: var(--dimmer);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .stp-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+      color: var(--dim);
+      font-size: var(--text-sm);
+    }
+
+    .stp-check input,
+    .stp-radio input {
+      accent-color: var(--ink);
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .stp-radio-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stp-radio {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(242,237,230,0.04);
+      font-size: var(--text-sm);
+      color: var(--dim);
+    }
+
+    .stp-help {
+      margin-top: 4px;
+      font-size: var(--text-xs);
+      color: var(--dimmer);
+      line-height: 1.5;
+    }
+
+    .stp-error {
+      margin-top: 8px;
+      font-size: var(--text-xs);
+      color: #ffb2b2;
+    }
+
+    .stp-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 28px 28px;
+    }
+
+    .stp-back {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--dimmer);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: color 0.2s;
+    }
+
+    .stp-back:hover { color: var(--ink); }
+    .stp-back:disabled { opacity: 0; pointer-events: none; }
+
+    .stp-next {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #000;
+      background: var(--ink);
+      border: none;
+      border-radius: 100px;
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s var(--ease-out);
+    }
+
+    .stp-next:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .stp-done {
+      text-align: center;
+      padding: 48px 28px;
+      animation: fadeUp 0.4s var(--ease-out) both;
+    }
+
+    .stp-done h3 {
+      font-size: var(--text-xl);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .stp-done p {
+      font-size: var(--text-sm);
+      color: var(--dimmer);
+      line-height: 1.6;
+      margin: 0;
+      max-width: 100%;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav {
+        gap: 16px;
+        padding: 8px 14px;
+      }
+      
+      .nav-links {
+        gap: 12px;
+      }
+      
+      .hero {
+        padding: 100px 20px 40px;
+      }
+
+      .event-form-sec {
+        margin-top: 80px;
+        padding: 72px 20px 56px;
+      }
+
+      .event-form-sec h2 {
+        font-size: clamp(26px, 7.5vw, 38px);
+      }
+
+      .event-form-sec p {
+        font-size: 14px;
+        margin-bottom: 36px;
+      }
+
+      .stepper-wrap { max-width: 100%; }
+      .stp-card { border-radius: 18px; }
+      .stp-header { padding: 20px 18px 0; }
+      .stp-body { padding: 20px 18px; min-height: 170px; }
+      .stp-footer { padding: 0 18px 20px; }
+      .stp-q { font-size: 15px; }
+      .stp-next { padding: 12px 22px; font-size: 14px; }
+      .stp-input, .stp-textarea { font-size: 16px; }
+      .stp-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">HUNTERS</a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/events.html">Host Event</a></li>
+    </ul>
+  </nav>
+  
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>
+        Get your event in front of<br><em>people who actually show up.</em>
+      </h1>
+      <p class="hero-sub">
+        Free event page. Easy RSVPs. No hidden fees. Share your event details in one quick form and reach Vadodara's most engaged crowd.
+      </p>
+      <div class="hero-cta">
+        <a href="#eventForm" class="btn-primary">List Your Event — Free</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENT FORM SECTION -->
+  <section class="event-form-sec" id="eventForm" aria-labelledby="event-form-heading">
+    <div class="end-bg" aria-hidden="true"></div>
+    <h2 id="event-form-heading">Submit your <em>event.</em></h2>
+    <p>Five quick steps and your listing is ready to be reviewed for Hunters Vadodara.</p>
+    <div class="stepper-wrap" id="eventStepperRoot"></div>
+  </section>
+
+  <script>
+    (function() {
+      const FORM_ENDPOINT = 'https://formspree.io/f/mwvwarnn';
+
+      const steps = [
+        { label: 'Step 1 of 5', question: "What's your event called?" },
+        { label: 'Step 2 of 5', question: 'When is it happening?' },
+        { label: 'Step 3 of 5', question: 'Where is it?' },
+        { label: 'Step 4 of 5', question: 'Tell us about your event.' },
+        { label: 'Step 5 of 5', question: 'How can people RSVP?' }
+      ];
+
+      let current = 0;
+      let errorMessage = '';
+
+      const formData = {
+        eventName: '',
+        eventDate: '',
+        startTime: '',
+        endTime: '',
+        venue: '',
+        isOnline: false,
+        description: '',
+        rsvpType: 'Free Event',
+        price: '',
+        capacity: '',
+        email: ''
+      };
+
+      function renderField(stepIndex) {
+        if (stepIndex === 0) {
+          return `<input class="stp-input" id="evt_name" placeholder="e.g. Open Mic Night at Barrelhouse" value="${escapeHtml(formData.eventName)}" />`;
+        }
+
+        if (stepIndex === 1) {
+          return `
+            <div class="stp-grid">
+              <div class="stp-field">
+                <label class="stp-field-label" for="evt_date">Date</label>
+                <input class="stp-input" id="evt_date" type="date" value="${escapeAttr(formData.eventDate)}" />
+              </div>
+              <div class="stp-field">
+                <label class="stp-field-label" for="evt_start">Start Time</label>
+                <input class="stp-input" id="evt_start" type="time" value="${escapeAttr(formData.startTime)}" />
+              </div>
+            </div>
+            <div class="stp-field">
+              <label class="stp-field-label" for="evt_end">End Time (optional)</label>
+              <input class="stp-input" id="evt_end" type="time" value="${escapeAttr(formData.endTime)}" />
+            </div>
+          `;
+        }
+
+        if (stepIndex === 2) {
+          return `
+            <input class="stp-input" id="evt_venue" placeholder="Venue name + address" value="${escapeHtml(formData.venue)}" ${formData.isOnline ? 'disabled' : ''} />
+            <label class="stp-check" for="evt_online">
+              <input id="evt_online" type="checkbox" ${formData.isOnline ? 'checked' : ''} />
+              <span>This is an online event</span>
+            </label>
+          `;
+        }
+
+        if (stepIndex === 3) {
+          return `<textarea class="stp-textarea" id="evt_desc" placeholder="What's happening? Who should come? What makes it worth attending?">${escapeHtml(formData.description)}</textarea>`;
+        }
+
+        return `
+          <div class="stp-radio-group" role="radiogroup" aria-label="Event type">
+            <label class="stp-radio" for="evt_free">
+              <input type="radio" id="evt_free" name="evt_rsvp_type" value="Free Event" ${formData.rsvpType === 'Free Event' ? 'checked' : ''} />
+              <span>Free Event</span>
+            </label>
+            <label class="stp-radio" for="evt_paid">
+              <input type="radio" id="evt_paid" name="evt_rsvp_type" value="Paid Event" ${formData.rsvpType === 'Paid Event' ? 'checked' : ''} />
+              <span>Paid Event</span>
+            </label>
+          </div>
+          ${formData.rsvpType === 'Paid Event' ? `
+            <div class="stp-field">
+              <label class="stp-field-label" for="evt_price">Price</label>
+              <input class="stp-input" id="evt_price" type="number" min="0" step="1" placeholder="e.g. 299" value="${escapeAttr(formData.price)}" />
+            </div>
+          ` : ''}
+          <div class="stp-grid">
+            <div class="stp-field">
+              <label class="stp-field-label" for="evt_capacity">Max Capacity (optional)</label>
+              <input class="stp-input" id="evt_capacity" type="number" min="1" step="1" placeholder="e.g. 80" value="${escapeAttr(formData.capacity)}" />
+            </div>
+            <div class="stp-field">
+              <label class="stp-field-label" for="evt_email">Your Email</label>
+              <input class="stp-input" id="evt_email" type="email" placeholder="you@example.com" value="${escapeAttr(formData.email)}" />
+            </div>
+          </div>
+          <div class="stp-help">We'll use this only to contact you about this listing.</div>
+        `;
+      }
+
+      function render() {
+        const root = document.getElementById('eventStepperRoot');
+        if (!root) return;
+
+        root.innerHTML = `
+          <div class="stp-card">
+            <div class="stp-header">
+              ${steps.map((_, i) => `
+                <div class="stp-circle ${i < current ? 'complete' : i === current ? 'active' : 'inactive'}" data-step="${i}">
+                  ${i < current ? '✓' : i + 1}
+                </div>
+                ${i < steps.length - 1 ? `<div class="stp-line"><div class="stp-line-fill" style="width:${i < current ? '100' : '0'}%"></div></div>` : ''}
+              `).join('')}
+            </div>
+
+            <div class="stp-body">
+              <div class="stp-step active" id="evt_step_${current}">
+                <div class="stp-label">${steps[current].label}</div>
+                <div class="stp-q">${steps[current].question}</div>
+                ${renderField(current)}
+                ${errorMessage ? `<div class="stp-error">${errorMessage}</div>` : ''}
+              </div>
+            </div>
+
+            <div class="stp-footer">
+              <button class="stp-back" id="evtBack" ${current === 0 ? 'disabled' : ''}>← Back</button>
+              <button class="stp-next" id="evtNext">${current === steps.length - 1 ? 'Submit →' : 'Continue →'}</button>
+            </div>
+          </div>
+        `;
+
+        bindStepInteractions();
+      }
+
+      function bindStepInteractions() {
+        const root = document.getElementById('eventStepperRoot');
+        const nextBtn = document.getElementById('evtNext');
+        const backBtn = document.getElementById('evtBack');
+
+        if (current === 2) {
+          const onlineEl = document.getElementById('evt_online');
+          const venueEl = document.getElementById('evt_venue');
+          if (onlineEl && venueEl) {
+            onlineEl.addEventListener('change', () => {
+              formData.isOnline = onlineEl.checked;
+              if (formData.isOnline) formData.venue = '';
+              render();
+            });
+          }
+        }
+
+        if (current === 4) {
+          root.querySelectorAll('input[name="evt_rsvp_type"]').forEach(el => {
+            el.addEventListener('change', () => {
+              formData.rsvpType = el.value;
+              if (formData.rsvpType !== 'Paid Event') formData.price = '';
+              render();
+            });
+          });
+        }
+
+        nextBtn.addEventListener('click', () => {
+          saveCurrentStep();
+          const validationError = validateCurrentStep();
+          if (validationError) {
+            errorMessage = validationError;
+            render();
+            return;
+          }
+
+          errorMessage = '';
+          if (current < steps.length - 1) {
+            current++;
+            render();
+          } else {
+            submitForm();
+          }
+        });
+
+        backBtn.addEventListener('click', () => {
+          if (current > 0) {
+            errorMessage = '';
+            current--;
+            render();
+          }
+        });
+
+        root.querySelectorAll('.stp-circle').forEach(el => {
+          el.addEventListener('click', () => {
+            const s = parseInt(el.dataset.step, 10);
+            if (s < current) {
+              saveCurrentStep();
+              errorMessage = '';
+              current = s;
+              render();
+            }
+          });
+        });
+      }
+
+      function saveCurrentStep() {
+        if (current === 0) {
+          formData.eventName = document.getElementById('evt_name')?.value.trim() || '';
+          return;
+        }
+
+        if (current === 1) {
+          formData.eventDate = document.getElementById('evt_date')?.value || '';
+          formData.startTime = document.getElementById('evt_start')?.value || '';
+          formData.endTime = document.getElementById('evt_end')?.value || '';
+          return;
+        }
+
+        if (current === 2) {
+          formData.isOnline = !!document.getElementById('evt_online')?.checked;
+          formData.venue = formData.isOnline ? '' : (document.getElementById('evt_venue')?.value.trim() || '');
+          return;
+        }
+
+        if (current === 3) {
+          formData.description = document.getElementById('evt_desc')?.value.trim() || '';
+          return;
+        }
+
+        formData.rsvpType = document.querySelector('input[name="evt_rsvp_type"]:checked')?.value || 'Free Event';
+        formData.price = document.getElementById('evt_price')?.value || '';
+        formData.capacity = document.getElementById('evt_capacity')?.value || '';
+        formData.email = document.getElementById('evt_email')?.value.trim() || '';
+      }
+
+      function validateCurrentStep() {
+        if (current === 0 && !formData.eventName) return 'Please add your event name.';
+        if (current === 1 && !formData.eventDate) return 'Please select an event date.';
+        if (current === 1 && !formData.startTime) return 'Please select a start time.';
+        if (current === 2 && !formData.isOnline && !formData.venue) return 'Please add a venue and address, or mark it as online.';
+        if (current === 3 && !formData.description) return 'Please add a short event description.';
+        if (current === 4 && formData.rsvpType === 'Paid Event' && !formData.price) return 'Please add a ticket price for paid events.';
+        if (current === 4 && !formData.email) return 'Please add your email so we can contact you.';
+        if (current === 4 && !/^\S+@\S+\.\S+$/.test(formData.email)) return 'Please enter a valid email address.';
+        return '';
+      }
+
+      function submitForm() {
+        if (FORM_ENDPOINT.includes('yourEventFormId')) {
+          showError('Add your Formspree endpoint in events.html before submitting.');
+          return;
+        }
+
+        fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            'Event Name': formData.eventName,
+            'Event Date': formData.eventDate,
+            'Start Time': formData.startTime,
+            'End Time': formData.endTime || 'N/A',
+            'Venue': formData.isOnline ? 'Online event' : formData.venue,
+            'Online Event': formData.isOnline ? 'Yes' : 'No',
+            'Description': formData.description,
+            'RSVP Type': formData.rsvpType,
+            'Price': formData.rsvpType === 'Paid Event' ? (formData.price || 'N/A') : 'Free',
+            'Max Capacity': formData.capacity || 'Not specified',
+            'Organizer Email': formData.email
+          })
+        })
+          .then(res => res.ok ? showDone() : showError('Submission failed. Please try again.'))
+          .catch(() => showError('Network error. Please try again in a moment.'));
+      }
+
+      function showError(message) {
+        const root = document.getElementById('eventStepperRoot');
+        if (!root) return;
+        root.innerHTML = `
+          <div class="stp-card">
+            <div class="stp-done">
+              <h3>Something went wrong.</h3>
+              <p>${escapeHtml(message)}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      function showDone() {
+        const root = document.getElementById('eventStepperRoot');
+        if (!root) return;
+        root.innerHTML = `
+          <div class="stp-card">
+            <div class="stp-done">
+              <h3>Event submitted.</h3>
+              <p>Thanks for listing with Hunters. We'll review it and get back to you soon.</p>
+            </div>
+          </div>
+        `;
+      }
+
+      function escapeHtml(value) {
+        return String(value || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function escapeAttr(value) {
+        return escapeHtml(value).replace(/`/g, '&#096;');
+      }
+
+      render();
+    })();
+  </script>
+  
+</body>
+</html>

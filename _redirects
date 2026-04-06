@@ -1,0 +1,5 @@
+# Clean events route
+/events  /events.html  200
+
+# Fallback unknown routes to homepage
+/*  /index.html  200
