@@ -79,6 +79,8 @@
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
       border-radius: 100px;
+      width: max-content;
+      max-width: calc(100vw - 24px);
     }
     
     .nav-logo {
@@ -130,6 +132,22 @@
       position: relative;
       z-index: 1;
       max-width: 840px;
+      width: 100%;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(242,237,230,0.05);
+      color: var(--dim);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      animation: fadeUp 0.7s var(--ease-out) 0.15s both;
     }
     
     .hero h1 {
@@ -494,21 +512,45 @@
     /* RESPONSIVE */
     @media (max-width: 640px) {
       nav {
-        gap: 16px;
-        padding: 8px 14px;
+        top: 10px;
+        gap: 10px;
+        width: calc(100vw - 24px);
+        justify-content: space-between;
+        padding: 8px 12px;
       }
+
+      .nav-logo { font-size: 11px; }
       
       .nav-links {
-        gap: 12px;
+        gap: 10px;
       }
+
+      .nav-links a { font-size: 11px; }
       
       .hero {
-        padding: 100px 20px 40px;
+        min-height: auto;
+        padding: 108px 20px 48px;
+      }
+
+      .hero-content { max-width: 100%; }
+
+      .hero-sub {
+        margin-top: 16px;
+        max-width: 34ch;
+      }
+
+      .hero-cta { margin-top: 28px; }
+
+      .btn-primary {
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+        padding: 14px 20px;
       }
 
       .event-form-sec {
-        margin-top: 80px;
-        padding: 72px 20px 56px;
+        margin-top: 48px;
+        padding: 64px 20px 56px;
       }
 
       .event-form-sec h2 {
@@ -523,19 +565,28 @@
       .stepper-wrap { max-width: 100%; }
       .stp-card { border-radius: 18px; }
       .stp-header { padding: 20px 18px 0; }
+      .stp-circle { width: 28px; height: 28px; font-size: 11px; }
+      .stp-line { margin: 0 6px; }
       .stp-body { padding: 20px 18px; min-height: 170px; }
-      .stp-footer { padding: 0 18px 20px; }
+      .stp-footer {
+        padding: 0 18px 20px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .stp-back { justify-self: start; }
       .stp-q { font-size: 14px; }
-      .stp-next { padding: 12px 22px; font-size: 14px; }
+      .stp-next { width: 100%; padding: 12px 22px; font-size: 14px; }
       .stp-input, .stp-textarea { font-size: 16px; }
       .stp-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 400px) {
-      nav { gap: 10px; padding: 8px 10px; }
+      nav { gap: 8px; padding: 7px 10px; }
       .nav-links { gap: 10px; }
       .nav-links a { font-size: 11px; }
       .hero h1 { font-size: clamp(30px, 9vw, 40px); }
+      .hero-tag { font-size: 11px; padding: 7px 12px; margin-bottom: 12px; }
       .hero-sub { font-size: 13px; }
       .event-form-sec h2 { font-size: clamp(24px, 8vw, 34px); }
       .stp-header { padding: 16px 14px 0; }
@@ -560,14 +611,15 @@
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
+      <div class="hero-tag">Free event page. Easy RSVPs. No hidden fees.</div>
       <h1>
         Get your event in front of<br><em>people who actually show up.</em>
       </h1>
       <p class="hero-sub">
-        Free event page. Easy RSVPs. No hidden fees. Share your event details in one quick form and reach Vadodara's most engaged crowd.
+        Share your event details in one quick form and reach Vadodara's most engaged crowd.
       </p>
       <div class="hero-cta">
-        <a href="#eventForm" class="btn-primary">List Your Event — Free</a>
+        <a href="#eventForm" class="btn-primary">Create Your Event</a>
       </div>
     </div>
   </section>
