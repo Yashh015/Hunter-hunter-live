@@ -70,8 +70,11 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 100;
+      width: max-content;
+      max-width: calc(100vw - 24px);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 32px;
       padding: 10px 20px 10px 16px;
       background: rgba(0,0,0,0.65);
@@ -79,8 +82,6 @@
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
       border-radius: 100px;
-      width: max-content;
-      max-width: calc(100vw - 24px);
     }
     
     .nav-logo {
@@ -96,6 +97,7 @@
       display: flex;
       gap: 24px;
       list-style: none;
+      align-items: center;
     }
     
     .nav-links a {
@@ -107,6 +109,49 @@
     }
     
     .nav-links a:hover { color: var(--ink); }
+
+    .nav-link-current {
+      color: var(--ink) !important;
+    }
+
+    .nav-toggle {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(242,237,230,0.04);
+      color: var(--ink);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .nav-toggle-line {
+      width: 14px;
+      height: 1.5px;
+      background: var(--ink);
+      border-radius: 2px;
+      display: block;
+      transition: transform 0.2s var(--ease-out), opacity 0.2s var(--ease-out);
+    }
+
+    .nav-toggle-line + .nav-toggle-line {
+      margin-top: 4px;
+    }
+
+    .nav-open .nav-toggle-line:nth-child(1) {
+      transform: translateY(5.5px) rotate(45deg);
+    }
+
+    .nav-open .nav-toggle-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-open .nav-toggle-line:nth-child(3) {
+      transform: translateY(-5.5px) rotate(-45deg);
+    }
     
     /* HERO SECTION */
     .hero {
@@ -205,6 +250,55 @@
       transform: translateY(-2px); 
     }
 
+    /* BENEFITS BLOCKS */
+    .benefits-sec {
+      position: relative;
+      padding: 8px 24px 12px;
+      background: #000;
+    }
+
+    .benefits-grid {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .benefit-card {
+      position: relative;
+      border-radius: 18px;
+      border: 1px solid rgba(242,237,230,0.14);
+      background: rgba(8,8,8,0.98);
+      color: var(--ink);
+      padding: 28px 30px;
+      overflow: hidden;
+      z-index: 1;
+      box-shadow: inset 0 1px 0 rgba(242,237,230,0.03);
+    }
+
+    .benefit-card::after {
+      content: none;
+    }
+
+    .benefit-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(20px, 2.1vw, 28px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+
+    .benefit-copy {
+      font-size: clamp(12px, 1.05vw, 15px);
+      line-height: 1.5;
+      font-weight: 500;
+      color: rgba(242,237,230,0.62);
+      max-width: 34ch;
+    }
+
     /* EVENT FORM SECTION */
     .event-form-sec {
       min-height: auto;
@@ -214,7 +308,7 @@
       justify-content: center;
       text-align: center;
       padding: 90px 24px 120px;
-      margin-top: 90px;
+      margin-top: 44px;
       position: relative;
       overflow: hidden;
       background: #000000;
@@ -513,19 +607,45 @@
     @media (max-width: 640px) {
       nav {
         top: 10px;
-        gap: 10px;
         width: calc(100vw - 24px);
-        justify-content: space-between;
-        padding: 8px 12px;
+        gap: 10px;
+        padding: 8px 10px 8px 14px;
+      }
+
+      .nav-toggle {
+        display: inline-flex;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 4px;
+        background: rgba(0,0,0,0.94);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 10px;
+      }
+
+      .nav-open .nav-links {
+        display: flex;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 8px 10px;
+        font-size: 13px;
+        border-radius: 10px;
+      }
+
+      .nav-links a:hover {
+        background: rgba(242,237,230,0.08);
       }
 
       .nav-logo { font-size: 11px; }
-      
-      .nav-links {
-        gap: 10px;
-      }
-
-      .nav-links a { font-size: 11px; }
       
       .hero {
         min-height: auto;
@@ -548,8 +668,33 @@
         padding: 14px 20px;
       }
 
+      .benefits-sec {
+        padding: 10px 20px 10px;
+      }
+
+      .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .benefit-card {
+        padding: 22px 20px;
+        border-radius: 16px;
+      }
+
+      .benefit-title {
+        font-size: clamp(20px, 6.2vw, 28px);
+        margin-bottom: 12px;
+      }
+
+      .benefit-copy {
+        font-size: 12px;
+        line-height: 1.5;
+        font-weight: 600;
+      }
+
       .event-form-sec {
-        margin-top: 48px;
+        margin-top: 28px;
         padding: 64px 20px 56px;
       }
 
@@ -583,11 +728,13 @@
 
     @media (max-width: 400px) {
       nav { gap: 8px; padding: 7px 10px; }
-      .nav-links { gap: 10px; }
-      .nav-links a { font-size: 11px; }
+      .nav-links a { font-size: 12px; }
       .hero h1 { font-size: clamp(30px, 9vw, 40px); }
       .hero-tag { font-size: 11px; padding: 7px 12px; margin-bottom: 12px; }
       .hero-sub { font-size: 13px; }
+      .benefit-card { padding: 18px 14px; }
+      .benefit-title { font-size: clamp(18px, 7.4vw, 24px); }
+      .benefit-copy { font-size: 11px; }
       .event-form-sec h2 { font-size: clamp(24px, 8vw, 34px); }
       .stp-header { padding: 16px 14px 0; }
       .stp-body { padding: 16px 14px; }
@@ -601,9 +748,17 @@
   <!-- NAV -->
   <nav>
     <a href="/" class="nav-logo">HUNTERS</a>
-    <ul class="nav-links">
+    <button class="nav-toggle" id="siteNavToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+    </button>
+    <ul class="nav-links" id="siteNavLinks">
       <li><a href="/">Home</a></li>
-      <li><a href="/events.html">Host Event</a></li>
+      <li><a href="/#cafes">Cafes</a></li>
+      <li><a href="/#events">Events</a></li>
+      <li><a href="/events.html" class="nav-link-current">Host Event</a></li>
+      <li><a href="/#suggest">Suggest</a></li>
     </ul>
   </nav>
   
@@ -624,6 +779,30 @@
     </div>
   </section>
 
+  <section class="benefits-sec" aria-label="Why host with Hunters">
+    <div class="benefits-grid">
+      <article class="benefit-card">
+        <h3 class="benefit-title">Free event page</h3>
+        <p class="benefit-copy">Submit your event, get a personalized page you can share. No fees, no commissions, completely free.</p>
+      </article>
+
+      <article class="benefit-card">
+        <h3 class="benefit-title">You own your audience</h3>
+        <p class="benefit-copy">We collect RSVPs for you. Your guest list stays yours, we never market to them or share their info.</p>
+      </article>
+
+      <article class="benefit-card">
+        <h3 class="benefit-title">Get discovered</h3>
+        <p class="benefit-copy">We feature events people actually want to attend. Reach Vadodara's most engaged crowd who show up.</p>
+      </article>
+
+      <article class="benefit-card">
+        <h3 class="benefit-title">Easy for everyone</h3>
+        <p class="benefit-copy">Submit once, we handle it. Attendees RSVP in seconds, no apps, no logins, just a link.</p>
+      </article>
+    </div>
+  </section>
+
   <!-- EVENT FORM SECTION -->
   <section class="event-form-sec" id="eventForm" aria-labelledby="event-form-heading">
     <div class="end-bg" aria-hidden="true"></div>
@@ -633,6 +812,41 @@
   </section>
 
   <script>
+    // Mobile navbar toggle.
+    (function() {
+      const nav = document.querySelector('nav');
+      const toggle = document.getElementById('siteNavToggle');
+      const links = document.getElementById('siteNavLinks');
+
+      if (!nav || !toggle || !links) return;
+
+      function closeNav() {
+        nav.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+
+      toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      links.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeNav);
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!nav.contains(event.target)) closeNav();
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 640) closeNav();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeNav();
+      });
+    })();
+
     (function() {
       const FORM_ENDPOINT = 'https://formspree.io/f/mwvwarnn';
 
