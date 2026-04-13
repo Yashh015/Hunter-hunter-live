@@ -241,8 +241,11 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
       transition: opacity 0.2s, transform 0.2s var(--ease-out);
-      display: inline-block;
     }
     
     .btn-primary:hover { 
@@ -630,8 +633,9 @@
 
       .nav-links a {
         display: block;
-        padding: 8px 10px;
-        font-size: 13px;
+        padding: 11px 12px;
+        font-size: 14px;
+        font-weight: 600;
         border-radius: 10px;
       }
 
@@ -659,7 +663,10 @@
         width: 100%;
         max-width: 320px;
         text-align: center;
-        padding: 14px 20px;
+        padding: 14px 18px;
+        font-size: 14px;
+        letter-spacing: 0.03em;
+        min-height: 48px;
       }
 
       .benefits-sec {
@@ -722,7 +729,7 @@
 
     @media (max-width: 400px) {
       nav { gap: 8px; padding: 7px 10px; }
-      .nav-links a { font-size: 12px; }
+      .nav-links a { font-size: 13px; }
       .hero h1 { font-size: clamp(30px, 9vw, 40px); }
       .hero-tag { font-size: 11px; padding: 7px 12px; margin-bottom: 12px; }
       .hero-sub { font-size: 13px; }
@@ -741,18 +748,17 @@
   
   <!-- NAV -->
   <nav>
-    <a href="/" class="nav-logo">HUNTERS</a>
+    <a href="index.html" class="nav-logo">HUNTERS</a>
     <button class="nav-toggle" id="siteNavToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">
       <span class="nav-toggle-line"></span>
       <span class="nav-toggle-line"></span>
       <span class="nav-toggle-line"></span>
     </button>
     <ul class="nav-links" id="siteNavLinks">
-      <li><a href="/">Home</a></li>
-      <li><a href="/#cafes">Cafes</a></li>
-      <li><a href="/#events">Events</a></li>
-      <li><a href="/events.html" class="nav-link-current">Host Event</a></li>
-      <li><a href="/#suggest">Suggest</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="cafes.html">Cafes</a></li>
+      <li><a href="event.html">Events</a></li>
+      <li><a href="events.html" class="nav-link-current">Host Event</a></li>
     </ul>
   </nav>
   

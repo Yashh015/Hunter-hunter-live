@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RJXHPJ8229"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RJXHPJ8229');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events - Hunters Vadodara</title>
+  <meta name="description" content="Upcoming events in Vadodara curated by Hunters. Live music, workshops, comedy, open mics, and weekend sidequests worth your time." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #000000;
+      --ink: #f2ede6;
+      --dim: rgba(242,237,230,0.55);
+      --dimmer: rgba(242,237,230,0.28);
+      --border: rgba(242,237,230,0.10);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+      --text-xs: clamp(10px, 1.2vw, 11px);
+      --text-sm: clamp(12px, 1.4vw, 13px);
+      --text-base: clamp(14px, 1.6vw, 16px);
+      --text-md: clamp(15px, 1.8vw, 17px);
+      --text-lg: clamp(17px, 2vw, 20px);
+      --text-xl: clamp(24px, 3vw, 32px);
+      --text-2xl: clamp(30px, 4.5vw, 52px);
+      --text-hero: clamp(34px, 5.4vw, 72px);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: var(--text-base);
+      line-height: 1.6;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.02'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      width: max-content;
+      max-width: calc(100vw - 24px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding: 10px 20px 10px 16px;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+    }
+
+    .nav-logo {
+      font-size: var(--text-sm);
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .nav-link-current { color: var(--ink) !important; }
+
+    .nav-toggle {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(242,237,230,0.04);
+      color: var(--ink);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .nav-toggle-line {
+      width: 14px;
+      height: 1.5px;
+      background: var(--ink);
+      border-radius: 2px;
+      display: block;
+      transition: transform 0.2s var(--ease-out), opacity 0.2s var(--ease-out);
+    }
+
+    .nav-toggle-line + .nav-toggle-line { margin-top: 4px; }
+
+    .nav-open .nav-toggle-line:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+    .nav-open .nav-toggle-line:nth-child(2) { opacity: 0; }
+    .nav-open .nav-toggle-line:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+    .hero {
+      min-height: 72vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 42%, rgba(255,255,255,0.04) 0%, transparent 72%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      margin-bottom: 16px;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(242,237,230,0.05);
+      color: var(--dim);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .hero h1 {
+      font-size: var(--text-hero);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      max-width: 14ch;
+      margin: 0 auto;
+    }
+
+    .hero h1 em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .hero-sub {
+      margin-top: 22px;
+      font-size: var(--text-md);
+      color: var(--dim);
+      max-width: 42ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      margin-top: 34px;
+      justify-content: center;
+    }
+
+    .btn-primary,
+    .btn-outline {
+      font-size: clamp(13px, 1.5vw, 15px);
+      letter-spacing: 0.04em;
+      border-radius: 100px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      transition: transform 0.2s var(--ease-out), opacity 0.2s;
+      padding: 13px 24px;
+    }
+
+    .btn-primary {
+      font-weight: 700;
+      color: #000;
+      background: var(--ink);
+    }
+
+    .btn-outline {
+      font-weight: 600;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      background: transparent;
+    }
+
+    .btn-primary:hover,
+    .btn-outline:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    .events-sec {
+      padding: 28px 24px 110px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .sec-eyebrow {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      margin-bottom: 18px;
+    }
+
+    .sec-title {
+      font-size: var(--text-2xl);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+
+    .sec-title em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .event-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .event-filter {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(242,237,230,0.04);
+      color: var(--dim);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .event-filter:hover,
+    .event-filter.active {
+      color: var(--ink);
+      border-color: rgba(242,237,230,0.24);
+      background: rgba(242,237,230,0.08);
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .event-card {
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(242,237,230,0.03);
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), background 0.2s, border-color 0.2s;
+    }
+
+    .event-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .event-card:hover {
+      background: rgba(242,237,230,0.06);
+      border-color: rgba(242,237,230,0.16);
+      transform: translateY(-2px);
+    }
+
+    .event-freq {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      background: rgba(242,237,230,0.07);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+
+    .event-name {
+      font-size: var(--text-md);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .event-venue {
+      font-size: var(--text-sm);
+      color: var(--dimmer);
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .event-why {
+      font-size: var(--text-sm);
+      color: rgba(242,237,230,0.44);
+      line-height: 1.6;
+    }
+
+    .footer {
+      background: #000;
+      color: var(--ink);
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 48px;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .footer-sub {
+      font-size: var(--text-sm);
+      color: var(--dimmer);
+      margin-top: 4px;
+    }
+
+    .col-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      margin-bottom: 16px;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .links a {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .links a:hover,
+    .email:hover {
+      color: var(--ink);
+    }
+
+    .email {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--dim);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+    }
+
+    .ai-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .ai-icon {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      opacity: 0.9;
+      transition: opacity 0.2s, transform 0.2s, background-color 0.2s;
+    }
+
+    .ai-icon:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+      background: rgba(242,237,230,0.06);
+    }
+
+    .ai-icon img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      nav {
+        top: 10px;
+        width: calc(100vw - 24px);
+        gap: 10px;
+        padding: 8px 10px 8px 14px;
+      }
+
+      .nav-toggle { display: inline-flex; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 4px;
+        background: rgba(0,0,0,0.94);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 10px;
+      }
+
+      .nav-open .nav-links { display: flex; }
+
+      .nav-links a {
+        display: block;
+        padding: 11px 12px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+      }
+
+      .nav-links a:hover { background: rgba(242,237,230,0.08); }
+
+      .hero {
+        min-height: auto;
+        padding: 102px 20px 48px;
+      }
+
+      .hero-sub { font-size: 14px; }
+
+      .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-outline {
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        letter-spacing: 0.03em;
+        min-height: 48px;
+        padding: 14px 18px;
+      }
+
+      .events-sec {
+        padding: 20px 20px 72px;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .event-card {
+        padding: 18px;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 60px 20px 44px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      nav { gap: 8px; padding: 7px 8px 7px 12px; }
+      .nav-logo { font-size: 11px; }
+      .nav-links a { font-size: 13px; }
+      .hero h1 { font-size: clamp(30px, 9vw, 42px); }
+      .event-name { font-size: 14px; }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .event-card {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">HUNTERS</a>
+    <button class="nav-toggle" id="siteNavToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+    </button>
+    <ul class="nav-links" id="siteNavLinks" role="list">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="cafes.html">Cafes</a></li>
+      <li><a href="event.html" class="nav-link-current">Events</a></li>
+      <li><a href="events.html">Host Event</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero" aria-label="Events hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Curated picks, no paid listings</div>
+      <h1>Plans worth leaving your bed <em>for.</em></h1>
+      <p class="hero-sub">Live events, workshops, open mics, and sidequests in Vadodara that are actually worth showing up to.</p>
+      <div class="hero-ctas">
+        <a href="#events" class="btn-primary">Browse Events</a>
+        <a href="events.html" class="btn-outline">Host Event</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="events-sec" id="events" aria-labelledby="events-heading">
+    <div class="sec-eyebrow">Confirmed - happening now</div>
+    <h2 class="sec-title" id="events-heading">Events worth <em>showing up for.</em></h2>
+    <div class="event-filters" role="tablist" aria-label="Event category filters">
+      <button class="event-filter active" type="button" data-filter="all">All</button>
+      <button class="event-filter" type="button" data-filter="weekend">Weekend</button>
+      <button class="event-filter" type="button" data-filter="run">Run Club</button>
+      <button class="event-filter" type="button" data-filter="music">Music</button>
+      <button class="event-filter" type="button" data-filter="openmic">Open Mic</button>
+      <button class="event-filter" type="button" data-filter="art">Art + Workshops</button>
+    </div>
+    <div class="events-grid" id="eventsGrid"></div>
+  </section>
+
+  <footer class="footer" aria-label="Site footer">
+    <div class="footer-top">
+      <div>
+        <div class="brand-name">Hunters</div>
+        <div class="footer-sub">Vadodara, Gujarat.</div>
+      </div>
+
+      <div>
+        <div class="col-label">Explore</div>
+        <div class="links">
+          <a href="cafes.html">Cafes</a>
+          <a href="event.html">Events</a>
+          <a href="events.html">Host Event</a>
+          <a href="index.html#suggest">Submit a Spot</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="col-label">Contact</div>
+        <a class="email" href="mailto:connectwyashraj@gmail.com">connectwyashraj@gmail.com</a>
+        <div class="col-label">Find us on AI</div>
+        <div class="ai-row">
+          <a class="ai-icon" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" aria-label="OpenAI">
+            <img src="images/icon/chatgpt.png" alt="OpenAI" loading="lazy">
+          </a>
+          <a class="ai-icon" href="https://claude.ai" target="_blank" rel="noopener noreferrer" aria-label="Anthropic Claude">
+            <img src="images/icon/claude.png" alt="Anthropic" loading="lazy">
+          </a>
+          <a class="ai-icon" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" aria-label="Google Gemini">
+            <img src="images/icon/gemini.png" alt="Gemini" loading="lazy">
+          </a>
+          <a class="ai-icon" href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" aria-label="Perplexity">
+            <img src="images/icon/perplexity.png" alt="Perplexity" loading="lazy">
+          </a>
+          <a class="ai-icon" href="https://x.ai" target="_blank" rel="noopener noreferrer" aria-label="Grok">
+            <img src="images/icon/grok.png" alt="Grok" loading="lazy">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const nav = document.querySelector('nav[aria-label="Main navigation"]');
+      const toggle = document.getElementById('siteNavToggle');
+      const links = nav && nav.querySelector('.nav-links');
+
+      if (!nav || !toggle || !links) return;
+
+      function closeNav() {
+        nav.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+
+      toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      links.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeNav);
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!nav.contains(event.target)) closeNav();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeNav();
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 640) closeNav();
+      });
+    })();
+
+    const events = [
+      { name: 'Chal Dod x Green Belly', venue: 'Green Belly Smoothies, Diwalipura', freq: 'This Sunday', why: 'Morning run with a car DJ and smoothies. Community fitness with a vibe.', tags: ['weekend', 'run'] },
+      { name: 'Harox Run Crew', venue: 'Vadodara', freq: 'This Sunday', why: '3km community run followed by a hybrid workout. Full experience, not just a run.', tags: ['weekend', 'run'] },
+      { name: 'Frisbee Social Run', venue: 'Kamati Bagh, Sayajiganj', freq: 'This Sunday, 7:00 AM', why: 'Run, frisbee, and meet people. Beginner-friendly, no-pressure outdoors.', tags: ['weekend', 'run'] },
+      { name: 'We The Flea', venue: 'Wageshwari Farms', freq: 'Monthly', why: 'Stalls, live music, art and food. One of the best youth gatherings in the city.', tags: ['weekend', 'art', 'music'] },
+      { name: 'Vocal Vibes Open Mic', venue: 'Various Cafes', freq: 'Bi-Weekly', why: 'A strong platform for local musicians, comics, and poets.', tags: ['openmic', 'music'] },
+      { name: 'The Brewery Live Music', venue: 'Alembic Colony', freq: 'Every Weekend', why: 'Casual live music nights in a crowd-friendly setup.', tags: ['weekend', 'music'] },
+      { name: 'MIC BY NO ONE Open Mic', venue: 'Fatehgunj', freq: 'Weekly', why: 'Inclusive stage for first-timers and regular performers alike.', tags: ['openmic'] },
+      { name: 'Alembic Art Workshops', venue: 'Alembic City', freq: 'Every Weekend', why: 'Pottery, painting and design sessions in one of Vadodara\'s best spaces.', tags: ['weekend', 'art'] },
+      { name: 'Late Night Comedy', venue: 'Chaibugs Elevate', freq: 'Weekly', why: 'Recurring late-night comedy format. Great for spontaneous plans.', tags: ['openmic'] }
+    ];
+
+    const eventGrid = document.getElementById('eventsGrid');
+    const filterButtons = document.querySelectorAll('.event-filter');
+
+    function renderEvents(activeTag) {
+      eventGrid.innerHTML = '';
+      const filtered = activeTag === 'all'
+        ? events
+        : events.filter(event => event.tags.includes(activeTag));
+
+      filtered.forEach((event, index) => {
+        const card = document.createElement('article');
+        card.className = 'event-card';
+        card.innerHTML =
+          '<span class="event-freq">' + event.freq + '</span>' +
+          '<div class="event-name">' + event.name + '</div>' +
+          '<div class="event-venue">' + event.venue + '</div>' +
+          '<div class="event-why">' + event.why + '</div>';
+        eventGrid.appendChild(card);
+
+        requestAnimationFrame(() => {
+          setTimeout(() => card.classList.add('visible'), index * 45);
+        });
+      });
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+        renderEvents(button.dataset.filter || 'all');
+      });
+    });
+
+    renderEvents('all');
+  </script>
+</body>
+</html>

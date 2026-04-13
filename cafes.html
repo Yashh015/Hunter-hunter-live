@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafes — HUNTERS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ffffff;
+      --red: #ffffff;
+      --red-bright: #ffffff;
+      --bg: #080808;
+      --bg1: #0d0d0d;
+      --bg2: #111111;
+      --bg3: #161616;
+      --bg4: #1c1c1c;
+      --ink: #f2ede6;
+      --ink60: rgba(242, 237, 230, .6);
+      --ink30: rgba(242, 237, 230, .3);
+      --ink10: rgba(242, 237, 230, .1);
+      --ink06: rgba(242, 237, 230, .06);
+      --green-bg: #0a1f14;
+      --green-acc: #3d8c7c;
+      --r-sm: 12px;
+      --r-md: 18px;
+      --r-lg: 24px;
+      --r-xl: 32px;
+      --ease-out: cubic-bezier(.22, 1, .36, 1);
+      --spring: cubic-bezier(.34, 1.4, .64, 1)
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body {
+      background: #050505;
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(14px, 1.4vw, 16px);
+      line-height: 1.55;
+      overflow-x: hidden
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    img {
+      display: block
+    }
+
+    ::selection {
+      background: var(--primary);
+      color: #fff
+    }
+
+    #grain {
+      position: fixed;
+      inset: 0;
+      z-index: 8998;
+      pointer-events: none;
+      opacity: .28;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.06'/%3E%3C/svg%3E");
+      animation: grainShift 8s steps(1) infinite
+    }
+
+    @keyframes grainShift {
+      0% {
+        background-position: 0 0
+      }
+
+      20% {
+        background-position: -50px 30px
+      }
+
+      40% {
+        background-position: 80px -20px
+      }
+
+      60% {
+        background-position: -30px 60px
+      }
+
+      80% {
+        background-position: 50px -50px
+      }
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 700;
+      padding: 14px 20px;
+      pointer-events: none;
+      animation: fromTop .7s var(--ease-out) both
+    }
+
+    @keyframes fromTop {
+      from {
+        opacity: 0;
+        transform: translateY(-16px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .nav-pill {
+      pointer-events: all;
+      max-width: 860px;
+      margin: 0 auto;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px 0 16px;
+      background: rgba(12, 11, 10, .88);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid rgba(242, 237, 230, .09);
+      border-radius: 100px;
+      box-shadow: 0 2px 0 rgba(255, 255, 255, .04) inset, 0 8px 32px rgba(0, 0, 0, .55);
+      transition: border-color .3s, box-shadow .3s
+    }
+
+    .n-brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-shrink: 0
+    }
+
+    .n-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--ink);
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: .02em;
+      flex-shrink: 0
+    }
+
+    .n-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: .1em;
+      color: var(--ink)
+    }
+
+    .n-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      list-style: none;
+      margin: 0 auto;
+      padding: 0 8px
+    }
+
+    .n-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(242, 237, 230, .45);
+      padding: 6px 12px;
+      border-radius: 100px;
+      transition: color .2s, background .2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap
+    }
+
+    .n-links a:hover,
+    .n-links a.active {
+      color: var(--ink);
+      background: rgba(242, 237, 230, .06)
+    }
+
+    .n-arr {
+      font-size: 8px;
+      opacity: .45;
+      margin-top: 1px
+    }
+
+    .n-divider {
+      width: 1px;
+      height: 20px;
+      background: rgba(242, 237, 230, .1);
+      margin: 0 6px;
+      flex-shrink: 0
+    }
+
+    .n-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0
+    }
+
+    .n-ghost {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: rgba(242, 237, 230, .55);
+      padding: 7px 15px;
+      border-radius: 100px;
+      border: 1px solid rgba(242, 237, 230, .12);
+      transition: border-color .2s, color .2s, background .2s;
+      white-space: nowrap
+    }
+
+    .n-ghost:hover {
+      border-color: rgba(242, 237, 230, .22);
+      color: var(--ink);
+      background: rgba(242, 237, 230, .04)
+    }
+
+    .n-cta {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #000;
+      padding: 8px 18px;
+      border-radius: 100px;
+      background: var(--primary);
+      border: 1px solid rgba(255, 255, 255, .08);
+      box-shadow: 0 2px 12px rgba(255, 255, 255, .15);
+      transition: background .2s, transform .15s var(--spring), box-shadow .3s;
+      white-space: nowrap
+    }
+
+    .n-cta:hover {
+      background: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, .2)
+    }
+
+    .n-menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: var(--ink06);
+      border: 1px solid var(--ink10);
+      border-radius: 9px;
+      cursor: pointer;
+      padding: 8px
+    }
+
+    .n-menu-btn span {
+      display: block;
+      height: 1.5px;
+      background: rgba(242, 237, 230, .6);
+      border-radius: 2px;
+      transition: transform .25s var(--ease-out), opacity .2s
+    }
+
+    .n-mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 699;
+      background: rgba(5, 5, 5, .97);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 80px 24px 40px
+    }
+
+    .n-mobile-menu.open {
+      display: flex
+    }
+
+    .n-mobile-menu a {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: clamp(24px, 7vw, 30px);
+      color: rgba(242, 237, 230, .45);
+      letter-spacing: -.02em;
+      padding: 14px 0;
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid rgba(242, 237, 230, .06);
+      transition: color .2s
+    }
+
+    .n-mobile-menu a:hover {
+      color: var(--ink)
+    }
+
+    .n-mobile-menu .nm-cta {
+      margin-top: 24px;
+      background: var(--primary);
+      color: #000 !important;
+      border-radius: 100px;
+      padding: 16px 40px !important;
+      font-size: 16px !important;
+      border-bottom: none !important;
+      width: auto !important
+    }
+
+    /* LAYOUT */
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 44px
+    }
+
+    .ey {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .ey::before {
+      content: '';
+      width: 18px;
+      height: 1px;
+      background: var(--primary)
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .rev {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s var(--ease-out), transform .6s var(--ease-out)
+    }
+
+    .rev.in {
+      opacity: 1;
+      transform: none
+    }
+
+    /* PAGE HERO */
+    .pg-hero {
+      padding: 140px 0 60px;
+      position: relative
+    }
+
+    .pg-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 400px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, .05) 0%, transparent 65%);
+      pointer-events: none
+    }
+
+    .pg-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 24px;
+      animation: fadeUp .7s var(--ease-out) .1s both
+    }
+
+    .pg-h {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 900;
+      font-size: clamp(44px, 6vw, 80px);
+      line-height: .95;
+      letter-spacing: -.03em;
+      margin-bottom: 16px;
+      animation: fadeUp .8s var(--ease-out) .2s both
+    }
+
+    .pg-h em {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--primary)
+    }
+
+    .pg-sub {
+      font-size: 16px;
+      color: var(--ink30);
+      line-height: 1.85;
+      max-width: 480px;
+      animation: fadeUp .7s var(--ease-out) .3s both;
+      margin-bottom: 40px
+    }
+
+    /* FILTERS */
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--ink06);
+      animation: fadeUp .6s var(--ease-out) .4s both
+    }
+
+    .filter-btn {
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid var(--ink10);
+      color: var(--ink30);
+      background: transparent;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      white-space: nowrap
+    }
+
+    .filter-btn:hover {
+      border-color: rgba(242, 237, 230, .22);
+      color: var(--ink)
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff
+    }
+
+    /* LOCATION STRIP */
+    .loc-strip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 0;
+      font-size: 13px;
+      color: var(--ink30);
+      border-bottom: 1px solid var(--ink06);
+      margin-bottom: 40px
+    }
+
+    .loc-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--green-acc);
+      border-radius: 50%;
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .4;
+        transform: scale(.6)
+      }
+    }
+
+    /* CAFE GRID */
+    .cafe-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 40px 0 80px
+    }
+
+    .cafe-card {
+      background: var(--bg1);
+      border: 1px solid var(--ink06);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color .25s, transform .35s var(--ease-out), box-shadow .3s
+    }
+
+    .cafe-card:hover {
+      border-color: rgba(255, 255, 255, .1);
+      transform: translateY(-5px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .6)
+    }
+
+    .cc-thumb {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px
+    }
+
+    .cc-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, .7) 100%)
+    }
+
+    .cc-chip {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 6px;
+      background: rgba(61, 140, 124, .18);
+      color: #6ec9bb
+    }
+
+    .cc-chip.gem {
+      background: rgba(255, 255, 255, .08);
+      color: var(--primary)
+    }
+
+    .cc-score-badge {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(10, 9, 8, .9);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--ink06);
+      border-radius: 7px;
+      padding: 5px 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--primary)
+    }
+
+    .cc-body {
+      padding: 22px
+    }
+
+    .cc-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 19px;
+      color: var(--ink);
+      margin-bottom: 4px
+    }
+
+    .cc-area {
+      font-size: 12px;
+      color: var(--ink30);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .cc-desc {
+      font-size: 13.5px;
+      color: var(--ink30);
+      line-height: 1.75;
+      margin-bottom: 14px
+    }
+
+    .cc-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px
+    }
+
+    .cc-tag {
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: var(--ink06);
+      color: var(--ink30)
+    }
+
+    .cc-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid var(--ink06)
+    }
+
+    .cc-price {
+      font-size: 12px;
+      color: var(--ink30)
+    }
+
+    .cc-price strong {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--ink60);
+      margin-right: 3px
+    }
+
+    .cc-hours {
+      font-size: 11.5px;
+      color: var(--ink30)
+    }
+
+    /* SITE FOOTER */
+    .site-footer {
+      background: #000;
+      color: var(--ink);
+      overflow: hidden;
+      border-top: 1px solid var(--ink10)
+    }
+
+    .site-footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 48px;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      position: relative;
+      z-index: 2
+    }
+
+    .site-brand-name {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: var(--ink);
+      margin-bottom: 4px
+    }
+
+    .site-footer-sub {
+      font-size: 13px;
+      color: var(--ink30);
+      margin-top: 4px
+    }
+
+    .site-col-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink30);
+      margin-bottom: 16px
+    }
+
+    .site-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .site-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(242, 237, 230, .55);
+      transition: color .2s
+    }
+
+    .site-links a:hover,
+    .site-email:hover {
+      color: var(--ink)
+    }
+
+    .site-email {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(242, 237, 230, .55);
+      display: block;
+      margin-bottom: 24px;
+      transition: color .2s
+    }
+
+    .site-ai-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap
+    }
+
+    .site-ai-icon {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      opacity: .9;
+      transition: opacity .2s, transform .2s, background-color .2s
+    }
+
+    .site-ai-icon:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+      background: rgba(242, 237, 230, .06)
+    }
+
+    .site-ai-icon img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      display: block
+    }
+
+    @media(max-width:900px) {
+      nav {
+        padding: 12px 16px
+      }
+
+      .nav-pill {
+        padding: 0 6px 0 14px
+      }
+
+      .n-links {
+        display: none
+      }
+
+      .n-divider {
+        display: none
+      }
+
+      .n-ghost {
+        display: none
+      }
+
+      .n-cta {
+        display: none
+      }
+
+      .n-menu-btn {
+        display: flex
+      }
+
+      .wrap {
+        padding: 0 20px
+      }
+
+      .cafe-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+    }
+
+    @media(max-width:640px) {
+      .site-footer-top {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 60px 20px 44px
+      }
+    }
+
+    @media(max-width:560px) {
+      nav {
+        padding: 10px 12px
+      }
+
+      .nav-pill {
+        height: 46px;
+        padding: 0 4px 0 12px
+      }
+
+      .n-logo {
+        width: 24px;
+        height: 24px
+      }
+
+      .n-name {
+        font-size: 13px
+      }
+
+      .wrap {
+        padding: 0 16px
+      }
+
+      .cafe-grid {
+        grid-template-columns: 1fr
+      }
+
+      .pg-hero {
+        padding: 110px 0 40px
+      }
+
+      .filters {
+        gap: 6px
+      }
+
+      .filter-btn {
+        font-size: 12px;
+        padding: 6px 13px
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <div id="grain"></div>
+
+  <nav aria-label="Main navigation">
+    <div class="nav-pill">
+      <a href="index.html" class="n-brand">
+        <div class="n-logo" aria-hidden="true">H</div>
+        <span class="n-name">HUNTERS</span>
+      </a>
+      <ul class="n-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cafes.html" class="active">Cafes</a></li>
+        <li><a href="event.html">Events</a></li>
+        <li><a href="events.html">Host Event</a></li>
+      </ul>
+      <div class="n-right">
+        <div class="n-divider"></div>
+        <a href="events.html" class="n-cta">Host Event</a>
+        <button class="n-menu-btn" id="menuBtn"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="n-mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="cafes.html" class="active">Cafes</a>
+    <a href="event.html">Events</a>
+    <a href="events.html">Host Event</a>
+  </div>
+
+  <div class="wrap">
+    <div class="pg-hero">
+      <div class="pg-glow"></div>
+      <div class="pg-badge">🐊 Curated by us. Verified in person.</div>
+      <h1 class="pg-h">Find cafes<br><em>near you.</em></h1>
+      <p class="pg-sub">Every place here has been visited by our team. No press releases. No paid listings. Just the
+        ones worth your time in Vadodara.</p>
+
+      <!-- FILTERS -->
+      <div class="filters">
+        <button class="filter-btn active" onclick="filterCards('all',this)">All</button>
+        <button class="filter-btn" onclick="filterCards('alkapuri',this)">Alkapuri</button>
+        <button class="filter-btn" onclick="filterCards('fatehgunj',this)">Fatehgunj</button>
+        <button class="filter-btn" onclick="filterCards('gotri',this)">Gotri</button>
+        <button class="filter-btn" onclick="filterCards('bhayli',this)">Bhayli</button>
+        <button class="filter-btn" onclick="filterCards('gem',this)">Hidden Gems</button>
+        <button class="filter-btn" onclick="filterCards('coffee',this)">Serious Coffee</button>
+        <button class="filter-btn" onclick="filterCards('vibe',this)">Best Vibe</button>
+      </div>
+
+      <!-- LOCATION STRIP -->
+      <div class="loc-strip">
+        <span class="loc-dot"></span>
+        <span>Showing cafes in <strong style="color:var(--ink60)">Vadodara, Gujarat</strong> — sorted by HUNTERS
+          rating</span>
+      </div>
+    </div>
+
+    <!-- CAFE GRID -->
+    <div class="cafe-grid">
+
+      <div class="cafe-card rev" data-tags="alembic vibe coffee">
+        <div class="cc-thumb" style="background:linear-gradient(150deg,#0a1a10,#050e08)">🍺
+          <div class="cc-img-overlay"></div>
+          <span class="cc-chip">Café · Bar</span>
+          <span class="cc-score-badge">9.2</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-name">The Brewery</div>
+          <div class="cc-area">📍 Alembic Art District</div>
+          <div class="cc-desc">Gujarat's first non-alcoholic microbrewery in a repurposed industrial building. Kombucha,
+            ginger beer, coffee. Free live music every Thursday. Go for the ambience first.</div>
+          <div class="cc-tags"><span class="cc-tag">Live Music</span><span class="cc-tag">Thu Free Entry</span><span
+              class="cc-tag">Industrial Vibe</span></div>
+          <div class="cc-meta">
+            <div class="cc-price"><strong>₹400–700</strong> for two</div>
+            <div class="cc-hours">11 AM – 12 AM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cafe-card rev" data-tags="gotri coffee">
+        <div class="cc-thumb" style="background:linear-gradient(150deg,#1a1005,#0d0800)">☕
+          <div class="cc-img-overlay"></div>
+          <span class="cc-chip">Roastery</span>
+          <span class="cc-score-badge">9.5</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-name">Soul Brew Coffee</div>
+          <div class="cc-area">📍 Gotri Road</div>
+          <div class="cc-desc">On-site roastery, freshly roasted daily. If you actually care about coffee — not just the
+            gram — this is your place. Order the Long Black or Affogato. Nothing disappoints.</div>
+          <div class="cc-tags"><span class="cc-tag">Roastery</span><span class="cc-tag">Beans for Sale</span><span
+              class="cc-tag">Specialty Coffee</span></div>
+          <div class="cc-meta">
+            <div class="cc-price"><strong>₹400–600</strong> for two</div>
+            <div class="cc-hours">9 AM – 9 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cafe-card rev" data-tags="bhayli gem vibe">
+        <div class="cc-thumb" style="background:linear-gradient(150deg,#0c1a10,#060e09)">🌊
+          <div class="cc-img-overlay"></div>
+          <span class="cc-chip gem">Hidden Gem</span>
+          <span class="cc-score-badge">9.0</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-name">Creekyard</div>
+          <div class="cc-area">📍 Bhayli</div>
+          <div class="cc-desc">Open seating near a river with a mini waterfall. Boho-style decor, cozy corners,
+            criminally low prices. The price-to-vibe ratio is unmatched in Vadodara. Nobody talks about this enough.
+          </div>
+          <div class="cc-tags"><span class="cc-tag">Outdoor</span><span class="cc-tag">Riverside</span><span
+              class="cc-tag">Budget Friendly</span></div>
+          <div class="cc-meta">
+            <div class="cc-price"><strong>From ₹120</strong></div>
+            <div class="cc-hours">1–3 PM · 6:30–11 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cafe-card rev" data-tags="alkapuri vibe coffee">
+        <div class="cc-thumb" style="background:linear-gradient(150deg,#1a0e14,#0d070a)">♟️
+          <div class="cc-img-overlay"></div>
+          <span class="cc-chip">Local Staple</span>
+          <span class="cc-score-badge">8.8</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-name">Café Bistro</div>
+          <div class="cc-area">📍 Race Course Road</div>
+          <div class="cc-desc">Oversized chessboard outside, always packed inside. Order the butterscotch or Oreo cold
+            coffee — both are the best in the city. An old-school Vadodara staple that earns its place every day.</div>
+          <div class="cc-tags"><span class="cc-tag">Cold Coffee</span><span class="cc-tag">Always Busy</span><span
+              class="cc-tag">Iconic</span></div>
+          <div class="cc-meta">
+            <div class="cc-price"><strong>₹300–500</strong> for two</div>
+            <div class="cc-hours">10 AM – 11 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cafe-card rev" data-tags="gem vibe">
+        <div class="cc-thumb" style="background:linear-gradient(150deg,#0f1a0a,#080e05)">🍵
+          <div class="cc-img-overlay"></div>
+          <span class="cc-chip">Café · Events</span>
+          <span class="cc-score-badge">8.7</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-name">VARIETEA</div>
+          <div class="cc-area">📍 Vadodara</div>
+          <div class="cc-desc">Quality tea from Darjeeling and Assam leaves. Regular open mic nights. Try the Creole
+            Pasta or Cheesy Fiesta. Chai plus live events is a rare combo — they nail it.</div>
+          <div class="cc-tags"><span class="cc-tag">Open Mic</span><span class="cc-tag">Specialty Tea</span><span
+              class="cc-tag">Live Events</span></div>
+          <div class="cc-meta">
+            <div class="cc-price"><strong>₹500</strong> for two</div>
+            <div class="cc-hours">10 AM – 10 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cafe-card rev" data-tags="fatehgunj gem vibe">
+        <div class="cc-thumb" style="background:linear-gradient(150deg,#1a1208,#0d0a04)">🌿
+          <div class="cc-img-overlay"></div>
+          <span class="cc-chip gem">Hidden Gem</span>
+          <span class="cc-score-badge">8.9</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-name">House of Earthmonk</div>
+          <div class="cc-area">📍 Golden Chowkdi</div>
+          <div class="cc-desc">Earthy, calm ambience with indoor and outdoor seating. Candlelight dinners, kitty
+            parties, live music evenings. The kind of place that doesn't need Instagram to stay full.</div>
+          <div class="cc-tags"><span class="cc-tag">Live Music</span><span class="cc-tag">Outdoor Seating</span><span
+              class="cc-tag">Date Spot</span></div>
+          <div class="cc-meta">
+            <div class="cc-price"><strong>₹500–800</strong> for two</div>
+            <div class="cc-hours">11 AM – 1 AM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cafe-card rev" data-tags="fatehgunj gem coffee">
+        <div class="cc-thumb" style="background:linear-gradient(150deg,#14100a,#0a0805)">🎨
+          <div class="cc-img-overlay"></div>
+          <span class="cc-chip gem">Hidden Gem</span>
+          <span class="cc-score-badge">8.6</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-name">Canara House Café</div>
+          <div class="cc-area">📍 Near Fatehgunj</div>
+          <div class="cc-desc">Vintage charm with South Indian classics done right. The filter coffee is a standout and
+            the masala dosa is perfectly crisp. Old Vadodara energy. No hype, just consistent.</div>
+          <div class="cc-tags"><span class="cc-tag">Filter Coffee</span><span class="cc-tag">South Indian</span><span
+              class="cc-tag">Vintage Vibe</span></div>
+          <div class="cc-meta">
+            <div class="cc-price"><strong>₹200–400</strong> for two</div>
+            <div class="cc-hours">8 AM – 8 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cafe-card rev" data-tags="gem vibe">
+        <div class="cc-thumb" style="background:linear-gradient(150deg,#18100a,#0c0805)">🏊
+          <div class="cc-img-overlay"></div>
+          <span class="cc-chip gem">Hidden Gem</span>
+          <span class="cc-score-badge">8.5</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-name">Kavish Café</div>
+          <div class="cc-area">📍 Golden Chowkdi</div>
+          <div class="cc-desc">A café with a swimming pool, turf, and pickleball facilities. Poolside seating with
+            vibrant decor. Nobody talks about this enough — one of the most unique setups in Vadodara.</div>
+          <div class="cc-tags"><span class="cc-tag">Poolside</span><span class="cc-tag">Turf</span><span
+              class="cc-tag">Pickleball</span></div>
+          <div class="cc-meta">
+            <div class="cc-price"><strong>₹400–600</strong> for two</div>
+            <div class="cc-hours">11 AM – 1 AM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cafe-card rev" data-tags="fatehgunj gem">
+        <div class="cc-thumb" style="background:linear-gradient(150deg,#0a1218,#050810)">🐾
+          <div class="cc-img-overlay"></div>
+          <span class="cc-chip gem">Must Visit</span>
+          <span class="cc-score-badge">9.1</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-name">The Purpose Café</div>
+          <div class="cc-area">📍 Fatehgunj</div>
+          <div class="cc-desc">Run by specially-abled individuals. Artistic décor, pet-friendly, heartwarming cause.
+            Must-try: Japanese Cheesecake and Korean Cheese Garlic Bun. Go here. Tell everyone.</div>
+          <div class="cc-tags"><span class="cc-tag">Pet Friendly</span><span class="cc-tag">Social Cause</span><span
+              class="cc-tag">Cheesecake</span></div>
+          <div class="cc-meta">
+            <div class="cc-price"><strong>₹300–500</strong> for two</div>
+            <div class="cc-hours">11 AM – 8 PM</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer-top">
+      <div>
+        <div class="site-brand-name">Hunters</div>
+        <div class="site-footer-sub">Vadodara, Gujarat.</div>
+      </div>
+
+      <div>
+        <div class="site-col-label">Explore</div>
+        <div class="site-links">
+          <a href="cafes.html">Cafes</a>
+          <a href="event.html">Events</a>
+          <a href="events.html">Host Event</a>
+          <a href="index.html#suggest">Submit a Spot</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="site-col-label">Contact</div>
+        <a class="site-email" href="mailto:connectwyashraj@gmail.com">connectwyashraj@gmail.com</a>
+        <div class="site-col-label">Find us on AI</div>
+        <div class="site-ai-row">
+          <a class="site-ai-icon" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" aria-label="OpenAI">
+            <img src="images/icon/chatgpt.png" alt="OpenAI" loading="lazy">
+          </a>
+          <a class="site-ai-icon" href="https://claude.ai" target="_blank" rel="noopener noreferrer" aria-label="Anthropic Claude">
+            <img src="images/icon/claude.png" alt="Anthropic" loading="lazy">
+          </a>
+          <a class="site-ai-icon" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" aria-label="Google Gemini">
+            <img src="images/icon/gemini.png" alt="Gemini" loading="lazy">
+          </a>
+          <a class="site-ai-icon" href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" aria-label="Perplexity">
+            <img src="images/icon/perplexity.png" alt="Perplexity" loading="lazy">
+          </a>
+          <a class="site-ai-icon" href="https://x.ai" target="_blank" rel="noopener noreferrer" aria-label="Grok">
+            <img src="images/icon/grok.png" alt="Grok" loading="lazy">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && x.target.classList.add('in')), { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.rev').forEach(el => io.observe(el));
+    window.addEventListener('scroll', () => { const p = document.querySelector('.nav-pill'); if (p) p.style.borderColor = scrollY > 30 ? 'rgba(242,237,230,.14)' : 'rgba(242,237,230,.09)' }, { passive: true });
+    const mb = document.getElementById('menuBtn');
+    const mm = document.getElementById('mobileMenu');
+    const nav = document.querySelector('nav');
+
+    function closeMenu() {
+      if (!mb || !mm) return;
+      mm.classList.remove('open');
+      mb.querySelectorAll('span').forEach(x => {
+        x.style.transform = '';
+        x.style.opacity = '';
+      });
+    }
+
+    if (mb && mm) {
+      mb.addEventListener('click', (event) => {
+        event.stopPropagation();
+        mm.classList.toggle('open');
+        const s = mb.querySelectorAll('span');
+        if (mm.classList.contains('open')) {
+          s[0].style.transform = 'translateY(6.5px) rotate(45deg)';
+          s[1].style.opacity = '0';
+          s[2].style.transform = 'translateY(-6.5px) rotate(-45deg)';
+        } else {
+          closeMenu();
+        }
+      });
+
+      mm.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+      document.addEventListener('click', (event) => {
+        if (!nav.contains(event.target) && !mm.contains(event.target)) closeMenu();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeMenu();
+      });
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) closeMenu();
+      });
+    }
+
+    function filterCards(tag, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.cafe-card').forEach(card => {
+        const tags = card.dataset.tags || '';
+        card.style.display = (tag === 'all' || tags.includes(tag)) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+
+</html>

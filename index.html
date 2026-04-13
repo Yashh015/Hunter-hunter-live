@@ -236,6 +236,10 @@
       padding: 13px 26px;
       border-radius: 100px;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
       transition: opacity 0.2s, transform 0.2s var(--ease-out);
     }
  
@@ -251,6 +255,10 @@
       padding: 13px 26px;
       border-radius: 100px;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
       transition: border-color 0.2s, transform 0.2s var(--ease-out);
     }
  
@@ -831,8 +839,9 @@
 
       .nav-links a {
         display: block;
-        padding: 8px 10px;
-        font-size: 13px;
+        padding: 11px 12px;
+        font-size: 14px;
+        font-weight: 600;
         border-radius: 10px;
       }
 
@@ -845,7 +854,14 @@
       .hero h1 { font-size: clamp(32px, 9vw, 48px); letter-spacing: -0.03em; }
       .hero-sub { font-size: 15px; margin-top: 16px; max-width: 100%; }
       .hero-ctas { flex-direction: column; align-items: stretch; width: 100%; gap: 10px; margin-top: 28px; }
-      .btn-primary, .btn-outline { width: 100%; text-align: center; padding: 15px 20px; font-size: 15px; }
+      .btn-primary, .btn-outline {
+        width: 100%;
+        text-align: center;
+        padding: 14px 18px;
+        font-size: 14px;
+        letter-spacing: 0.03em;
+        min-height: 48px;
+      }
  
       /* Sections */
       .sec { padding: 72px 20px; }
@@ -889,7 +905,7 @@
     @media (max-width: 400px) {
       nav { gap: 8px; padding: 7px 8px 7px 12px; }
       .nav-logo { font-size: 11px; }
-      .nav-links a { font-size: 12px; }
+      .nav-links a { font-size: 13px; }
       .cafe-row { grid-template-columns: 36px 1fr auto; gap: 8px; }
       .cafe-num { font-size: 10px; }
     }
@@ -914,18 +930,17 @@
  
   <!-- NAV -->
   <nav aria-label="Main navigation">
-    <a href="/" class="nav-logo">HUNTERS</a>
+    <a href="index.html" class="nav-logo">HUNTERS</a>
     <button class="nav-toggle" id="siteNavToggle" type="button" aria-expanded="false" aria-controls="siteNavLinks" aria-label="Toggle navigation">
       <span class="nav-toggle-line"></span>
       <span class="nav-toggle-line"></span>
       <span class="nav-toggle-line"></span>
     </button>
     <ul class="nav-links" id="siteNavLinks" role="list">
-      <li><a href="/" class="nav-link-current">Home</a></li>
-      <li><a href="#cafes">Cafes</a></li>
-      <li><a href="#events">Events</a></li>
-      <li><a href="/events.html">Host Event</a></li>
-      <li><a href="#suggest">Suggest</a></li>
+      <li><a href="index.html" class="nav-link-current">Home</a></li>
+      <li><a href="cafes.html">Cafes</a></li>
+      <li><a href="event.html">Events</a></li>
+      <li><a href="events.html">Host Event</a></li>
     </ul>
   </nav>
  
@@ -936,8 +951,8 @@
     <h1>Life is more than just<br>work and <em>bed rotting.</em></h1>
     <p class="hero-sub">Discover the best cafes, events, and experiences worth your time.</p>
     <div class="hero-ctas">
-      <a href="#cafes" class="btn-primary">Start Hunting →</a>
-      <a href="/events.html" class="btn-outline">Host Event</a>
+      <a href="cafes.html" class="btn-primary">Start Hunting →</a>
+      <a href="events.html" class="btn-outline">Host Event</a>
     </div>
  
   </section>
@@ -960,22 +975,1605 @@
     </div>
   </section>
  
-  <!-- EVENTS -->
-  <section class="sec" id="events" aria-labelledby="events-heading">
-    <div class="sec-eyebrow">Confirmed · Happening now</div>
-    <h2 class="sec-title" id="events-heading">Sidequests to do<br><em>this weekend.</em></h2>
-    <div class="events-grid" id="eventGrid"></div>
+<!-- ══════════════════════ SECTION 2: THE TERRITORY (MAP) ══════════════════════ -->
+  <style>
+    /* ── MAP SECTION STYLES ── */
+    .map-sec {
+      padding: 100px 40px 120px;
+      background: #000000;
+    }
+
+    .map-sec-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    /* Cinematic reveal */
+    .map-reveal-label {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 1.0s cubic-bezier(0.22, 1, 0.36, 1), transform 1.0s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .map-reveal-headline {
+      opacity: 0;
+      transform: translateY(60px);
+      clip-path: inset(0 0 100% 0);
+      transition: opacity 1.2s .15s cubic-bezier(0.22, 1, 0.36, 1), transform 1.4s .15s cubic-bezier(0.22, 1, 0.36, 1), clip-path 1.2s .15s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .map-reveal-sub {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s .28s cubic-bezier(0.22, 1, 0.36, 1), transform 1.3s .28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .map-reveal-browser {
+      opacity: 0;
+      transform: translateY(90px) scale(0.96);
+      transition: opacity 1.6s .38s cubic-bezier(0.22, 1, 0.36, 1), transform 1.8s .38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .map-reveal-bottom {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 1.0s .7s cubic-bezier(0.22, 1, 0.36, 1), transform 1.0s .7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .map-sec.map-in .map-reveal-label,
+    .map-sec.map-in .map-reveal-headline,
+    .map-sec.map-in .map-reveal-sub,
+    .map-sec.map-in .map-reveal-browser,
+    .map-sec.map-in .map-reveal-bottom {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      clip-path: inset(0 0 0% 0);
+    }
+
+    /* Label */
+    .map-label-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .map-label-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 5px 13px;
+      border-radius: 100px;
+    }
+
+    .map-live-dot {
+      width: 6px;
+      height: 6px;
+      background: #ffffff;
+      border-radius: 50%;
+      animation: mapBlink 1.8s ease-in-out infinite;
+    }
+
+    @keyframes mapBlink {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.25;
+        transform: scale(0.55);
+      }
+    }
+
+    /* Headline */
+    .map-headline-wrap {
+      margin-bottom: 52px;
+    }
+
+    .map-sec h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(38px, 5.5vw, 62px);
+      line-height: 1.04;
+      color: #ffffff;
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    .map-sec h2 em {
+      font-style: italic;
+      color: #ffffff;
+    }
+
+    .map-sub {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.72);
+      max-width: 420px;
+      line-height: 1.65;
+      font-weight: 400;
+    }
+
+    /* Browser chrome */
+    .map-browser {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04),
+        0 12px 40px rgba(0, 0, 0, 0.1), 0 40px 80px rgba(0, 0, 0, 0.08), 0 80px 120px rgba(0, 0, 0, 0.04);
+      background: #1c1c1e;
+    }
+
+    .map-titlebar {
+      background: #2d2d2f;
+      padding: 13px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      user-select: none;
+    }
+
+    .map-win-btns {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .map-win-btn {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      transition: filter .15s;
+    }
+
+    .map-win-btn.red {
+      background: #FF5F57;
+    }
+
+    .map-win-btn.yellow {
+      background: #FEBC2E;
+    }
+
+    .map-win-btn.green {
+      background: #28C840;
+    }
+
+    .map-tab-bar {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .map-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px 8px 0 0;
+      padding: 7px 16px 7px 12px;
+      max-width: 240px;
+    }
+
+    .map-tab-favicon {
+      width: 14px;
+      height: 14px;
+      background: #ffffff;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 900;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .map-tab-title {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.75);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .map-tab-close {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 4px;
+      font-size: 8px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .map-addrbar-row {
+      background: #242426;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .map-nav-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .map-nav-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-nav-btn svg {
+      width: 12px;
+      height: 12px;
+      stroke: rgba(255, 255, 255, 0.3);
+    }
+
+    .map-addrbar {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 480px;
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .map-lock-icon {
+      width: 11px;
+      height: 11px;
+      stroke: rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
+    }
+
+    .map-addr-text {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.45);
+      letter-spacing: 0.01em;
+    }
+
+    /* Content split */
+    .map-content-split {
+      display: flex;
+      height: 500px;
+    }
+
+    .map-pane {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: #1a2332;
+      min-width: 0;
+    }
+
+    .map-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      filter: saturate(0.85) brightness(0.9);
+      transition: filter .4s;
+    }
+
+    .map-frame:hover {
+      filter: saturate(1) brightness(1);
+    }
+
+    .map-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 70%, rgba(17, 17, 17, 0.6) 100%),
+        radial-gradient(ellipse at 30% 50%, transparent 60%, rgba(10, 15, 25, 0.25) 100%);
+      pointer-events: none;
+    }
+
+    /* Sidebar */
+    .map-sidebar {
+      width: 320px;
+      flex-shrink: 0;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .map-sidebar-head {
+      padding: 22px 20px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
+    }
+
+    .map-sidebar-eyebrow {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: #ffffff;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .map-sidebar-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 19px;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .map-curated-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(231, 111, 81, 0.12);
+      border: 1px solid rgba(231, 111, 81, 0.25);
+      color: rgba(231, 111, 81, 0.9);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    /* Cards */
+    .map-cards {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+    }
+
+    .map-cards::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .map-cards::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+    }
+
+    .map-card {
+      display: flex;
+      gap: 12px;
+      padding: 13px 18px;
+      cursor: pointer;
+      border-left: 2.5px solid transparent;
+      transition: background .18s, border-color .18s;
+    }
+
+    .map-card:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .map-card.map-active {
+      background: rgba(231, 111, 81, 0.07);
+      border-left-color: #ffffff;
+    }
+
+    .map-card-thumb {
+      width: 54px;
+      height: 54px;
+      border-radius: 9px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #222;
+    }
+
+    .map-card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.9);
+      transition: filter .2s, transform .3s;
+    }
+
+    .map-card:hover .map-card-thumb img {
+      filter: saturate(1.1);
+      transform: scale(1.06);
+    }
+
+    .map-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .map-card-type {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: #ffffff;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .map-card-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .map-card-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+
+    .map-card-stars {
+      color: #ffffff;
+      font-size: 10px;
+    }
+
+    .map-card-rating {
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .map-card-reviews {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .map-card-sep {
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 10px;
+    }
+
+    .map-card-area {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 0.04em;
+    }
+
+    .map-card-desc {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.42);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Sidebar footer */
+    .map-sidebar-foot {
+      padding: 14px 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
+    }
+
+    .map-cta-btn {
+      width: 100%;
+      background: #f2ede6;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background .18s, transform .15s, box-shadow .18s;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+    }
+
+    .map-cta-btn:hover {
+      background: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+    }
+
+    .map-cta-btn svg {
+      width: 14px;
+      height: 14px;
+      stroke: #000;
+    }
+
+    /* Bottom row */
+    .map-bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 28px;
+    }
+
+    .map-spots-count {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.68);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .map-spots-count strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .map-dots-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .map-dot-ind {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+
+    .map-dot-ind.map-on {
+      background: #ffffff;
+      transform: scale(1.3);
+    }
+
+    @keyframes mapCardIn {
+      from {
+        opacity: 0;
+        transform: translateX(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .map-sec {
+        padding: 80px 28px 100px;
+      }
+
+      .map-sidebar {
+        width: 280px;
+      }
+
+      .map-content-split {
+        height: 460px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .map-sec {
+        padding: 60px 20px 80px;
+      }
+
+      .map-content-split {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .map-pane {
+        height: 220px;
+        width: 100%;
+        order: 1;
+      }
+
+      .map-sidebar {
+        width: 100%;
+        order: 2;
+        max-height: 360px;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .map-sidebar-head {
+        padding: 16px 16px 12px;
+      }
+
+      .map-cards {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 10px 12px;
+        gap: 10px;
+        scrollbar-width: none;
+        max-height: none;
+      }
+
+      .map-cards::-webkit-scrollbar {
+        display: none;
+      }
+
+      .map-card {
+        flex-direction: column;
+        flex-shrink: 0;
+        width: 160px;
+        padding: 12px;
+        border-left: none;
+        border-bottom: 2px solid transparent;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.03);
+        gap: 8px;
+      }
+
+      .map-card.map-active {
+        border-bottom-color: #ffffff;
+        border-left-color: transparent;
+        background: rgba(231, 111, 81, 0.08);
+      }
+
+      .map-card-thumb {
+        width: 100%;
+        height: 90px;
+        border-radius: 7px;
+      }
+
+      .map-card-desc {
+        display: none;
+      }
+
+      .map-bottom-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .map-addrbar-row .map-nav-btns {
+        display: none;
+      }
+
+      .map-addrbar {
+        max-width: 100%;
+        margin: 0;
+      }
+    }
+  </style>
+
+  <section class="map-sec" id="sec2">
+    <div class="map-sec-inner">
+
+      <!-- Label -->
+      <div class="map-label-row map-reveal-label">
+        <div class="map-label-pill">
+          <span class="map-live-dot"></span>
+          The Territory
+        </div>
+      </div>
+
+      <!-- Headline -->
+      <div class="map-headline-wrap">
+        <h2 class="map-reveal-headline">Find the best experience<br>of Vadodara.</h2>
+        <p class="map-sub map-reveal-sub">5 places worth your time right now. Just the good stuff.</p>
+      </div>
+
+      <!-- Browser mockup -->
+      <div class="map-reveal-browser">
+        <div class="map-browser">
+
+          <!-- Title bar -->
+          <div class="map-titlebar">
+            <div class="map-win-btns">
+              <div class="map-win-btn red"></div>
+              <div class="map-win-btn yellow"></div>
+              <div class="map-win-btn green"></div>
+            </div>
+            <div class="map-tab-bar">
+              <div class="map-tab">
+                <div class="map-tab-favicon">H</div>
+                <span class="map-tab-title">Best Places in Vadodara — hunters</span>
+                <div class="map-tab-close">✕</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address bar -->
+          <div class="map-addrbar-row">
+            <div class="map-nav-btns">
+              <div class="map-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </div>
+              <div class="map-nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </div>
+            </div>
+            <div class="map-addrbar">
+              <svg class="map-lock-icon" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              <span class="map-addr-text">hunters.in/map · Best Places in Vadodara</span>
+            </div>
+          </div>
+
+          <!-- Map + Sidebar -->
+          <div class="map-content-split">
+            <div class="map-pane" id="mapPane">
+              <iframe class="map-frame" id="mapFrame"
+                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d29475.305!2d73.165!3d22.305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sBest+cafes+and+venues+Vadodara!5e0!3m2!1sen!2sin!4v1234567890"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+              <div class="map-gradient"></div>
+            </div>
+
+            <div class="map-sidebar">
+              <div class="map-sidebar-head">
+                <div class="map-sidebar-eyebrow">hunters picks</div>
+                <div class="map-sidebar-title">Best Places in<br>Vadodara</div>
+                <div class="map-curated-badge">
+                  <span class="map-live-dot"></span>
+                  Curated · Not sponsored
+                </div>
+              </div>
+              <div class="map-cards" id="mapCardsList"></div>
+              <div class="map-sidebar-foot">
+                <button class="map-cta-btn" onclick="window.location.href='cafes.html'">
+                  View all spots
+                  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom row -->
+      <div class="map-bottom-row map-reveal-bottom">
+        <div class="map-spots-count"><strong>5</strong> curated spots in Vadodara</div>
+        <div class="map-dots-row" id="mapDotsRow"></div>
+      </div>
+
+      <!-- ══════════════════════ SECTION 3: DISCOVER ══════════════════════ -->
+      <section class="disc-sec">
+
+        <!-- ROW 1 — scrolls RIGHT (→) -->
+        <div class="disc-track-wrap">
+          <div class="disc-track disc-track-right" id="trackRight">
+            <div class="disc-track-inner">
+
+              <!-- Card set A -->
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Jazz Night</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Jazz at Lionize</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#2d1b69 0%,#11998e 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Open Mic</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Open Mic Night</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">The Cave</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">The Cave Café</div>
+                  <div class="d-card-meta">Café</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Art Fair</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Vadodara Art Fair</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#43e97b 0%,#38f9d7 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">Tulip Touch</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">The Tulip Touch</div>
+                  <div class="d-card-meta">Café</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#fa709a 0%,#fee140 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Flea Market</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Sunday Flea Market</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#a18cd1 0%,#fbc2eb 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">SHOZO</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">SHOZO Cafe & Bakery</div>
+                  <div class="d-card-meta">Café</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#ffecd2 0%,#fcb69f 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Standup</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Standup Comedy</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <!-- Card set B (duplicate for seamless loop) -->
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Jazz Night</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Jazz at Lionize</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#2d1b69 0%,#11998e 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Open Mic</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Open Mic Night</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">The Cave</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">The Cave Café</div>
+                  <div class="d-card-meta">Café</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Art Fair</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Vadodara Art Fair</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#43e97b 0%,#38f9d7 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">Tulip Touch</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">The Tulip Touch</div>
+                  <div class="d-card-meta">Café</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#fa709a 0%,#fee140 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Flea Market</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Sunday Flea Market</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#a18cd1 0%,#fbc2eb 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">SHOZO</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">SHOZO Cafe & Bakery</div>
+                  <div class="d-card-meta">Café</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#ffecd2 0%,#fcb69f 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Standup</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Standup Comedy</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ROW 2 — scrolls LEFT (←) -->
+        <div class="disc-track-wrap">
+          <div class="disc-track disc-track-left" id="trackLeft">
+            <div class="disc-track-inner">
+
+              <!-- Card set A -->
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#0f2027 0%,#203a43 50%,#2c5364 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">Waves Club</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Waves Club</div>
+                  <div class="d-card-meta">Café · Club</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#c94b4b 0%,#4b134f 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Dandiya Night</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Dandiya Night</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#f7971e 0%,#ffd200 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">Banyan Resort</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Banyan Paradise</div>
+                  <div class="d-card-meta">Venue</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#396afc 0%,#2948ff 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Film Screening</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Indie Film Night</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#11998e 0%,#38ef7d 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">Green Brew</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Green Brew Co.</div>
+                  <div class="d-card-meta">Café</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#ee0979 0%,#ff6a00 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Food Festival</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Street Food Fest</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#8360c3 0%,#2ebf91 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">Purple Haze</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Purple Haze Café</div>
+                  <div class="d-card-meta">Café</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#373b44 0%,#4286f4 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Night Run</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">5K Night Run</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <!-- Card set B (duplicate for seamless loop) -->
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#0f2027 0%,#203a43 50%,#2c5364 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">Waves Club</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Waves Club</div>
+                  <div class="d-card-meta">Café · Club</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#c94b4b 0%,#4b134f 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Dandiya Night</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Dandiya Night</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#f7971e 0%,#ffd200 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">Banyan Resort</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Banyan Paradise</div>
+                  <div class="d-card-meta">Venue</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#396afc 0%,#2948ff 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Film Screening</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Indie Film Night</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#11998e 0%,#38ef7d 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">Green Brew</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Green Brew Co.</div>
+                  <div class="d-card-meta">Café</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#ee0979 0%,#ff6a00 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Food Festival</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Street Food Fest</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#8360c3 0%,#2ebf91 100%);">
+                  <span class="d-card-tag d-tag-cafe">Café</span>
+                  <div class="d-card-img-label">Purple Haze</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">Purple Haze Café</div>
+                  <div class="d-card-meta">Café</div>
+                </div>
+              </div>
+
+              <div class="d-card">
+                <div class="d-card-img" style="background: linear-gradient(135deg,#373b44 0%,#4286f4 100%);">
+                  <span class="d-card-tag d-tag-event">Event</span>
+                  <div class="d-card-img-label">Night Run</div>
+                </div>
+                <div class="d-card-body">
+                  <div class="d-card-name">5K Night Run</div>
+                  <div class="d-card-meta">Event</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ══════════ SEC 3 STYLES ══════════ -->
+      <style>
+        /* ─── SECTION WRAPPER ─── */
+        .disc-sec {
+          background: #000000;
+          padding: 60px 0 70px;
+          overflow: hidden;
+          position: relative;
+          width: 100vw;
+          margin-left: calc(50% - 50vw);
+          margin-right: calc(50% - 50vw);
+        }
+
+        /* subtle divider glow from top */
+        .disc-sec::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 600px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(242, 237, 230, .1), transparent);
+        }
+
+        /* ─── HEADER ─── */
+        .disc-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 48px;
+          max-width: 1200px;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 52px;
+        }
+
+        .disc-title {
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-weight: 800;
+          font-size: clamp(32px, 4.5vw, 68px);
+          line-height: 1;
+          letter-spacing: -.04em;
+          color: #f2ede6;
+        }
+
+        .disc-line {
+          display: block;
+          overflow: hidden;
+          padding-bottom: .06em;
+        }
+
+        .disc-line-inner {
+          display: block;
+          animation: discLineUp .9s cubic-bezier(.22, 1, .36, 1) both;
+        }
+
+        .dl1 .disc-line-inner {
+          animation-delay: .08s;
+        }
+
+        .dl2 .disc-line-inner {
+          animation-delay: .18s;
+        }
+
+        .dl3 .disc-line-inner {
+          animation-delay: .28s;
+        }
+
+        @keyframes discLineUp {
+          from {
+            transform: translateY(102%);
+            opacity: 0;
+          }
+
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        /* ─── CTA PILLS ─── */
+        .disc-ctas {
+          display: flex;
+          gap: 8px;
+          flex-shrink: 0;
+          align-self: center;
+        }
+
+        .disc-pill {
+          display: inline-flex;
+          align-items: center;
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          padding: 10px 20px;
+          border-radius: 100px;
+          white-space: nowrap;
+          letter-spacing: -.01em;
+          transition: transform .18s ease, opacity .18s ease, background .18s ease, border-color .18s ease;
+        }
+
+        .disc-pill:hover {
+          transform: translateY(-1px);
+        }
+
+        /* "Get matched" — white border outline, transparent bg */
+        .disc-pill-ghost {
+          background: transparent;
+          color: #111111;
+          border: 1px solid rgba(0, 0, 0, .6);
+        }
+
+        .disc-pill-ghost:hover {
+          border-color: rgba(0, 0, 0, .85);
+          background: rgba(0, 0, 0, .04);
+        }
+
+        /* "Find an Expert" — near-black solid, white text, very faint border */
+        .disc-pill-solid {
+          background: #1c1c1c;
+          color: #ffffff;
+          border: 1px solid rgba(255, 255, 255, .1);
+        }
+
+        .disc-pill-solid:hover {
+          background: #252525;
+          border-color: rgba(255, 255, 255, .18);
+        }
+
+        /* ─── TRACK WRAPPER (overflow mask) ─── */
+        .disc-track-wrap {
+          overflow: hidden;
+          width: 100%;
+          margin-bottom: 10px;
+        }
+
+        .disc-track-wrap:last-child {
+          margin-bottom: 0;
+        }
+
+        /* ─── TRACK INNER (flex row) ─── */
+        .disc-track-inner {
+          display: flex;
+          gap: 10px;
+          width: max-content;
+          padding: 0;
+        }
+
+        /* ─── ANIMATIONS ─── */
+        .disc-track-right .disc-track-inner {
+          animation: scrollRight 88s linear infinite;
+        }
+
+        .disc-track-left .disc-track-inner {
+          animation: scrollLeft 88s linear infinite;
+        }
+
+        .disc-track-wrap:hover .disc-track-inner {
+          animation-play-state: paused;
+        }
+
+        @keyframes scrollRight {
+          from {
+            transform: translateX(0);
+          }
+
+          to {
+            transform: translateX(-50%);
+          }
+        }
+
+        @keyframes scrollLeft {
+          from {
+            transform: translateX(-50%);
+          }
+
+          to {
+            transform: translateX(0);
+          }
+        }
+
+        /* ─── CARDS ─── */
+        .d-card {
+          flex-shrink: 0;
+          width: 437px;
+          border-radius: 10px;
+          overflow: visible;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          transition: transform .25s ease, box-shadow .25s ease;
+        }
+
+        .d-card:hover {
+          transform: translateY(-2px);
+          box-shadow: none;
+        }
+
+        /* Image area — matches ~200px height from reference */
+        .d-card-img {
+          width: 100%;
+          height: 288px;
+          position: relative;
+          display: flex;
+          align-items: flex-end;
+          padding: 12px;
+          border-radius: 10px;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .d-card-tag {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: .12em;
+          text-transform: uppercase;
+          padding: 3px 8px;
+          border-radius: 100px;
+        }
+
+        .d-tag-event {
+          background: rgba(244, 135, 10, .18);
+          color: #f4870a;
+          border: 1px solid rgba(244, 135, 10, .3);
+        }
+
+        .d-tag-cafe {
+          background: rgba(242, 237, 230, .12);
+          color: #f2ede6;
+          border: 1px solid rgba(242, 237, 230, .18);
+        }
+
+        .d-card-img-label {
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: 22px;
+          font-weight: 800;
+          color: rgba(255, 255, 255, .18);
+          letter-spacing: -.02em;
+          line-height: 1;
+          user-select: none;
+        }
+
+        /* Text footer */
+        .d-card-body {
+          padding: 8px 2px 0;
+        }
+
+        .d-card-name {
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: 12px;
+          font-weight: 600;
+          color: #f5f5f5;
+          margin-bottom: 2px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          letter-spacing: -.01em;
+        }
+
+        .d-card-meta {
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: 11px;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 0.62);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          letter-spacing: 0;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+          .disc-sec {
+            padding: 48px 0 56px;
+          }
+
+          .disc-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+            padding: 0 24px;
+          }
+
+          .disc-title {
+            font-size: clamp(28px, 8vw, 44px);
+          }
+
+          .disc-track-inner {
+            gap: 8px;
+          }
+
+          .d-card {
+            width: min(78vw, 360px);
+          }
+
+          .d-card-img {
+            height: 220px;
+          }
+
+          .disc-track-right .disc-track-inner,
+          .disc-track-left .disc-track-inner {
+            animation-duration: 35s;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .disc-sec {
+            padding: 36px 0 44px;
+          }
+
+          .disc-track-wrap {
+            margin-bottom: 8px;
+          }
+
+          .d-card {
+            width: 86vw;
+          }
+
+          .d-card-img {
+            height: 56vw;
+            min-height: 190px;
+            max-height: 250px;
+          }
+
+          .d-card-name {
+            font-size: 11px;
+          }
+
+          .d-card-meta {
+            font-size: 10px;
+          }
+        }
+      </style>
+
+    </div>
   </section>
- 
-  <!-- SUGGEST A SPOT -->
-  <section class="end-sec" id="suggest" aria-labelledby="suggest-heading">
-    <div class="end-bg" aria-hidden="true"></div>
-    <h2 id="suggest-heading" style="position:relative;">Submit <em>a spot.</em></h2>
-    <p style="position:relative; margin-top:16px; margin-bottom:48px;">Tell us about a cafe, event, or experience you think Vadodara needs to know about.</p>
- 
-    <!-- Stepper -->
-    <div class="stepper-wrap" id="stepperRoot" style="position:relative;"></div>
-  </section>
+
+<script>
+    (function () {
+      const mapPlaces = [
+        { id: 1, name: "The Cave Café", type: "Café", area: "Sayajiganj", rating: "4.9", reviews: "469", desc: "Highest rated café in the city. The atmosphere is unlike anything else in Vadodara.", img: "https://lh3.googleusercontent.com/places/ANXAkqHBgkVuJgfVK8Ax_FYZzp2qqTi05S1dJO4MqKVCiZnyUjnYphumdE1ciZWpa5bODjgnNoasLqHKukNOCz7HWhXxHt55NvY7ArY=s400-w400-h300", mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3690.5!2d73.187!3d22.308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fcfd29b8ee747%3A0x6116ebbdb53cf2bf!2sThe%20Cave%20Cafe!5e0!3m2!1sen!2sin!4v1234567890" },
+        { id: 2, name: "The Tulip Touch Café", type: "Café", area: "Akota", rating: "4.5", reviews: "1,910", desc: "Most aesthetic café in Vadodara. Monochrome interiors, solid food, great for content.", img: "https://lh3.googleusercontent.com/places/ANXAkqFeSbvR1fkvTDNo6FnUqKc05jSgEspQxozY1PDYmPKqT4GWtg01-n4kBa3wU13u0Oo-iKpuyUJ-awku80_rFxCNXhM5oW5MTyY=s400-w400-h300", mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.2!2d73.167!3d22.300!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fcc090a8aa09%3A0x5e20ad2cb32ba9c2!2sThe%20Tulip%20Touch%20Caf%C3%A9!5e0!3m2!1sen!2sin!4v1234567890" },
+        { id: 3, name: "Lionize Restro Cafe", type: "Café · Live Music", area: "Race Course", rating: "4.6", reviews: "369", desc: "Premium feel, live music, open till 2AM. Rare for Vadodara. Don't sleep on this one.", img: "https://lh3.googleusercontent.com/places/ANXAkqGiBYVbA3pHvT5X1N8bVBVjV-TjvMQOeQC58hUryLRLfWtxEhx_oAMlJ3Msdmy5TFe0pZEe8j6KjxiRgXMAMbEHpzeuBx2GM-8=s400-w400-h300", mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3690.1!2d73.157!3d22.314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fcc292be2f1f7%3A0xd6f4d491949b549c!2sLionize%20Restro%20Cafe!5e0!3m2!1sen!2sin!4v1234567890" },
+        { id: 4, name: "Banyan Paradise Resort", type: "Event Venue", area: "Vemali", rating: "4.2", reviews: "5,360", desc: "The go-to venue for large events in Vadodara. If something big is happening, it's here.", img: "https://lh3.googleusercontent.com/places/ANXAkqEdm3TFzuKGSwxPvPSc4oQnELGwt1T2rnSLXqjjhty1P2nzqvELx80q6bpQaDlQkSAzb7uk0JAMS_jchbyuGsKRsluEs5gKlfI=s400-w400-h300", mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3688.8!2d73.199!3d22.362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fcc9f9cd4975b%3A0x7a6ddd4e9f9ba79f!2sBanyan%20Paradise%20Resort!5e0!3m2!1sen!2sin!4v1234567890" },
+        { id: 5, name: "Waves Club", type: "Club · Event Space", area: "Bhayli", rating: "4.5", reviews: "7,028", desc: "Best club and event space in the city. 7000+ reviews don't lie. Watch for weekend events.", img: "https://lh3.googleusercontent.com/places/ANXAkqF8D0O8QlKKLhAA1bT_sgfP1SA7XMFSs80OljAfYKcfy7glvJbunDZ5Prhk65KR2Ys2arQqPIzGuF2eKf94U4VX4rw3kEYDwhY=s400-w400-h300", mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3692.0!2d73.130!3d22.287!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc7d19dc799f1%3A0xc5a44de8f48fb4ce!2sWaves%20Club!5e0!3m2!1sen!2sin!4v1234567890" }
+      ];
+
+      let mapActiveId = null;
+      const mapFrame = document.getElementById('mapFrame');
+
+      function swapMap(src) {
+        mapFrame.style.transition = 'opacity 0.3s ease, transform 0.35s cubic-bezier(0.4,0,0.2,1)';
+        mapFrame.style.opacity = '0';
+        mapFrame.style.transform = 'scale(1.025)';
+        setTimeout(() => {
+          mapFrame.src = src;
+          mapFrame.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+          mapFrame.style.opacity = '1';
+          mapFrame.style.transform = 'scale(1)';
+        }, 300);
+      }
+
+      function setMapActive(id) {
+        const prev = mapActiveId;
+        mapActiveId = mapActiveId === id ? null : id;
+        const place = mapPlaces.find(p => p.id === mapActiveId);
+        if (mapActiveId && place && mapActiveId !== prev) {
+          swapMap(place.mapSrc);
+        } else if (!mapActiveId) {
+          swapMap("https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d29475.305!2d73.165!3d22.305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sBest+cafes+and+venues+Vadodara!5e0!3m2!1sen!2sin!4v1234567890");
+        }
+        renderMapCards();
+      }
+
+      function renderMapCards() {
+        const cardsList = document.getElementById('mapCardsList');
+        cardsList.innerHTML = mapPlaces.map((p, i) => `
+        <div class="map-card ${mapActiveId === p.id ? 'map-active' : ''}"
+             data-id="${p.id}"
+             style="animation: mapCardIn 0.45s ${i * 0.07}s both cubic-bezier(0.16,1,0.3,1)">
+          <div class="map-card-thumb"><img src="${p.img}" alt="${p.name}" loading="lazy"/></div>
+          <div class="map-card-info">
+            <div class="map-card-type">${p.type}</div>
+            <div class="map-card-name">${p.name}</div>
+            <div class="map-card-row">
+              <span class="map-card-stars">★</span>
+              <span class="map-card-rating">${p.rating}</span>
+              <span class="map-card-reviews">(${p.reviews})</span>
+              <span class="map-card-sep">·</span>
+              <span class="map-card-area">${p.area}</span>
+            </div>
+            <div class="map-card-desc">${p.desc}</div>
+          </div>
+        </div>
+      `).join('');
+
+        const dotsRow = document.getElementById('mapDotsRow');
+        dotsRow.innerHTML = mapPlaces.map(p => `
+        <div class="map-dot-ind ${mapActiveId === p.id ? 'map-on' : ''}" data-id="${p.id}"></div>
+      `).join('');
+
+        document.querySelectorAll('.map-card').forEach(el => {
+          el.addEventListener('click', () => {
+            setMapActive(parseInt(el.dataset.id));
+            setTimeout(() => {
+              const active = document.querySelector('.map-card.map-active');
+              if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 60);
+          });
+        });
+
+        document.querySelectorAll('.map-dot-ind').forEach(el => {
+          el.addEventListener('click', () => setMapActive(parseInt(el.dataset.id)));
+        });
+      }
+
+      // Scroll entrance reveal
+      const mapSection = document.getElementById('sec2');
+      const mapObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { mapSection.classList.add('map-in'); mapObserver.unobserve(mapSection); }
+        });
+      }, { threshold: 0.12 });
+      mapObserver.observe(mapSection);
+
+      renderMapCards();
+    })();
+  </script>
 
   <footer class="footer" aria-label="Site footer">
     <div class="footer-top">
@@ -987,10 +2585,9 @@
       <div>
         <div class="col-label">Explore</div>
         <div class="links">
-          <a href="#cafes">Cafes</a>
-          <a href="#events">Events</a>
-          <a href="/events.html">Host Event</a>
-          <a href="#suggest">Submit a Spot</a>
+          <a href="cafes.html">Cafes</a>
+          <a href="event.html">Events</a>
+          <a href="events.html">Host Event</a>
         </div>
       </div>
 
@@ -1000,19 +2597,19 @@
         <div class="col-label">Find us on AI</div>
         <div class="ai-row">
           <a class="ai-icon" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" aria-label="OpenAI">
-            <img src="https://cdn.simpleicons.org/openai/f2ede6" alt="OpenAI" loading="lazy">
+            <img src="images/icon/chatgpt.png" alt="OpenAI" loading="lazy">
           </a>
           <a class="ai-icon" href="https://claude.ai" target="_blank" rel="noopener noreferrer" aria-label="Anthropic Claude">
-            <img src="https://cdn.simpleicons.org/anthropic/f2ede6" alt="Anthropic" loading="lazy">
+            <img src="images/icon/claude.png" alt="Anthropic" loading="lazy">
           </a>
           <a class="ai-icon" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" aria-label="Google Gemini">
-            <img src="https://cdn.simpleicons.org/googlegemini/f2ede6" alt="Gemini" loading="lazy">
+            <img src="images/icon/gemini.png" alt="Gemini" loading="lazy">
           </a>
           <a class="ai-icon" href="https://www.perplexity.ai" target="_blank" rel="noopener noreferrer" aria-label="Perplexity">
-            <img src="https://cdn.simpleicons.org/perplexity/f2ede6" alt="Perplexity" loading="lazy">
+            <img src="images/icon/perplexity.png" alt="Perplexity" loading="lazy">
           </a>
-          <a class="ai-icon" href="https://mistral.ai" target="_blank" rel="noopener noreferrer" aria-label="Mistral AI">
-            <img src="https://cdn.simpleicons.org/mistralai/f2ede6" alt="Mistral AI" loading="lazy">
+          <a class="ai-icon" href="https://x.ai" target="_blank" rel="noopener noreferrer" aria-label="Grok">
+            <img src="images/icon/grok.png" alt="Grok" loading="lazy">
           </a>
         </div>
       </div>
@@ -1288,20 +2885,25 @@
  
     // Render events
     const eventGrid = document.getElementById('eventGrid');
-    events.forEach(e => {
-      const card = document.createElement('div');
-      card.className = 'event-card';
-      card.innerHTML = `
+    if (eventGrid) {
+      events.forEach(e => {
+        const card = document.createElement('div');
+        card.className = 'event-card';
+        card.innerHTML = `
         <span class="event-freq">${e.freq}</span>
         <div class="event-name">${e.name}</div>
         <div class="event-venue">${e.venue}</div>
         <div class="event-why">${e.why}</div>
       `;
-      eventGrid.appendChild(card);
-    });
+        eventGrid.appendChild(card);
+      });
+    }
  
     // ── STEPPER ──
     (function() {
+      const root = document.getElementById('stepperRoot');
+      if (!root) return;
+
       const steps = [
         {
           label: 'Step 1 of 3',
@@ -1325,7 +2927,6 @@
       const formData = { name: '', type: 'Cafe / Coffee', why: '' };
  
       function render() {
-        const root = document.getElementById('stepperRoot');
         root.innerHTML = `
           <div class="stp-card">
             <div class="stp-header">
@@ -1396,7 +2997,7 @@
       }
  
       function showError() {
-        document.getElementById('stepperRoot').innerHTML = `
+        root.innerHTML = `
           <div class="stp-card">
             <div class="stp-done">
               <div>⚠️</div>
@@ -1408,7 +3009,7 @@
       }
  
       function showDone() {
-        document.getElementById('stepperRoot').innerHTML = `
+        root.innerHTML = `
           <div class="stp-card">
             <div class="stp-done">
  
