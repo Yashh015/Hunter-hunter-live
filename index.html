@@ -1733,14 +1733,6 @@
             </div>
 
             <div class="map-sidebar">
-              <div class="map-sidebar-head">
-                <div class="map-sidebar-eyebrow">hunters picks</div>
-                <div class="map-sidebar-title">Best Places in<br>Vadodara</div>
-                <div class="map-curated-badge">
-                  <span class="map-live-dot"></span>
-                  Curated · Not sponsored
-                </div>
-              </div>
               <div class="map-cards" id="mapCardsList"></div>
               <div class="map-sidebar-foot">
                 <button class="map-cta-btn" onclick="window.location.href='cafes.html'">
@@ -1758,7 +1750,7 @@
 
       <!-- Bottom row -->
       <div class="map-bottom-row map-reveal-bottom">
-        <div class="map-spots-count"><strong>5</strong> curated spots in Vadodara</div>
+        <div class="map-spots-count"><strong>5</strong> points from My Fav Places</div>
         <div class="map-dots-row" id="mapDotsRow"></div>
       </div>
 
@@ -2486,11 +2478,11 @@
 <script>
     (function () {
       const mapPlaces = [
-        { id: 1, name: "The Cave Café", type: "Café", area: "Sayajiganj", rating: "4.9", reviews: "469", desc: "Highest rated café in the city. The atmosphere is unlike anything else in Vadodara.", img: "https://lh3.googleusercontent.com/places/ANXAkqHBgkVuJgfVK8Ax_FYZzp2qqTi05S1dJO4MqKVCiZnyUjnYphumdE1ciZWpa5bODjgnNoasLqHKukNOCz7HWhXxHt55NvY7ArY=s400-w400-h300", mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3690.5!2d73.187!3d22.308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fcfd29b8ee747%3A0x6116ebbdb53cf2bf!2sThe%20Cave%20Cafe!5e0!3m2!1sen!2sin!4v1234567890" },
-        { id: 2, name: "The Tulip Touch Café", type: "Café", area: "Akota", rating: "4.5", reviews: "1,910", desc: "Most aesthetic café in Vadodara. Monochrome interiors, solid food, great for content.", img: "https://lh3.googleusercontent.com/places/ANXAkqFeSbvR1fkvTDNo6FnUqKc05jSgEspQxozY1PDYmPKqT4GWtg01-n4kBa3wU13u0Oo-iKpuyUJ-awku80_rFxCNXhM5oW5MTyY=s400-w400-h300", mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.2!2d73.167!3d22.300!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fcc090a8aa09%3A0x5e20ad2cb32ba9c2!2sThe%20Tulip%20Touch%20Caf%C3%A9!5e0!3m2!1sen!2sin!4v1234567890" },
-        { id: 3, name: "Lionize Restro Cafe", type: "Café · Live Music", area: "Race Course", rating: "4.6", reviews: "369", desc: "Premium feel, live music, open till 2AM. Rare for Vadodara. Don't sleep on this one.", img: "https://lh3.googleusercontent.com/places/ANXAkqGiBYVbA3pHvT5X1N8bVBVjV-TjvMQOeQC58hUryLRLfWtxEhx_oAMlJ3Msdmy5TFe0pZEe8j6KjxiRgXMAMbEHpzeuBx2GM-8=s400-w400-h300", mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3690.1!2d73.157!3d22.314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fcc292be2f1f7%3A0xd6f4d491949b549c!2sLionize%20Restro%20Cafe!5e0!3m2!1sen!2sin!4v1234567890" },
-        { id: 4, name: "Banyan Paradise Resort", type: "Event Venue", area: "Vemali", rating: "4.2", reviews: "5,360", desc: "The go-to venue for large events in Vadodara. If something big is happening, it's here.", img: "https://lh3.googleusercontent.com/places/ANXAkqEdm3TFzuKGSwxPvPSc4oQnELGwt1T2rnSLXqjjhty1P2nzqvELx80q6bpQaDlQkSAzb7uk0JAMS_jchbyuGsKRsluEs5gKlfI=s400-w400-h300", mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3688.8!2d73.199!3d22.362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fcc9f9cd4975b%3A0x7a6ddd4e9f9ba79f!2sBanyan%20Paradise%20Resort!5e0!3m2!1sen!2sin!4v1234567890" },
-        { id: 5, name: "Waves Club", type: "Club · Event Space", area: "Bhayli", rating: "4.5", reviews: "7,028", desc: "Best club and event space in the city. 7000+ reviews don't lie. Watch for weekend events.", img: "https://lh3.googleusercontent.com/places/ANXAkqF8D0O8QlKKLhAA1bT_sgfP1SA7XMFSs80OljAfYKcfy7glvJbunDZ5Prhk65KR2Ys2arQqPIzGuF2eKf94U4VX4rw3kEYDwhY=s400-w400-h300", mapSrc: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3692.0!2d73.130!3d22.287!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395fc7d19dc799f1%3A0xc5a44de8f48fb4ce!2sWaves%20Club!5e0!3m2!1sen!2sin!4v1234567890" }
+        { id: 1, name: "0265 Burgers & Gelateria", type: "Fav Pick", area: "Alkapuri", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/1.jpg", mapSrc: "https://www.google.com/maps?q=22.3092427,73.1717001&output=embed" },
+        { id: 2, name: "Jay Ranchod", type: "Fav Pick", area: "Vadodara", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/2.jpg", mapSrc: "https://www.google.com/maps?q=22.27475,73.1746256&output=embed" },
+        { id: 3, name: "Sudha", type: "Fav Pick", area: "Vadodara", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/3.jpg", mapSrc: "https://www.google.com/maps?q=22.3175389,73.1611798&output=embed" },
+        { id: 4, name: "JASHAN", type: "Fav Pick", area: "Near MN Soda", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/4.jpg", mapSrc: "https://www.google.com/maps?q=22.3044548,73.1642327&output=embed" },
+        { id: 5, name: "The Dhabha", type: "Fav Pick", area: "Vadodara", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/5.jpg", mapSrc: "https://www.google.com/maps?q=22.3049672,73.1654226&output=embed" }
       ];
 
       let mapActiveId = null;
@@ -2531,10 +2523,7 @@
             <div class="map-card-type">${p.type}</div>
             <div class="map-card-name">${p.name}</div>
             <div class="map-card-row">
-              <span class="map-card-stars">★</span>
-              <span class="map-card-rating">${p.rating}</span>
-              <span class="map-card-reviews">(${p.reviews})</span>
-              <span class="map-card-sep">·</span>
+              ${p.rating !== '—' ? `<span class="map-card-stars">★</span><span class="map-card-rating">${p.rating}</span><span class="map-card-reviews">(${p.reviews})</span><span class="map-card-sep">·</span>` : ''}
               <span class="map-card-area">${p.area}</span>
             </div>
             <div class="map-card-desc">${p.desc}</div>
