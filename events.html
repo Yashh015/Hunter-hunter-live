@@ -277,10 +277,6 @@
       box-shadow: inset 0 1px 0 rgba(242,237,230,0.03);
     }
 
-    .benefit-card::after {
-      content: none;
-    }
-
     .benefit-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: clamp(20px, 2.1vw, 28px);
@@ -301,7 +297,6 @@
 
     /* EVENT FORM SECTION */
     .event-form-sec {
-      min-height: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -413,7 +408,6 @@
       min-height: 200px;
     }
 
-    .stp-step { display: none; }
     .stp-step.active { display: block; animation: fadeUp 0.35s var(--ease-out) both; }
 
     .stp-label {
@@ -985,8 +979,7 @@
 
         if (current === 2) {
           const onlineEl = document.getElementById('evt_online');
-          const venueEl = document.getElementById('evt_venue');
-          if (onlineEl && venueEl) {
+          if (onlineEl) {
             onlineEl.addEventListener('change', () => {
               formData.isOnline = onlineEl.checked;
               if (formData.isOnline) formData.venue = '';
@@ -1087,11 +1080,6 @@
       }
 
       function submitForm() {
-        if (FORM_ENDPOINT.includes('yourEventFormId')) {
-          showError('Add your Formspree endpoint in events.html before submitting.');
-          return;
-        }
-
         fetch(FORM_ENDPOINT, {
           method: 'POST',
           headers: {

@@ -1210,7 +1210,7 @@
         const isHigh = parseFloat(c.rating) >= 4.5;
         row.innerHTML = `
           <span class="cafe-num" aria-hidden="true">${String(c.rank).padStart(2,'0')}</span>
-          <div class="cafe-info">
+          <div>
             <div class="cafe-name">${c.name}</div>
             <div class="cafe-area">${c.area}</div>
           </div>
@@ -1399,7 +1399,7 @@
         document.getElementById('stepperRoot').innerHTML = `
           <div class="stp-card">
             <div class="stp-done">
-              <div class="stp-done-icon">⚠️</div>
+              <div>⚠️</div>
               <h3>Something went wrong.</h3>
               <p>Please try again in a moment.</p>
             </div>
