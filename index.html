@@ -810,27 +810,41 @@
       /* Nav */
       nav {
         top: 10px;
-        width: calc(100vw - 24px);
-        gap: 10px;
-        padding: 8px 10px 8px 14px;
+        left: 12px;
+        right: 12px;
+        transform: none;
+        width: auto;
+        max-width: none;
+        gap: 8px;
+        padding: 10px 12px;
+        border-radius: 16px;
+        background: rgba(10, 10, 10, 0.88);
+        border-color: rgba(242, 237, 230, 0.14);
+      }
+
+      .nav-logo {
+        font-size: 12px;
+        letter-spacing: 0.12em;
       }
 
       .nav-toggle {
         display: inline-flex;
+        margin-left: auto;
       }
 
       .nav-links {
         display: none;
         position: absolute;
-        top: calc(100% + 8px);
+        top: calc(100% + 10px);
         left: 0;
         right: 0;
         flex-direction: column;
         gap: 4px;
-        background: rgba(0,0,0,0.94);
+        background: rgba(12, 12, 12, 0.97);
         border: 1px solid var(--border);
-        border-radius: 18px;
-        padding: 10px;
+        border-radius: 14px;
+        padding: 8px;
+        box-shadow: 0 18px 38px rgba(0, 0, 0, 0.5);
       }
 
       .nav-open .nav-links {
@@ -843,6 +857,7 @@
         font-size: 14px;
         font-weight: 600;
         border-radius: 10px;
+        color: rgba(242, 237, 230, 0.9);
       }
 
       .nav-links a:hover {
@@ -1367,6 +1382,11 @@
     .map-card:hover {
       background: rgba(255, 255, 255, 0.03);
     }
+
+      .map-card:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.55);
+        outline-offset: -2px;
+      }
 
     .map-card.map-active {
       background: rgba(231, 111, 81, 0.07);
@@ -2478,11 +2498,11 @@
 <script>
     (function () {
       const mapPlaces = [
-        { id: 1, name: "0265 Burgers & Gelateria", type: "Fav Pick", area: "Alkapuri", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/1.jpg", mapSrc: "https://www.google.com/maps?q=22.3092427,73.1717001&output=embed" },
-        { id: 2, name: "Jay Ranchod", type: "Fav Pick", area: "Vadodara", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/2.jpg", mapSrc: "https://www.google.com/maps?q=22.27475,73.1746256&output=embed" },
-        { id: 3, name: "Sudha", type: "Fav Pick", area: "Vadodara", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/3.jpg", mapSrc: "https://www.google.com/maps?q=22.3175389,73.1611798&output=embed" },
-        { id: 4, name: "JASHAN", type: "Fav Pick", area: "Near MN Soda", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/4.jpg", mapSrc: "https://www.google.com/maps?q=22.3044548,73.1642327&output=embed" },
-        { id: 5, name: "The Dhabha", type: "Fav Pick", area: "Vadodara", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/5.jpg", mapSrc: "https://www.google.com/maps?q=22.3049672,73.1654226&output=embed" }
+        { id: 1, name: "0256 Burgers & Gelato", type: "Fav Pick", area: "Alkapuri", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/1.jpg", mapSrc: "https://www.google.com/maps?q=22.3092427,73.1717001&output=embed", mapLink: "https://maps.app.goo.gl/UDq4u1JnwqfQAtYx5" },
+        { id: 2, name: "Jay Ranchod", type: "Fav Pick", area: "Vadodara", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/2.jpg", mapSrc: "https://www.google.com/maps?q=22.27475,73.1746256&output=embed", mapLink: "https://maps.app.goo.gl/MqAykd9Nrub1Lnua6" },
+        { id: 3, name: "Sudha", type: "Fav Pick", area: "Vadodara", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/3.jpg", mapSrc: "https://www.google.com/maps?q=22.3175389,73.1611798&output=embed", mapLink: "https://maps.app.goo.gl/3oz9Zi7radmJrYVJ9" },
+        { id: 4, name: "Jashan De Paratha", type: "Fav Pick", area: "Near MN Soda", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/4.jpg", mapSrc: "https://www.google.com/maps?q=22.3044548,73.1642327&output=embed", mapLink: "https://maps.app.goo.gl/VhVWttJdmTbFGrwr9" },
+        { id: 5, name: "The Dhaba", type: "Fav Pick", area: "Vadodara", rating: "—", reviews: "", desc: "From your My Fav Places list.", img: "images/index-hero/5.jpg", mapSrc: "https://www.google.com/maps?q=22.3049672,73.1654226&output=embed", mapLink: "https://maps.app.goo.gl/QYs814dYmraWWfgN6" }
       ];
 
       let mapActiveId = null;
@@ -2517,6 +2537,9 @@
         cardsList.innerHTML = mapPlaces.map((p, i) => `
         <div class="map-card ${mapActiveId === p.id ? 'map-active' : ''}"
              data-id="${p.id}"
+             role="button"
+             tabindex="0"
+             aria-label="Open ${p.name} location"
              style="animation: mapCardIn 0.45s ${i * 0.07}s both cubic-bezier(0.16,1,0.3,1)">
           <div class="map-card-thumb"><img src="${p.img}" alt="${p.name}" loading="lazy"/></div>
           <div class="map-card-info">
@@ -2537,12 +2560,26 @@
       `).join('');
 
         document.querySelectorAll('.map-card').forEach(el => {
-          el.addEventListener('click', () => {
-            setMapActive(parseInt(el.dataset.id));
+          const cardId = parseInt(el.dataset.id, 10);
+          const place = mapPlaces.find(p => p.id === cardId);
+
+          const openPlace = () => {
+            setMapActive(cardId);
+            if (place?.mapLink) {
+              window.open(place.mapLink, '_blank', 'noopener,noreferrer');
+            }
             setTimeout(() => {
               const active = document.querySelector('.map-card.map-active');
               if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 60);
+          };
+
+          el.addEventListener('click', openPlace);
+          el.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              openPlace();
+            }
           });
         });
 
