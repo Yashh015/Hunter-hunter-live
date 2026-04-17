@@ -811,6 +811,10 @@
     <div class="stepper-wrap" id="eventStepperRoot"></div>
   </section>
 
+  <script src="files/hunters-supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="files/hunters-backend.js"></script>
+  <script src="files/email-capture-popup.js"></script>
   <script>
     // Mobile navbar toggle.
     (function() {
@@ -848,8 +852,6 @@
     })();
 
     (function() {
-      const FORM_ENDPOINT = 'https://formspree.io/f/mwvwarnn';
-
       const steps = [
         { label: 'Step 1 of 5', question: "What's your event called?" },
         { label: 'Step 2 of 5', question: 'When is it happening?' },
@@ -1085,29 +1087,35 @@
         return '';
       }
 
-      function submitForm() {
-        fetch(FORM_ENDPOINT, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            'Event Name': formData.eventName,
-            'Event Date': formData.eventDate,
-            'Start Time': formData.startTime,
-            'End Time': formData.endTime || 'N/A',
-            'Venue': formData.isOnline ? 'Online event' : formData.venue,
-            'Online Event': formData.isOnline ? 'Yes' : 'No',
-            'Description': formData.description,
-            'RSVP Type': formData.rsvpType,
-            'Price': formData.rsvpType === 'Paid Event' ? (formData.price || 'N/A') : 'Free',
-            'Max Capacity': formData.capacity || 'Not specified',
-            'Organizer Email': formData.email
-          })
-        })
-          .then(res => res.ok ? showDone() : showError('Submission failed. Please try again.'))
-          .catch(() => showError('Network error. Please try again in a moment.'));
+      async function submitForm() {
+        const backendPayload = {
+          event_name: formData.eventName,
+          event_date: formData.eventDate,
+          start_time: formData.startTime,
+          end_time: formData.endTime || null,
+          venue: formData.isOnline ? null : formData.venue,
+          is_online: formData.isOnline,
+          description: formData.description,
+          rsvp_type: formData.rsvpType,
+          price: formData.rsvpType === 'Paid Event' && formData.price ? Number(formData.price) : null,
+          capacity: formData.capacity ? Number(formData.capacity) : null,
+          organizer_email: formData.email,
+          source_page: 'events.html'
+        };
+
+        const backend = window.HuntersBackend;
+        if (!(backend && backend.isConfigured())) {
+          showError('Submission backend is not configured.');
+          return;
+        }
+
+        const result = await backend.submitEventSubmission(backendPayload);
+        if (result.ok) {
+          showDone();
+          return;
+        }
+
+        showError('Submission failed. Please try again.');
       }
 
       function showError(message) {

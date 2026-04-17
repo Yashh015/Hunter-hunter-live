@@ -358,6 +358,45 @@
       line-height: 1.6;
     }
 
+    .event-actions {
+      margin-top: 14px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .event-vote-btn {
+      border: 1px solid rgba(242,237,230,0.18);
+      border-radius: 999px;
+      background: rgba(242,237,230,0.04);
+      color: var(--dim);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      min-height: 34px;
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .event-vote-btn:hover {
+      border-color: rgba(242,237,230,0.3);
+      color: var(--ink);
+      background: rgba(242,237,230,0.1);
+    }
+
+    .event-vote-btn.voted {
+      color: var(--ink);
+      border-color: rgba(242,237,230,0.34);
+      background: rgba(242,237,230,0.16);
+    }
+
+    .event-vote-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     .footer {
       background: #000;
       color: var(--ink);
@@ -649,6 +688,10 @@
     </div>
   </footer>
 
+  <script src="files/hunters-supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="files/hunters-backend.js"></script>
+  <script src="files/email-capture-popup.js"></script>
   <script>
     (function() {
       const nav = document.querySelector('nav[aria-label="Main navigation"]');
@@ -684,52 +727,171 @@
       });
     })();
 
-    const events = [
-      { name: 'Chal Dod x Green Belly', venue: 'Green Belly Smoothies, Diwalipura', freq: 'This Sunday', why: 'Morning run with a car DJ and smoothies. Community fitness with a vibe.', tags: ['weekend', 'run'] },
-      { name: 'Harox Run Crew', venue: 'Vadodara', freq: 'This Sunday', why: '3km community run followed by a hybrid workout. Full experience, not just a run.', tags: ['weekend', 'run'] },
-      { name: 'Frisbee Social Run', venue: 'Kamati Bagh, Sayajiganj', freq: 'This Sunday, 7:00 AM', why: 'Run, frisbee, and meet people. Beginner-friendly, no-pressure outdoors.', tags: ['weekend', 'run'] },
-      { name: 'We The Flea', venue: 'Wageshwari Farms', freq: 'Monthly', why: 'Stalls, live music, art and food. One of the best youth gatherings in the city.', tags: ['weekend', 'art', 'music'] },
-      { name: 'Vocal Vibes Open Mic', venue: 'Various Cafes', freq: 'Bi-Weekly', why: 'A strong platform for local musicians, comics, and poets.', tags: ['openmic', 'music'] },
-      { name: 'The Brewery Live Music', venue: 'Alembic Colony', freq: 'Every Weekend', why: 'Casual live music nights in a crowd-friendly setup.', tags: ['weekend', 'music'] },
-      { name: 'MIC BY NO ONE Open Mic', venue: 'Fatehgunj', freq: 'Weekly', why: 'Inclusive stage for first-timers and regular performers alike.', tags: ['openmic'] },
-      { name: 'Alembic Art Workshops', venue: 'Alembic City', freq: 'Every Weekend', why: 'Pottery, painting and design sessions in one of Vadodara\'s best spaces.', tags: ['weekend', 'art'] },
-      { name: 'Late Night Comedy', venue: 'Chaibugs Elevate', freq: 'Weekly', why: 'Recurring late-night comedy format. Great for spontaneous plans.', tags: ['openmic'] }
+    let events = [
+      { id: null, name: 'Chal Dod x Green Belly', venue: 'Green Belly Smoothies, Diwalipura', freq: 'This Sunday', why: 'Morning run with a car DJ and smoothies. Community fitness with a vibe.', tags: ['weekend', 'run'], upvotes: 0 },
+      { id: null, name: 'Harox Run Crew', venue: 'Vadodara', freq: 'This Sunday', why: '3km community run followed by a hybrid workout. Full experience, not just a run.', tags: ['weekend', 'run'], upvotes: 0 },
+      { id: null, name: 'Frisbee Social Run', venue: 'Kamati Bagh, Sayajiganj', freq: 'This Sunday, 7:00 AM', why: 'Run, frisbee, and meet people. Beginner-friendly, no-pressure outdoors.', tags: ['weekend', 'run'], upvotes: 0 },
+      { id: null, name: 'We The Flea', venue: 'Wageshwari Farms', freq: 'Monthly', why: 'Stalls, live music, art and food. One of the best youth gatherings in the city.', tags: ['weekend', 'art', 'music'], upvotes: 0 },
+      { id: null, name: 'Vocal Vibes Open Mic', venue: 'Various Cafes', freq: 'Bi-Weekly', why: 'A strong platform for local musicians, comics, and poets.', tags: ['openmic', 'music'], upvotes: 0 },
+      { id: null, name: 'The Brewery Live Music', venue: 'Alembic Colony', freq: 'Every Weekend', why: 'Casual live music nights in a crowd-friendly setup.', tags: ['weekend', 'music'], upvotes: 0 },
+      { id: null, name: 'MIC BY NO ONE Open Mic', venue: 'Fatehgunj', freq: 'Weekly', why: 'Inclusive stage for first-timers and regular performers alike.', tags: ['openmic'], upvotes: 0 },
+      { id: null, name: 'Alembic Art Workshops', venue: 'Alembic City', freq: 'Every Weekend', why: 'Pottery, painting and design sessions in one of Vadodara\'s best spaces.', tags: ['weekend', 'art'], upvotes: 0 },
+      { id: null, name: 'Late Night Comedy', venue: 'Chaibugs Elevate', freq: 'Weekly', why: 'Recurring late-night comedy format. Great for spontaneous plans.', tags: ['openmic'], upvotes: 0 }
     ];
 
+    const backend = window.HuntersBackend;
     const eventGrid = document.getElementById('eventsGrid');
     const filterButtons = document.querySelectorAll('.event-filter');
+    let activeFilter = 'all';
+    let votedEventIds = new Set();
 
-    function renderEvents(activeTag) {
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function sortEventsForDisplay(items) {
+      return [...items].sort((a, b) => {
+        const groupA = Number.isFinite(a.curated_group) ? a.curated_group : 9999;
+        const groupB = Number.isFinite(b.curated_group) ? b.curated_group : 9999;
+        if (groupA !== groupB) return groupA - groupB;
+
+        const votesA = Number.isFinite(a.upvotes) ? a.upvotes : 0;
+        const votesB = Number.isFinite(b.upvotes) ? b.upvotes : 0;
+        if (votesA !== votesB) return votesB - votesA;
+
+        const rankA = Number.isFinite(a.curated_rank) ? a.curated_rank : 9999;
+        const rankB = Number.isFinite(b.curated_rank) ? b.curated_rank : 9999;
+        return rankA - rankB;
+      });
+    }
+
+    function slugify(value) {
+      return String(value || '')
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+    }
+
+    function buildEventDetailUrl(eventRow) {
+      const params = new URLSearchParams();
+      if (eventRow && eventRow.id) params.set('event', String(eventRow.id));
+      if (eventRow && eventRow.name) params.set('name', slugify(eventRow.name));
+      return 'event-detail.html?' + params.toString();
+    }
+
+    async function hydrateEventsFromBackend() {
+      if (!backend || !backend.isConfigured()) return;
+      const result = await backend.fetchEventsPublic();
+      if (!result.ok || !Array.isArray(result.data) || result.data.length === 0) return;
+
+      events = sortEventsForDisplay(result.data.map(row => ({
+        id: row.id,
+        name: row.name,
+        venue: row.venue,
+        freq: row.event_frequency,
+        why: row.description,
+        tags: Array.isArray(row.tags) ? row.tags : [],
+        upvotes: Number(row.upvotes || 0),
+        curated_group: Number(row.curated_group || 9999),
+        curated_rank: Number(row.curated_rank || 9999)
+      })));
+    }
+
+    async function hydrateOwnVotes() {
+      votedEventIds = new Set();
+      if (!backend || !backend.isConfigured()) return;
+      const ids = events.map(event => event.id).filter(Boolean);
+      const result = await backend.getOwnVoteIds('event', ids);
+      if (!result.ok || !Array.isArray(result.ids)) return;
+      votedEventIds = new Set(result.ids);
+    }
+
+    function renderEvents(tag) {
       eventGrid.innerHTML = '';
-      const filtered = activeTag === 'all'
+      const filtered = tag === 'all'
         ? events
-        : events.filter(event => event.tags.includes(activeTag));
+        : events.filter(event => Array.isArray(event.tags) && event.tags.includes(tag));
 
       filtered.forEach((event, index) => {
         const card = document.createElement('article');
         card.className = 'event-card';
-        card.innerHTML =
-          '<span class="event-freq">' + event.freq + '</span>' +
-          '<div class="event-name">' + event.name + '</div>' +
-          '<div class="event-venue">' + event.venue + '</div>' +
-          '<div class="event-why">' + event.why + '</div>';
-        eventGrid.appendChild(card);
+        card.dataset.eventUrl = buildEventDetailUrl(event);
+        card.style.cursor = 'pointer';
 
+        const votes = Number(event.upvotes || 0);
+        const voted = !!(event.id && votedEventIds.has(event.id));
+        const canVote = !!(event.id && backend && backend.isConfigured());
+
+        card.innerHTML =
+          '<span class="event-freq">' + escapeHtml(event.freq) + '</span>' +
+          '<div class="event-name">' + escapeHtml(event.name) + '</div>' +
+          '<div class="event-venue">' + escapeHtml(event.venue) + '</div>' +
+          '<div class="event-why">' + escapeHtml(event.why) + '</div>' +
+          '<div class="event-actions">' +
+            '<button class="event-vote-btn' + (voted ? ' voted' : '') + '" type="button" data-event-vote-id="' + escapeHtml(event.id || '') + '" aria-pressed="' + (voted ? 'true' : 'false') + '" ' + (canVote ? '' : 'disabled') + '>' +
+              '▲ <span class="event-vote-count">' + votes + '</span>' +
+            '</button>' +
+          '</div>';
+
+        eventGrid.appendChild(card);
         requestAnimationFrame(() => {
           setTimeout(() => card.classList.add('visible'), index * 45);
         });
       });
     }
 
+    eventGrid.addEventListener('click', async (event) => {
+      const button = event.target.closest('[data-event-vote-id]');
+      if (!button) {
+        const card = event.target.closest('.event-card');
+        if (card && card.dataset.eventUrl) {
+          window.location.href = card.dataset.eventUrl;
+        }
+        return;
+      }
+
+      const eventId = button.getAttribute('data-event-vote-id');
+      if (!eventId || !backend || !backend.isConfigured()) return;
+
+      button.disabled = true;
+      const result = await backend.toggleVote('event', eventId);
+      if (result.ok) {
+        if (result.voted) {
+          votedEventIds.add(eventId);
+        } else {
+          votedEventIds.delete(eventId);
+        }
+
+        const row = events.find(item => item.id === eventId);
+        if (row) {
+          row.upvotes = Math.max(0, Number(row.upvotes || 0) + (result.voted ? 1 : -1));
+        }
+        renderEvents(activeFilter);
+      }
+      button.disabled = false;
+    });
+
     filterButtons.forEach(button => {
       button.addEventListener('click', () => {
         filterButtons.forEach(item => item.classList.remove('active'));
         button.classList.add('active');
-        renderEvents(button.dataset.filter || 'all');
+        activeFilter = button.dataset.filter || 'all';
+        renderEvents(activeFilter);
       });
     });
 
-    renderEvents('all');
+    (async function initEvents() {
+      await hydrateEventsFromBackend();
+      await hydrateOwnVotes();
+      renderEvents(activeFilter);
+    })();
   </script>
 </body>
 </html>

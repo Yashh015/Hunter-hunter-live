@@ -626,6 +626,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
       padding-top: 14px;
       border-top: 1px solid var(--ink06)
     }
@@ -645,6 +646,48 @@
 
     .cc-hours {
       font-size: 11.5px;
+      color: var(--ink30)
+    }
+
+    .cc-meta-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0
+    }
+
+    .cc-vote-btn {
+      border: 1px solid rgba(242, 237, 230, .18);
+      background: rgba(242, 237, 230, .05);
+      color: var(--ink60);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s ease
+    }
+
+    .cc-vote-btn:hover {
+      color: var(--ink);
+      border-color: rgba(242, 237, 230, .28)
+    }
+
+    .cc-vote-btn.voted {
+      color: #0d2f25;
+      background: #8ce0cd;
+      border-color: #8ce0cd
+    }
+
+    .cc-vote-btn:disabled {
+      opacity: .45;
+      cursor: not-allowed
+    }
+
+    .cafe-empty {
+      border: 1px solid var(--ink06);
+      border-radius: var(--r-lg);
+      padding: 24px;
       color: var(--ink30)
     }
 
@@ -897,7 +940,7 @@
     </div>
 
     <!-- CAFE GRID -->
-    <div class="cafe-grid">
+    <div class="cafe-grid" id="cafeGrid">
 
       <div class="cafe-card rev" data-tags="alembic vibe coffee">
         <div class="cc-thumb" style="background:linear-gradient(150deg,#0a1a10,#050e08)">🍺
@@ -1125,10 +1168,32 @@
     </div>
   </footer>
 
+  <script src="files/hunters-supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="files/hunters-backend.js"></script>
+  <script src="files/email-capture-popup.js"></script>
   <script>
-    const io = new IntersectionObserver(e => e.forEach(x => x.isIntersecting && x.target.classList.add('in')), { threshold: .1, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.rev').forEach(el => io.observe(el));
-    window.addEventListener('scroll', () => { const p = document.querySelector('.nav-pill'); if (p) p.style.borderColor = scrollY > 30 ? 'rgba(242,237,230,.14)' : 'rgba(242,237,230,.09)' }, { passive: true });
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+        }
+      });
+    }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
+
+    function bindRevealAnimations() {
+      document.querySelectorAll('.rev').forEach(el => revealObserver.observe(el));
+    }
+
+    bindRevealAnimations();
+
+    window.addEventListener('scroll', () => {
+      const pill = document.querySelector('.nav-pill');
+      if (pill) {
+        pill.style.borderColor = scrollY > 30 ? 'rgba(242,237,230,.14)' : 'rgba(242,237,230,.09)';
+      }
+    }, { passive: true });
+
     const mb = document.getElementById('menuBtn');
     const mm = document.getElementById('mobileMenu');
     const nav = document.querySelector('nav');
@@ -1168,14 +1233,183 @@
       });
     }
 
-    function filterCards(tag, btn) {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('.cafe-card').forEach(card => {
-        const tags = card.dataset.tags || '';
-        card.style.display = (tag === 'all' || tags.includes(tag)) ? '' : 'none';
+    const backend = window.HuntersBackend;
+    const cafeGrid = document.getElementById('cafeGrid');
+    let currentFilter = 'all';
+    let cafeRows = [];
+    let votedCafeIds = new Set();
+
+    function escapeHtml(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function sortByBlend(items) {
+      return [...items].sort((a, b) => {
+        const groupA = Number.isFinite(a.curated_group) ? a.curated_group : 9999;
+        const groupB = Number.isFinite(b.curated_group) ? b.curated_group : 9999;
+        if (groupA !== groupB) return groupA - groupB;
+
+        const votesA = Number.isFinite(a.upvotes) ? a.upvotes : 0;
+        const votesB = Number.isFinite(b.upvotes) ? b.upvotes : 0;
+        if (votesA !== votesB) return votesB - votesA;
+
+        const rankA = Number.isFinite(a.curated_rank) ? a.curated_rank : 9999;
+        const rankB = Number.isFinite(b.curated_rank) ? b.curated_rank : 9999;
+        return rankA - rankB;
       });
     }
+
+    function normalizeTags(tags) {
+      if (!Array.isArray(tags)) return [];
+      return tags
+        .map(tag => String(tag || '').trim().toLowerCase())
+        .filter(Boolean);
+    }
+
+    function setActiveFilterButton(tag, explicitButton) {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(button => button.classList.remove('active'));
+
+      if (explicitButton) {
+        explicitButton.classList.add('active');
+        return;
+      }
+
+      buttons.forEach(button => {
+        const handler = button.getAttribute('onclick') || '';
+        if (handler.includes(`'${tag}'`)) {
+          button.classList.add('active');
+        }
+      });
+    }
+
+    function applyCurrentFilter() {
+      document.querySelectorAll('.cafe-card').forEach(card => {
+        const tags = card.dataset.tags || '';
+        card.style.display = (currentFilter === 'all' || tags.includes(currentFilter)) ? '' : 'none';
+      });
+    }
+
+    function filterCards(tag, btn) {
+      currentFilter = tag || 'all';
+      setActiveFilterButton(currentFilter, btn);
+      applyCurrentFilter();
+    }
+
+    window.filterCards = filterCards;
+
+    function renderCafeCard(row) {
+      const categoryTags = normalizeTags(row.category_tags);
+      const uiTags = Array.isArray(row.ui_tags) ? row.ui_tags : [];
+      const dataTags = categoryTags.join(' ');
+      const score = Number(row.hunters_score);
+      const scoreText = Number.isFinite(score) ? score.toFixed(1) : '-';
+      const chip = row.chip_label || 'Cafe';
+      const chipClass = categoryTags.includes('gem') || String(chip).toLowerCase().includes('gem') ? 'cc-chip gem' : 'cc-chip';
+      const votes = Number(row.upvotes || 0);
+      const voted = !!(row.id && votedCafeIds.has(row.id));
+      const canVote = !!(row.id && backend && backend.isConfigured());
+
+      let tagsHtml = uiTags
+        .map(tag => `<span class="cc-tag">${escapeHtml(tag)}</span>`)
+        .join('');
+
+      if (!tagsHtml) {
+        tagsHtml = '<span class="cc-tag">Vadodara Pick</span>';
+      }
+
+      return `
+        <div class="cafe-card rev" data-tags="${escapeHtml(dataTags)}">
+          <div class="cc-thumb" style="background:linear-gradient(150deg,#111111,#060606)">${escapeHtml(row.emoji || '☕')}
+            <div class="cc-img-overlay"></div>
+            <span class="${chipClass}">${escapeHtml(chip)}</span>
+            <span class="cc-score-badge">${escapeHtml(scoreText)}</span>
+          </div>
+          <div class="cc-body">
+            <div class="cc-name">${escapeHtml(row.name || 'Unnamed Cafe')}</div>
+            <div class="cc-area">📍 ${escapeHtml(row.area || 'Vadodara')}</div>
+            <div class="cc-desc">${escapeHtml(row.description || '')}</div>
+            <div class="cc-tags">${tagsHtml}</div>
+            <div class="cc-meta">
+              <div class="cc-price"><strong>${escapeHtml(row.price_text || 'INR -')}</strong></div>
+              <div class="cc-meta-right">
+                <div class="cc-hours">${escapeHtml(row.hours_text || '')}</div>
+                <button class="cc-vote-btn ${voted ? 'voted' : ''}" type="button" data-cafe-vote-id="${row.id || ''}" aria-pressed="${voted ? 'true' : 'false'}" ${canVote ? '' : 'disabled'}>
+                  ▲ ${votes}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCafeGrid() {
+      if (!cafeGrid) return;
+
+      if (!Array.isArray(cafeRows) || cafeRows.length === 0) {
+        cafeGrid.innerHTML = '<div class="cafe-empty">No approved cafes are live yet.</div>';
+        return;
+      }
+
+      cafeGrid.innerHTML = cafeRows.map(renderCafeCard).join('');
+      bindRevealAnimations();
+      applyCurrentFilter();
+    }
+
+    async function hydrateCafesFromBackend() {
+      if (!cafeGrid || !backend || !backend.isConfigured()) return;
+
+      const cafesResult = await backend.fetchCafesPublic();
+      if (!(cafesResult.ok && Array.isArray(cafesResult.data) && cafesResult.data.length > 0)) return;
+
+      cafeRows = sortByBlend(cafesResult.data);
+
+      const votesResult = await backend.getOwnVoteIds('cafe', cafeRows.map(item => item.id).filter(Boolean));
+      if (votesResult.ok && Array.isArray(votesResult.ids)) {
+        votedCafeIds = new Set(votesResult.ids);
+      }
+
+      renderCafeGrid();
+    }
+
+    if (cafeGrid) {
+      cafeGrid.addEventListener('click', async (event) => {
+        const button = event.target.closest('[data-cafe-vote-id]');
+        if (!button) return;
+
+        const cafeId = button.getAttribute('data-cafe-vote-id');
+        if (!cafeId || !backend || !backend.isConfigured()) return;
+
+        button.disabled = true;
+        const result = await backend.toggleVote('cafe', cafeId);
+        if (result.ok) {
+          if (result.voted) {
+            votedCafeIds.add(cafeId);
+          } else {
+            votedCafeIds.delete(cafeId);
+          }
+
+          const row = cafeRows.find(item => item.id === cafeId);
+          if (row) {
+            row.upvotes = Math.max(0, Number(row.upvotes || 0) + (result.voted ? 1 : -1));
+          }
+
+          cafeRows = sortByBlend(cafeRows);
+          renderCafeGrid();
+        }
+        button.disabled = false;
+      });
+    }
+
+    const activeFilterButton = document.querySelector('.filter-btn.active');
+    filterCards('all', activeFilterButton || undefined);
+    hydrateCafesFromBackend();
   </script>
 </body>
 

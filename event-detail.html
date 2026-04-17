@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sundowner Sessions Vol.3 — HUNTERS</title>
+  <meta name="description" content="An intimate rooftop music evening with live jazz, craft cocktails, and Vadodara's best crowd. Join us at The Terrace, Alkapuri." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080808;
+      --bg1: #0d0d0d;
+      --bg2: #111111;
+      --ink: #f2ede6;
+      --ink60: rgba(242,237,230,.6);
+      --ink30: rgba(242,237,230,.3);
+      --ink10: rgba(242,237,230,.1);
+      --ink06: rgba(242,237,230,.06);
+      --ease-out: cubic-bezier(.22,1,.36,1);
+      --spring: cubic-bezier(.34,1.4,.64,1);
+      --accent: #c8f06e;
+      --accent-dim: rgba(200,240,110,.12);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    img{display:block}
+
+    /* ── GRAIN ── */
+    #grain{position:fixed;inset:0;z-index:8998;pointer-events:none;opacity:.22;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.06'/%3E%3C/svg%3E");
+      animation:grainShift 8s steps(1) infinite}
+    @keyframes grainShift{0%{background-position:0 0}20%{background-position:-50px 30px}40%{background-position:80px -20px}60%{background-position:-30px 60px}80%{background-position:50px -50px}}
+    /* ── HERO ── */
+    .ev-hero{position:relative;min-height:75vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+    .ev-hero-content{position:relative;z-index:2;max-width:1080px;margin:0 auto;width:100%;padding:0 20px 40px}
+    .ev-breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--ink30);margin-bottom:24px;animation:fadeUp .6s var(--ease-out) .1s both}
+    .ev-breadcrumb span{color:var(--ink60)}
+    .ev-tags{display:flex;align-items:center;gap:8px;margin-bottom:20px;animation:fadeUp .6s var(--ease-out) .2s both}
+    .ev-tag{display:inline-flex;align-items:center;gap:5px;padding:5px 13px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .ev-tag.live{background:rgba(200,240,110,.15);color:var(--accent);border:1px solid rgba(200,240,110,.25)}
+    .ev-tag.cat{background:var(--ink06);color:var(--ink60);border:1px solid var(--ink10)}
+    .ev-live-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.6s ease-in-out infinite}
+    @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+    .ev-title{font-family:'Instrument Serif',serif;font-size:clamp(40px,6vw,88px);line-height:1;letter-spacing:-.03em;margin-bottom:16px;animation:fadeUp .7s var(--ease-out) .3s both}
+    .ev-title em{font-style:italic;color:var(--ink60)}
+    .ev-subtitle{font-size:17px;font-weight:400;color:var(--ink60);max-width:560px;line-height:1.7;animation:fadeUp .7s var(--ease-out) .4s both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+    /* ── MAIN LAYOUT ── */
+    .ev-body{max-width:1080px;margin:0 auto;padding:40px 20px 120px;display:grid;grid-template-columns:1fr 340px;gap:48px;align-items:start}
+
+    /* ── LEFT COLUMN ── */
+    /* Quick facts strip */
+    .ev-facts{display:flex;flex-wrap:wrap;gap:0;background:var(--bg2);border:1px solid var(--ink10);border-radius:20px;overflow:hidden;margin-bottom:48px}
+    .ev-fact{flex:1 1 140px;padding:22px 24px;border-right:1px solid var(--ink10);display:flex;flex-direction:column;gap:5px;min-width:130px}
+    .ev-fact:last-child{border-right:none}
+    .ev-fact-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink30)}
+    .ev-fact-value{font-size:15px;font-weight:600;color:var(--ink)}
+    .ev-fact-sub{font-size:12px;color:var(--ink30)}
+
+    /* About section */
+    .ev-section{margin-bottom:48px}
+    .ev-section-label{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink30);margin-bottom:16px}
+    .ev-section h2{font-family:'Instrument Serif',serif;font-size:clamp(22px,3vw,32px);line-height:1.2;margin-bottom:16px;letter-spacing:-.02em}
+    .ev-section p{font-size:15px;color:var(--ink60);line-height:1.8;margin-bottom:12px}
+
+    /* Who's Coming */
+    .ev-attendees-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+    .ev-attendee{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--ink10);border-radius:100px;padding:8px 14px 8px 8px;transition:border-color .2s}
+    .ev-attendee:hover{border-color:rgba(242,237,230,.22)}
+    .ev-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover;background:var(--ink10);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;overflow:hidden}
+    .ev-attendee-name{font-size:13px;font-weight:600}
+    .ev-attendee-role{font-size:11px;color:var(--ink30)}
+    .ev-attendees-more{display:flex;align-items:center;gap:10px;background:var(--ink06);border:1px dashed var(--ink10);border-radius:100px;padding:8px 14px 8px 14px;font-size:13px;color:var(--ink30);font-weight:500}
+
+    /* Photo gallery */
+    .ev-gallery{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:220px 160px;gap:8px;border-radius:20px;overflow:hidden;margin-top:12px}
+    .ev-gallery-item{position:relative;overflow:hidden;background:var(--bg2)}
+    .ev-gallery-item:first-child{grid-row:span 2}
+    .ev-gallery-img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease-out)}
+    .ev-gallery-item:hover .ev-gallery-img{transform:scale(1.04)}
+    .ev-gallery-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:linear-gradient(135deg, var(--bg2) 0%, #1a1a1a 100%)}
+
+    /* Schedule */
+    .ev-schedule{margin-top:8px;display:flex;flex-direction:column;gap:0}
+    .ev-sched-item{display:flex;gap:20px;padding:16px 0;border-bottom:1px solid var(--ink06)}
+    .ev-sched-item:last-child{border-bottom:none}
+    .ev-sched-time{font-size:12px;font-weight:600;color:var(--ink30);min-width:60px;padding-top:2px}
+    .ev-sched-body{flex:1}
+    .ev-sched-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+    .ev-sched-desc{font-size:13px;color:var(--ink30)}
+
+    /* Location map embed */
+    .ev-map{border-radius:16px;overflow:hidden;border:1px solid var(--ink10);height:220px;background:var(--bg2);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;margin-top:12px;cursor:pointer;transition:border-color .2s;position:relative}
+    .ev-map:hover{border-color:var(--ink30)}
+    .ev-map iframe{width:100%;height:100%;border:none;filter:grayscale(1) invert(1) brightness(.6)}
+    .ev-map-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(8,8,8,.4);pointer-events:none}
+    .ev-map-pin{background:#080808;border:1px solid var(--ink10);border-radius:100px;padding:8px 18px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+
+    /* ── RIGHT COLUMN — TICKET CARD ── */
+    .ev-ticket-card{position:sticky;top:24px;background:var(--bg1);border:1px solid var(--ink10);border-radius:24px;overflow:hidden}
+    .ev-ticket-header{padding:28px 28px 20px;border-bottom:1px solid var(--ink10)}
+    .ev-ticket-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
+    .ev-ticket-price{font-family:'Instrument Serif',serif;font-size:40px;letter-spacing:-.03em}
+    .ev-ticket-per{font-size:13px;color:var(--ink30)}
+    .ev-ticket-note{font-size:12px;color:var(--ink30);margin-bottom:16px}
+    .ev-ticket-spots{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(200,240,110,.07);border:1px solid rgba(200,240,110,.15);border-radius:12px;margin-bottom:0}
+    .ev-ticket-spots-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;animation:blink 1.6s ease-in-out infinite}
+    .ev-ticket-spots-text{font-size:12.5px;font-weight:600;color:var(--accent)}
+
+    .ev-ticket-body{padding:20px 28px 28px;display:flex;flex-direction:column;gap:12px}
+
+    /* Ticket type selector */
+    .ev-ticket-types{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}
+    .ev-ticket-type{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;border:1px solid var(--ink10);cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+    .ev-ticket-type.selected{border-color:var(--accent);background:rgba(200,240,110,.05)}
+    .ev-ticket-type-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--ink30);flex-shrink:0;transition:border-color .2s;position:relative}
+    .ev-ticket-type.selected .ev-ticket-type-radio{border-color:var(--accent)}
+    .ev-ticket-type.selected .ev-ticket-type-radio::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:var(--accent);border-radius:50%}
+    .ev-ticket-type-info{flex:1}
+    .ev-ticket-type-name{font-size:14px;font-weight:600;margin-bottom:2px}
+    .ev-ticket-type-desc{font-size:12px;color:var(--ink30)}
+    .ev-ticket-type-price{font-size:15px;font-weight:700;color:var(--ink);flex-shrink:0}
+
+    /* RSVP btn */
+    .ev-rsvp-btn{width:100%;padding:16px;border-radius:100px;background:#fff;color:#000;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;border:none;cursor:pointer;transition:background .2s,transform .15s var(--spring);letter-spacing:-.01em}
+    .ev-rsvp-btn:hover{background:#e0e0e0;transform:translateY(-2px)}
+    .ev-rsvp-btn:active{transform:translateY(0)}
+    .ev-rsvp-outline{width:100%;padding:14px;border-radius:100px;background:transparent;color:var(--ink60);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;border:1px solid var(--ink10);cursor:pointer;transition:border-color .2s,color .2s,transform .15s var(--spring)}
+    .ev-rsvp-outline:hover{border-color:rgba(242,237,230,.22);color:var(--ink);transform:translateY(-1px)}
+
+    .ev-ticket-divider{height:1px;background:var(--ink06);margin:4px 0}
+
+    /* Share row */
+    .ev-share-row{display:flex;align-items:center;gap:8px}
+    .ev-share-label{font-size:12px;color:var(--ink30);margin-right:4px}
+    .ev-share-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--ink10);background:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s;color:var(--ink60)}
+    .ev-share-btn:hover{border-color:var(--ink30);background:var(--ink06);color:var(--ink)}
+
+    /* Host row */
+    .ev-host-row{display:flex;align-items:center;gap:12px;padding:14px;background:var(--bg2);border-radius:14px;border:1px solid var(--ink10)}
+    .ev-host-avatar{width:40px;height:40px;border-radius:50%;background:var(--ink10);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+    .ev-host-name{font-size:13px;font-weight:600}
+    .ev-host-label{font-size:11px;color:var(--ink30)}
+    .ev-host-contact{margin-left:auto;font-size:12px;color:var(--ink30);border:1px solid var(--ink10);padding:5px 12px;border-radius:100px;cursor:pointer;transition:border-color .2s,color .2s}
+    .ev-host-contact:hover{border-color:var(--ink30);color:var(--ink)}
+
+    /* ── SIMILAR EVENTS ── */
+    .ev-similar{padding:0 20px 100px;max-width:1080px;margin:0 auto}
+    .ev-similar-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:32px}
+    .ev-similar-title{font-family:'Instrument Serif',serif;font-size:clamp(22px,3vw,36px);letter-spacing:-.02em}
+    .ev-similar-see{font-size:13px;color:var(--ink30);border-bottom:1px solid var(--ink10);transition:color .2s,border-color .2s;cursor:pointer}
+    .ev-similar-see:hover{color:var(--ink);border-color:var(--ink30)}
+    .ev-similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+
+    /* Event card */
+    .ev-card{background:var(--bg1);border:1px solid var(--ink10);border-radius:20px;overflow:hidden;cursor:pointer;transition:border-color .3s,transform .3s var(--ease-out),box-shadow .3s}
+    .ev-card:hover{border-color:rgba(242,237,230,.18);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+    .ev-card-thumb{height:180px;background:var(--bg2);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:40px}
+    .ev-card-body{padding:18px 20px 20px}
+    .ev-card-meta{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+    .ev-card-dot{width:3px;height:3px;border-radius:50%;background:var(--ink30)}
+    .ev-card-date{font-size:11px;font-weight:600;color:var(--ink30);text-transform:uppercase;letter-spacing:.08em}
+    .ev-card-title{font-size:16px;font-weight:700;line-height:1.3;margin-bottom:8px}
+    .ev-card-loc{font-size:12px;color:var(--ink30);display:flex;align-items:center;gap:5px;margin-bottom:14px}
+    .ev-card-footer{display:flex;align-items:center;justify-content:space-between}
+    .ev-card-price{font-size:14px;font-weight:700}
+    .ev-card-rsvp{font-size:12px;font-weight:600;padding:6px 14px;border-radius:100px;border:1px solid var(--ink10);color:var(--ink60);transition:border-color .2s,color .2s,background .2s}
+    .ev-card:hover .ev-card-rsvp{border-color:rgba(242,237,230,.22);color:var(--ink);background:var(--ink06)}
+
+    /* ── STICKY MOBILE RSVP BAR ── */
+    .mobile-rsvp-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:900;
+      padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+      background:rgba(8,8,8,.92);backdrop-filter:blur(20px) saturate(160%);
+      border-top:1px solid var(--ink10);
+      box-shadow:0 -8px 32px rgba(0,0,0,.6)}
+    .mobile-rsvp-bar-inner{display:flex;align-items:center;gap:12px}
+    .mobile-rsvp-price{flex:1}
+    .mobile-rsvp-amount{font-family:'Instrument Serif',serif;font-size:24px;letter-spacing:-.02em;line-height:1}
+    .mobile-rsvp-note{font-size:11px;color:var(--ink30)}
+    .mobile-rsvp-btn{padding:14px 28px;border-radius:100px;background:#fff;color:#000;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;transition:background .2s,transform .15s var(--spring)}
+    .mobile-rsvp-btn:active{transform:scale(.97)}
+
+    /* Scroll reveal */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out)}
+    .reveal.in{opacity:1;transform:none}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:860px){
+      /* Show RSVP card inline, hide desktop sticky card */
+      .ev-body{grid-template-columns:1fr;padding:24px 16px 140px}
+      #rsvp .ev-ticket-card{display:none} /* hide big card, use bottom bar */
+      .mobile-rsvp-bar{display:block}
+      .ev-hero{min-height:65vh}
+      .ev-hero-content{padding:0 16px 32px}
+      .ev-similar{padding:0 16px 100px}
+      .ev-similar-grid{grid-template-columns:1fr 1fr;gap:12px}
+      .ev-gallery{grid-template-columns:1fr 1fr;grid-template-rows:180px 130px}
+      .ev-gallery-item:first-child{grid-row:span 1}
+      .ev-facts{display:grid;grid-template-columns:1fr 1fr}
+      .ev-fact{border-right:none;border-bottom:1px solid var(--ink10)}
+      .ev-fact:nth-child(odd){border-right:1px solid var(--ink10)}
+      .ev-fact:nth-last-child(-n+2){border-bottom:none}
+      .ev-tags{flex-wrap:wrap;gap:6px}
+      .ev-section{margin-bottom:36px}
+      .ev-attendees-grid{gap:8px}
+      .ev-attendee{padding:7px 12px 7px 7px}
+    }
+    @media(max-width:480px){
+      .ev-similar-grid{grid-template-columns:1fr}
+      .ev-title{font-size:clamp(32px,9vw,52px)}
+      .ev-facts{grid-template-columns:1fr 1fr}
+      .ev-body{padding:20px 14px 140px}
+      .ev-hero-content{padding:0 14px 28px}
+      .ev-similar{padding:0 14px 100px}
+      .ev-similar-grid{gap:10px}
+      .ev-ticket-header{padding:20px 20px 16px}
+      .ev-ticket-body{padding:16px 20px 20px}
+    }
+
+    /* RSVP success state */
+    .rsvp-success{display:none;flex-direction:column;align-items:center;gap:8px;padding:16px;text-align:center}
+    .rsvp-success-icon{font-size:32px;margin-bottom:4px}
+    .rsvp-success-title{font-size:15px;font-weight:700}
+    .rsvp-success-sub{font-size:13px;color:var(--ink30)}
+    .rsvp-active .ev-rsvp-btn{display:none}
+    .rsvp-active .rsvp-success{display:flex}
+
+    /* ── COMMUNITY DROPS ── */
+    .drops-sec{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+    .drops-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+    .drops-title-row{display:flex;align-items:center;gap:12px}
+    .drops-live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(200,240,110,.1);border:1px solid rgba(200,240,110,.2);border-radius:100px;padding:5px 12px}
+    .drops-live-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:blink 1.6s ease-in-out infinite;flex-shrink:0}
+    .drops-live-text{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+    .drops-title{font-family:'Instrument Serif',serif;font-size:clamp(22px,3vw,32px);letter-spacing:-.02em}
+    .drops-host-btn{display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:100px;background:var(--bg2);border:1px solid var(--ink10);font-size:13px;font-weight:600;color:var(--ink60);cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+    .drops-host-btn:hover{border-color:rgba(242,237,230,.22);color:var(--ink);background:var(--bg1)}
+    .drops-host-btn.active{background:var(--accent);color:#000;border-color:transparent}
+    .drops-host-btn.active:hover{background:#b8e05a}
+
+    /* Feed */
+    .drops-feed{columns:3;column-gap:12px}
+    .drop-item{break-inside:avoid;margin-bottom:12px;border-radius:16px;overflow:hidden;background:var(--bg1);border:1px solid var(--ink10);cursor:pointer;transition:transform .3s var(--ease-out),box-shadow .3s,border-color .3s;display:block}
+    .drop-item:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.5);border-color:rgba(242,237,230,.18)}
+    .drop-img-wrap{position:relative;overflow:hidden;background:var(--bg2)}
+    .drop-img{width:100%;height:auto;display:block;transition:transform .5s var(--ease-out)}
+    .drop-item:hover .drop-img{transform:scale(1.03)}
+    .drop-meta{padding:12px 14px 14px}
+    .drop-caption{font-size:13px;color:var(--ink60);line-height:1.5;margin-bottom:8px}
+    .drop-time-row{display:flex;align-items:center;justify-content:space-between}
+    .drop-time{font-size:11px;color:var(--ink30)}
+    .drop-owner{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink30)}
+    .drop-owner-dot{width:14px;height:14px;background:linear-gradient(135deg,var(--accent),#80eecc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#000}
+    .drop-remove{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:rgba(8,8,8,.8);backdrop-filter:blur(8px);border:1px solid var(--ink10);color:var(--ink60);font-size:12px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:2;transition:background .2s,color .2s}
+    .drop-remove:hover{background:#200;color:#ff6060}
+    .host-mode .drop-remove{display:flex}
+    .drops-empty{text-align:center;padding:60px 20px;color:var(--ink30);font-size:14px;border:1px dashed var(--ink10);border-radius:20px}
+    .drops-empty-icon{font-size:36px;margin-bottom:12px}
+
+    /* Upload modal */
+    .drop-modal-bg{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.8);backdrop-filter:blur(12px);display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+    .drop-modal-bg.open{opacity:1;visibility:visible}
+    .drop-modal{background:var(--bg1);border:1px solid var(--ink10);border-radius:28px 28px 0 0;width:100%;max-width:540px;padding:28px 24px calc(28px + env(safe-area-inset-bottom));transform:translateY(40px);transition:transform .4s var(--ease-out)}
+    .drop-modal-bg.open .drop-modal{transform:translateY(0)}
+    .drop-modal-handle{width:40px;height:4px;border-radius:2px;background:var(--ink10);margin:0 auto 20px}
+    .drop-modal-title{font-size:17px;font-weight:700;margin-bottom:4px}
+    .drop-modal-sub{font-size:13px;color:var(--ink30);margin-bottom:20px}
+    .drop-zone{border:2px dashed var(--ink10);border-radius:18px;padding:36px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--accent);background:rgba(200,240,110,.04)}
+    .drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .drop-zone-icon{font-size:28px;margin-bottom:8px}
+    .drop-zone-label{font-size:14px;font-weight:600;color:var(--ink60);margin-bottom:4px}
+    .drop-zone-hint{font-size:12px;color:var(--ink30)}
+    .drop-preview-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .drop-preview-thumb{width:64px;height:64px;border-radius:10px;object-fit:cover;border:1px solid var(--ink10)}
+    .drop-caption-input{width:100%;margin-top:16px;padding:12px 14px;border-radius:12px;background:var(--bg2);border:1px solid var(--ink10);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;resize:none;height:72px;transition:border-color .2s}
+    .drop-caption-input:focus{outline:none;border-color:rgba(242,237,230,.25)}
+    .drop-caption-input::placeholder{color:var(--ink30)}
+    .drop-modal-actions{display:flex;gap:10px;margin-top:16px}
+    .drop-post-btn{flex:1;padding:14px;border-radius:100px;background:var(--accent);color:#000;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:background .2s,transform .15s var(--spring)}
+    .drop-post-btn:hover{background:#b8e05a;transform:translateY(-1px)}
+    .drop-post-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+    .drop-cancel-btn{padding:14px 22px;border-radius:100px;background:transparent;color:var(--ink60);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;border:1px solid var(--ink10);cursor:pointer;transition:border-color .2s,color .2s}
+    .drop-cancel-btn:hover{border-color:rgba(242,237,230,.22);color:var(--ink)}
+
+    /* PIN prompt */
+    .pin-modal-bg{position:fixed;inset:0;z-index:1001;background:rgba(0,0,0,.85);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+    .pin-modal-bg.open{opacity:1;visibility:visible}
+    .pin-modal{background:var(--bg1);border:1px solid var(--ink10);border-radius:24px;padding:32px 28px;width:100%;max-width:340px;text-align:center}
+    .pin-modal-icon{font-size:32px;margin-bottom:12px}
+    .pin-modal-title{font-size:18px;font-weight:700;margin-bottom:6px}
+    .pin-modal-sub{font-size:13px;color:var(--ink30);margin-bottom:20px}
+    .pin-input{width:100%;padding:14px;text-align:center;letter-spacing:.4em;font-size:20px;font-weight:700;border-radius:14px;background:var(--bg2);border:1px solid var(--ink10);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;margin-bottom:12px;transition:border-color .2s}
+    .pin-input:focus{outline:none;border-color:rgba(242,237,230,.3)}
+    .pin-input.error{border-color:#ff6060;animation:shake .3s}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+    .pin-submit{width:100%;padding:13px;border-radius:100px;background:#fff;color:#000;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:background .2s}
+    .pin-submit:hover{background:#e0e0e0}
+    .pin-hint{font-size:11px;color:var(--ink30);margin-top:10px}
+
+    /* Lightbox */
+    .lightbox-bg{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;padding:20px}
+    .lightbox-bg.open{opacity:1;visibility:visible}
+    .lightbox-img{max-width:100%;max-height:85vh;border-radius:16px;object-fit:contain;transform:scale(.96);transition:transform .3s var(--ease-out)}
+    .lightbox-bg.open .lightbox-img{transform:scale(1)}
+    .lightbox-close{position:absolute;top:20px;right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+    .lightbox-close:hover{background:rgba(255,255,255,.2)}
+    .lightbox-caption{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:8px 20px;font-size:13px;color:rgba(255,255,255,.8);white-space:nowrap;max-width:80vw;overflow:hidden;text-overflow:ellipsis}
+
+    @media(max-width:860px){
+      .drops-feed{columns:2}
+      .drops-sec{padding:0 16px 60px}
+    }
+    @media(max-width:480px){
+      .drops-feed{columns:2}
+      .drop-modal{border-radius:24px 24px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom))}
+    }
+  </style>
+</head>
+<body>
+<div id="grain"></div>
+
+
+<!-- HERO -->
+<section class="ev-hero">
+  <!-- Gradient background with pattern instead of real image -->
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0e1a0f 0%,#1a1a2e 30%,#16213e 60%,#0a0a0a 100%);z-index:0"></div>
+  <div style="position:absolute;inset:0;z-index:1;opacity:.35;background-image:radial-gradient(circle at 20% 50%, rgba(200,240,110,.15) 0%, transparent 50%),radial-gradient(circle at 80% 20%, rgba(100,120,200,.1) 0%, transparent 40%)"></div>
+  <!-- Decorative pattern -->
+  <svg style="position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:.06" xmlns="http://www.w3.org/2000/svg">
+    <defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="#fff" stroke-width=".5"/></pattern></defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+  <div class="ev-hero-gradient" style="position:absolute;inset:0;background:linear-gradient(to top, #080808 20%, rgba(8,8,8,.5) 55%, rgba(8,8,8,0) 100%);z-index:2"></div>
+
+  <div class="ev-hero-content" style="z-index:3">
+    <div class="ev-breadcrumb">
+      <span>Events</span>
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      <span style="color:var(--ink60)">Music & Nights</span>
+    </div>
+    <div class="ev-tags">
+      <div class="ev-tag live"><div class="ev-live-dot"></div>Registrations Open</div>
+      <div class="ev-tag cat">🎷 Jazz & Live Music</div>
+      <div class="ev-tag cat">🍹 Rooftop</div>
+    </div>
+    <h1 class="ev-title">Sundowner Sessions<br><em>Vol. 3</em></h1>
+    <p class="ev-subtitle">An intimate evening of live jazz, handcrafted cocktails, and Vadodara's finest crowd — up on the rooftop as the sun paints the skyline.</p>
+  </div>
+</section>
+
+<!-- MAIN BODY -->
+<div class="ev-body">
+
+  <!-- LEFT -->
+  <div class="ev-left">
+
+    <!-- Quick Facts -->
+    <div class="ev-facts reveal">
+      <div class="ev-fact">
+        <div class="ev-fact-label">📅 Date</div>
+        <div class="ev-fact-value">Sat, 19 Apr 2026</div>
+        <div class="ev-fact-sub">This Saturday</div>
+      </div>
+      <div class="ev-fact">
+        <div class="ev-fact-label">⏰ Time</div>
+        <div class="ev-fact-value">6:30 PM onwards</div>
+        <div class="ev-fact-sub">Doors open 6:00 PM</div>
+      </div>
+      <div class="ev-fact">
+        <div class="ev-fact-label">📍 Venue</div>
+        <div class="ev-fact-value">The Terrace</div>
+        <div class="ev-fact-sub">Alkapuri, Vadodara</div>
+      </div>
+      <div class="ev-fact">
+        <div class="ev-fact-label">👥 Capacity</div>
+        <div class="ev-fact-value">~80 guests</div>
+        <div class="ev-fact-sub">Intimate format</div>
+      </div>
+    </div>
+
+    <!-- About -->
+    <div class="ev-section reveal">
+      <div class="ev-section-label">About this event</div>
+      <h2>A rooftop night you'll actually remember.</h2>
+      <p>Sundowner Sessions is Vadodara's most-loved intimate music evening — back for its third volume with a handpicked lineup of local jazz musicians, a curated cocktail menu, and that golden-hour feeling we've all been chasing.</p>
+      <p>No big stage, no loud DJs — just great music, good people, and the city glowing below you. Expect impromptu jam sessions, signature sunset cocktails from The Terrace bar, and a curated cheese & charcuterie spread.</p>
+      <p style="font-size:14px;color:var(--ink30)">🎟️ Tickets include welcome drink · 🥂 Complimentary canapes for early birds · 📸 Photography encouraged</p>
+    </div>
+
+    <!-- Gallery -->
+    <div class="ev-section reveal">
+      <div class="ev-section-label">Event Vibes</div>
+      <div class="ev-gallery">
+        <div class="ev-gallery-item" style="background:linear-gradient(135deg,#1a2a1a,#0a1a12)"><div class="ev-gallery-placeholder">🎷</div></div>
+        <div class="ev-gallery-item" style="background:linear-gradient(135deg,#1a1a2e,#0d0d1a)"><div class="ev-gallery-placeholder" style="font-size:22px">🌅</div></div>
+        <div class="ev-gallery-item" style="background:linear-gradient(135deg,#2a1a10,#1a0d05)"><div class="ev-gallery-placeholder" style="font-size:22px">🍹</div></div>
+      </div>
+      <p style="font-size:12px;color:var(--ink30);margin-top:10px">Photos from Sundowner Sessions Vol. 2 · Jan 2026</p>
+    </div>
+
+    <!-- Schedule -->
+    <div class="ev-section reveal">
+      <div class="ev-section-label">Evening Schedule</div>
+      <div class="ev-schedule">
+        <div class="ev-sched-item">
+          <div class="ev-sched-time">6:00 PM</div>
+          <div class="ev-sched-body">
+            <div class="ev-sched-title">Doors Open & Welcome Drinks</div>
+            <div class="ev-sched-desc">Settle in, grab your welcome cocktail, find your spot.</div>
+          </div>
+        </div>
+        <div class="ev-sched-item">
+          <div class="ev-sched-time">6:30 PM</div>
+          <div class="ev-sched-body">
+            <div class="ev-sched-title">Opening Set — Rohan & The Quartet</div>
+            <div class="ev-sched-desc">Smooth jazz as the sun starts its descent.</div>
+          </div>
+        </div>
+        <div class="ev-sched-item">
+          <div class="ev-sched-time">7:30 PM</div>
+          <div class="ev-sched-body">
+            <div class="ev-sched-title">Sunset Intermission + Charcuterie</div>
+            <div class="ev-sched-desc">Golden hour, cheese boards, open networking.</div>
+          </div>
+        </div>
+        <div class="ev-sched-item">
+          <div class="ev-sched-time">8:00 PM</div>
+          <div class="ev-sched-body">
+            <div class="ev-sched-title">Main Set — Ananya Vocals + Piano</div>
+            <div class="ev-sched-desc">Soulful bossa nova and contemporary jazz originals.</div>
+          </div>
+        </div>
+        <div class="ev-sched-item">
+          <div class="ev-sched-time">9:15 PM</div>
+          <div class="ev-sched-body">
+            <div class="ev-sched-title">Open Jam + Late Bar</div>
+            <div class="ev-sched-desc">Everyone's invited to the floor. Ends ~10:30 PM.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Who's Coming -->
+    <div class="ev-section reveal">
+      <div class="ev-section-label">Who's coming</div>
+      <div class="ev-attendees-grid">
+        <div class="ev-attendee">
+          <div class="ev-avatar" style="background:#1a2a1a;color:var(--accent)">RK</div>
+          <div><div class="ev-attendee-name">Rohan K.</div><div class="ev-attendee-role">Jazz musician</div></div>
+        </div>
+        <div class="ev-attendee">
+          <div class="ev-avatar" style="background:#2a1a2a;color:#d4a0ff">AN</div>
+          <div><div class="ev-attendee-name">Ananya N.</div><div class="ev-attendee-role">Vocalist</div></div>
+        </div>
+        <div class="ev-attendee">
+          <div class="ev-avatar" style="background:#1a1a2a;color:#80aaff">MS</div>
+          <div><div class="ev-attendee-name">Mihir S.</div><div class="ev-attendee-role">Attending</div></div>
+        </div>
+        <div class="ev-attendee">
+          <div class="ev-avatar" style="background:#2a1a10;color:#ffb380">PD</div>
+          <div><div class="ev-attendee-name">Priya D.</div><div class="ev-attendee-role">Attending</div></div>
+        </div>
+        <div class="ev-attendee">
+          <div class="ev-avatar" style="background:#0a1a1a;color:#80ffee">ZK</div>
+          <div><div class="ev-attendee-name">Zara K.</div><div class="ev-attendee-role">Attending</div></div>
+        </div>
+        <div class="ev-attendees-more">
+          <span>+42 others going</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="ev-section reveal">
+      <div class="ev-section-label">Location</div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:16px;font-weight:600;margin-bottom:4px">The Terrace, Alkapuri</div>
+        <div style="font-size:14px;color:var(--ink30)">3rd Floor, Sayaji Hotel Complex, Alkapuri, Vadodara, Gujarat 390007</div>
+      </div>
+      <div class="ev-map" onclick="this.querySelector('iframe').style.display='block';this.querySelector('.ev-map-overlay').style.display='none'">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.052!2d73.178!3d22.308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDE4JzI4LjgiTiA3M8KwMTAnNDAuOCJF!5e0!3m2!1sen!2sin!4v1" style="display:none" allowfullscreen loading="lazy"></iframe>
+        <div class="ev-map-overlay">
+          <div class="ev-map-pin">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 21s-8-7.5-8-12a8 8 0 1116 0c0 4.5-8 12-8 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Click to open map · Alkapuri, Vadodara
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <a href="https://maps.google.com" target="_blank" style="font-size:13px;color:var(--ink30);border:1px solid var(--ink10);padding:7px 16px;border-radius:100px;transition:border-color .2s,color .2s" onmouseover="this.style.borderColor='rgba(242,237,230,.22)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--ink10)';this.style.color='var(--ink30)'">↗ Open in Maps</a>
+        <span style="font-size:13px;color:var(--ink30);border:1px solid var(--ink10);padding:7px 16px;border-radius:100px;cursor:pointer;transition:border-color .2s,color .2s" onmouseover="this.style.borderColor='rgba(242,237,230,.22)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--ink10)';this.style.color='var(--ink30)'">🚗 Get Directions</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT — TICKET CARD -->
+  <div id="rsvp">
+    <div class="ev-ticket-card reveal">
+      <div class="ev-ticket-header">
+        <div class="ev-ticket-price-row">
+          <div class="ev-ticket-price">₹599</div>
+          <div class="ev-ticket-per">per person</div>
+        </div>
+        <div class="ev-ticket-note">Includes welcome drink + canapes</div>
+        <div class="ev-ticket-spots">
+          <div class="ev-ticket-spots-dot"></div>
+          <div class="ev-ticket-spots-text">Only 18 spots left — filling up fast</div>
+        </div>
+      </div>
+
+      <div class="ev-ticket-body" id="rsvp-card">
+        <!-- Ticket type selector -->
+        <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink30);margin-bottom:4px">Choose your ticket</div>
+        <div class="ev-ticket-types">
+          <div class="ev-ticket-type selected" onclick="selectTicket(this,'Early Bird — ₹599')">
+            <div class="ev-ticket-type-radio"></div>
+            <div class="ev-ticket-type-info">
+              <div class="ev-ticket-type-name">Early Bird</div>
+              <div class="ev-ticket-type-desc">Welcome drink + canapes included</div>
+            </div>
+            <div class="ev-ticket-type-price">₹599</div>
+          </div>
+          <div class="ev-ticket-type" onclick="selectTicket(this,'Premium — ₹999')">
+            <div class="ev-ticket-type-radio"></div>
+            <div class="ev-ticket-type-info">
+              <div class="ev-ticket-type-name">Premium</div>
+              <div class="ev-ticket-type-desc">Front section + 2 drinks + cheese board</div>
+            </div>
+            <div class="ev-ticket-type-price">₹999</div>
+          </div>
+        </div>
+
+        <!-- Date picker row -->
+        <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink30);margin-bottom:4px">Date</div>
+        <div style="padding:12px 14px;border-radius:14px;border:1px solid var(--ink10);display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:14px;font-weight:600">Sat, 19 April 2026</span>
+          <span style="font-size:12px;color:var(--ink30)">6:30 PM</span>
+        </div>
+
+        <button class="ev-rsvp-btn" onclick="handleRSVP()">Reserve My Spot →</button>
+        <div class="rsvp-success">
+          <div class="rsvp-success-icon">🎉</div>
+          <div class="rsvp-success-title">You're in! Confirmation sent.</div>
+          <div class="rsvp-success-sub">Check your email for your ticket. See you Saturday!</div>
+        </div>
+
+        <div class="ev-ticket-divider"></div>
+
+        <button class="ev-rsvp-outline" onclick="addToCalendar()">📅 Add to Calendar</button>
+
+        <div class="ev-ticket-divider"></div>
+
+        <!-- Share -->
+        <div class="ev-share-row">
+          <span class="ev-share-label">Share</span>
+          <button class="ev-share-btn" title="Share on WhatsApp" onclick="shareEvent('whatsapp')">
+            <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </button>
+          <button class="ev-share-btn" title="Copy link" onclick="copyLink(this)">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+          </button>
+          <button class="ev-share-btn" title="Share on Twitter" onclick="shareEvent('twitter')">
+            <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </button>
+        </div>
+
+        <div class="ev-ticket-divider"></div>
+
+        <!-- Host -->
+        <div class="ev-host-row">
+          <div class="ev-host-avatar">🎪</div>
+          <div>
+            <div class="ev-host-name">Hunters Collective</div>
+            <div class="ev-host-label">Event Organiser</div>
+          </div>
+          <div class="ev-host-contact">Contact</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- COMMUNITY DROPS -->
+<section style="background:var(--bg);padding-top:20px 0 0">
+  <div class="drops-sec" id="drops-sec">
+    <div class="drops-header reveal">
+      <div class="drops-title-row">
+        <div class="drops-title">Community Drops</div>
+        <div class="drops-live-badge"><div class="drops-live-dot"></div><span class="drops-live-text">Live</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:12px;color:var(--ink30)" id="drops-count">3 photos shared</span>
+        <button class="drops-host-btn" id="host-toggle-btn" onclick="toggleHostMode()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Host Mode
+        </button>
+      </div>
+    </div>
+
+    <!-- Feed -->
+    <div class="drops-feed" id="drops-feed">
+
+      <!-- Pre-seeded drop 1 -->
+      <div class="drop-item reveal" onclick="openLightbox(this)" data-caption="Setting up the rooftop — golden hour is hitting different tonight 🌅">
+        <div class="drop-img-wrap">
+          <div style="width:100%;height:220px;background:linear-gradient(135deg,#1a2a10 0%,#2a3a1a 50%,#0a1a06 100%);display:flex;align-items:center;justify-content:center;font-size:56px">🌅</div>
+          <button class="drop-remove" onclick="event.stopPropagation();removeDrop(this)" title="Remove">✕</button>
+        </div>
+        <div class="drop-meta">
+          <div class="drop-caption">Setting up the rooftop — golden hour is hitting different tonight 🌅</div>
+          <div class="drop-time-row">
+            <span class="drop-time">6:02 PM · Today</span>
+            <span class="drop-owner"><div class="drop-owner-dot">H</div> Host</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pre-seeded drop 2 -->
+      <div class="drop-item reveal" onclick="openLightbox(this)" data-caption="Rohan & the quartet warming up 🎷">
+        <div class="drop-img-wrap">
+          <div style="width:100%;height:160px;background:linear-gradient(135deg,#1a0a2a 0%,#2a1a3a 50%,#0a0614 100%);display:flex;align-items:center;justify-content:center;font-size:48px">🎷</div>
+          <button class="drop-remove" onclick="event.stopPropagation();removeDrop(this)" title="Remove">✕</button>
+        </div>
+        <div class="drop-meta">
+          <div class="drop-caption">Rohan & the quartet warming up 🎷</div>
+          <div class="drop-time-row">
+            <span class="drop-time">6:28 PM · Today</span>
+            <span class="drop-owner"><div class="drop-owner-dot">H</div> Host</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pre-seeded drop 3 -->
+      <div class="drop-item reveal" onclick="openLightbox(this)" data-caption="Cocktail bar is ready — signatures tonight only 🍹">
+        <div class="drop-img-wrap">
+          <div style="width:100%;height:280px;background:linear-gradient(135deg,#2a1a08 0%,#3a2a10 50%,#1a0a04 100%);display:flex;align-items:center;justify-content:center;font-size:64px">🍹</div>
+          <button class="drop-remove" onclick="event.stopPropagation();removeDrop(this)" title="Remove">✕</button>
+        </div>
+        <div class="drop-meta">
+          <div class="drop-caption">Cocktail bar is ready — signatures tonight only 🍹</div>
+          <div class="drop-time-row">
+            <span class="drop-time">6:45 PM · Today</span>
+            <span class="drop-owner"><div class="drop-owner-dot">H</div> Host</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SIMILAR EVENTS -->
+<section style="background:var(--bg);padding-top:20px">
+  <div class="ev-similar">
+    <div class="ev-similar-header reveal">
+      <div class="ev-similar-title">More events in Vadodara</div>
+      <span class="ev-similar-see">See all →</span>
+    </div>
+    <div class="ev-similar-grid">
+
+      <div class="ev-card reveal">
+        <div class="ev-card-thumb" style="background:linear-gradient(135deg,#1a0a2e,#0d0a1a)">🎸</div>
+        <div class="ev-card-body">
+          <div class="ev-card-meta">
+            <div class="ev-card-date">Fri, 25 Apr</div>
+            <div class="ev-card-dot"></div>
+            <div class="ev-card-date">Live Music</div>
+          </div>
+          <div class="ev-card-title">Friday Unplugged Night</div>
+          <div class="ev-card-loc">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 21s-8-7.5-8-12a8 8 0 1116 0c0 4.5-8 12-8 12z"/></svg>
+            Sayaji Hotel Lawn, Vadodara
+          </div>
+          <div class="ev-card-footer">
+            <div class="ev-card-price">₹399</div>
+            <div class="ev-card-rsvp">Reserve</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ev-card reveal">
+        <div class="ev-card-thumb" style="background:linear-gradient(135deg,#0a1a10,#071209)">🍽️</div>
+        <div class="ev-card-body">
+          <div class="ev-card-meta">
+            <div class="ev-card-date">Sat, 26 Apr</div>
+            <div class="ev-card-dot"></div>
+            <div class="ev-card-date">Food & Drinks</div>
+          </div>
+          <div class="ev-card-title">Craft Beer Tasting Evening</div>
+          <div class="ev-card-loc">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 21s-8-7.5-8-12a8 8 0 1116 0c0 4.5-8 12-8 12z"/></svg>
+            Aakar Brewpub, Fatehgunj
+          </div>
+          <div class="ev-card-footer">
+            <div class="ev-card-price">₹699</div>
+            <div class="ev-card-rsvp">Reserve</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ev-card reveal">
+        <div class="ev-card-thumb" style="background:linear-gradient(135deg,#1a1000,#0d0800)">🎨</div>
+        <div class="ev-card-body">
+          <div class="ev-card-meta">
+            <div class="ev-card-date">Sun, 27 Apr</div>
+            <div class="ev-card-dot"></div>
+            <div class="ev-card-date">Art & Culture</div>
+          </div>
+          <div class="ev-card-title">Baroda Art Walk & Brunch</div>
+          <div class="ev-card-loc">
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 21s-8-7.5-8-12a8 8 0 1116 0c0 4.5-8 12-8 12z"/></svg>
+            Kamati Baug, Central Vadodara
+          </div>
+          <div class="ev-card-footer">
+            <div class="ev-card-price">Free</div>
+            <div class="ev-card-rsvp">Reserve</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- MOBILE STICKY RSVP BAR -->
+<div class="mobile-rsvp-bar" id="mobile-bar">
+  <div class="mobile-rsvp-bar-inner">
+    <div class="mobile-rsvp-price">
+      <div class="mobile-rsvp-amount">₹599</div>
+      <div class="mobile-rsvp-note">per person · 18 spots left</div>
+    </div>
+    <button class="mobile-rsvp-btn" onclick="handleMobileRSVP()">Reserve Spot →</button>
+  </div>
+</div>
+
+<!-- HOST FLOATING ADD BUTTON -->
+<button id="host-fab" onclick="openUploadModal()" style="display:none;position:fixed;bottom:90px;right:20px;z-index:950;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#000;border:none;cursor:pointer;font-size:24px;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(200,240,110,.4),0 2px 8px rgba(0,0,0,.4);transition:transform .2s var(--spring),box-shadow .2s" onmouseover="this.style.transform='scale(1.1)';this.style.boxShadow='0 12px 32px rgba(200,240,110,.5),0 4px 12px rgba(0,0,0,.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 8px 24px rgba(200,240,110,.4),0 2px 8px rgba(0,0,0,.4)'" title="Share a photo">
+  <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+</button>
+
+<!-- UPLOAD MODAL -->
+
+<div class="drop-modal-bg" id="upload-modal">
+  <div class="drop-modal">
+    <div class="drop-modal-handle"></div>
+    <div class="drop-modal-title">Share a photo 📸</div>
+    <div class="drop-modal-sub">Drop from the event for your attendees to see in real time.</div>
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="drop-file-input" accept="image/*" multiple onchange="handleFiles(this.files)">
+      <div class="drop-zone-icon">🖼️</div>
+      <div class="drop-zone-label">Tap to pick photos</div>
+      <div class="drop-zone-hint">or drag & drop · JPG, PNG, WEBP · max 10MB each</div>
+    </div>
+    <div class="drop-preview-strip" id="drop-previews"></div>
+    <textarea class="drop-caption-input" id="drop-caption" placeholder="Add a caption (optional)…"></textarea>
+    <div class="drop-modal-actions">
+      <button class="drop-cancel-btn" onclick="closeUploadModal()">Cancel</button>
+      <button class="drop-post-btn" id="drop-post-btn" onclick="postDrops()" disabled>Post to Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- PIN MODAL -->
+<div class="pin-modal-bg" id="pin-modal">
+  <div class="pin-modal">
+    <div class="pin-modal-icon">🔑</div>
+    <div class="pin-modal-title">Host Access</div>
+    <div class="pin-modal-sub">Enter the host PIN to unlock photo sharing.</div>
+    <input class="pin-input" id="pin-input" type="password" maxlength="6" placeholder="· · · · · ·" oninput="onPinInput()" onkeydown="if(event.key==='Enter')submitPin()">
+    <button class="pin-submit" onclick="submitPin()">Unlock →</button>
+    <div class="pin-hint">Hint: the PIN is <strong>1234</strong> for this demo</div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-bg" id="lightbox" onclick="closeLightbox()">
+  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<script src="files/hunters-supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="files/hunters-backend.js"></script>
+<script>
+  const backend = window.HuntersBackend;
+  const HOST_PIN = '1234';
+  let isHostMode = false;
+  let pendingFiles = [];
+  let selectedTicketType = 'Early Bird';
+  let currentEventId = 'default';
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function slugify(value) {
+    return String(value || '')
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+  }
+
+  function normalizeEventKey(value) {
+    const raw = String(value || '').trim();
+    return raw || 'default';
+  }
+
+  function getTimeLabel(value) {
+    const date = value ? new Date(value) : null;
+    if (!date || Number.isNaN(date.getTime())) return 'Just now';
+    return date.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true }) + ' · Today';
+  }
+
+  function queryParam(name) {
+    return new URLSearchParams(window.location.search).get(name);
+  }
+
+  function updateEventShell(eventRow) {
+    if (!eventRow) return;
+
+    currentEventId = normalizeEventKey(eventRow.id || queryParam('event') || slugify(eventRow.name));
+
+    if (eventRow.name) {
+      const heroTitle = document.querySelector('.ev-title');
+      if (heroTitle) heroTitle.textContent = eventRow.name;
+      document.title = eventRow.name + ' — HUNTERS';
+    }
+
+    if (eventRow.description) {
+      const heroSub = document.querySelector('.ev-subtitle');
+      if (heroSub) heroSub.textContent = eventRow.description;
+    }
+
+    const factRows = document.querySelectorAll('.ev-fact');
+    if (factRows[0] && eventRow.event_frequency) {
+      const value = factRows[0].querySelector('.ev-fact-value');
+      const sub = factRows[0].querySelector('.ev-fact-sub');
+      if (value) value.textContent = eventRow.event_frequency;
+      if (sub) sub.textContent = 'Live from dashboard data';
+    }
+
+    if (factRows[2] && eventRow.venue) {
+      const value = factRows[2].querySelector('.ev-fact-value');
+      const sub = factRows[2].querySelector('.ev-fact-sub');
+      if (value) value.textContent = eventRow.venue;
+      if (sub) sub.textContent = 'Vadodara';
+    }
+
+    const venueHeading = Array.from(document.querySelectorAll('.ev-section div')).find(function (node) {
+      return node.textContent && node.textContent.includes('The Terrace');
+    });
+    if (venueHeading && eventRow.venue) {
+      venueHeading.textContent = eventRow.venue;
+    }
+
+    const earlyPrice = Number(eventRow.early_bird_price || eventRow.price_early || 599);
+    const premiumPrice = Number(eventRow.premium_price || eventRow.price_premium || 999);
+    const normalizedEarly = Number.isFinite(earlyPrice) ? earlyPrice : 599;
+    const normalizedPremium = Number.isFinite(premiumPrice) ? premiumPrice : 999;
+
+    const topPrice = document.querySelector('.ev-ticket-price');
+    if (topPrice) topPrice.textContent = '₹' + normalizedEarly;
+
+    const mobilePrice = document.querySelector('.mobile-rsvp-amount');
+    if (mobilePrice) mobilePrice.textContent = '₹' + normalizedEarly;
+
+    const ticketTypes = document.querySelectorAll('.ev-ticket-type');
+    if (ticketTypes[0]) {
+      const price = ticketTypes[0].querySelector('.ev-ticket-type-price');
+      if (price) price.textContent = '₹' + normalizedEarly;
+    }
+    if (ticketTypes[1]) {
+      const price = ticketTypes[1].querySelector('.ev-ticket-type-price');
+      if (price) price.textContent = '₹' + normalizedPremium;
+    }
+  }
+
+  function makeDropCard(drop) {
+    const card = document.createElement('div');
+    card.className = 'drop-item';
+    card.setAttribute('data-caption', drop.caption || '');
+    card.setAttribute('data-drop-id', String(drop.id || ''));
+
+    const captionHtml = drop.caption ? '<div class="drop-caption">' + escapeHtml(drop.caption) + '</div>' : '';
+    const timeLabel = getTimeLabel(drop.created_at);
+
+    let mediaHtml = '';
+    if (drop.image_url) {
+      mediaHtml = '<img class="drop-img" src="' + escapeHtml(drop.image_url) + '" alt="" style="height:220px;object-fit:cover">';
+    } else {
+      mediaHtml = '<div style="width:100%;height:220px;background:linear-gradient(135deg,#1a1a1a,#101010);display:flex;align-items:center;justify-content:center;font-size:56px">📸</div>';
+    }
+
+    card.innerHTML = ''
+      + '<div class="drop-img-wrap">'
+      + mediaHtml
+      + '<button class="drop-remove" onclick="event.stopPropagation();removeDrop(this)" title="Remove">✕</button>'
+      + '</div>'
+      + '<div class="drop-meta">'
+      + captionHtml
+      + '<div class="drop-time-row">'
+      + '<span class="drop-time">' + escapeHtml(timeLabel) + '</span>'
+      + '<span class="drop-owner"><div class="drop-owner-dot">H</div> Host</span>'
+      + '</div>'
+      + '</div>';
+
+    card.addEventListener('click', function () { openLightbox(card); });
+    return card;
+  }
+
+  async function hydrateDrops() {
+    const feed = document.getElementById('drops-feed');
+    if (!feed) return;
+
+    if (!(backend && typeof backend.fetchEventPhotoDrops === 'function')) {
+      updateDropCount();
+      return;
+    }
+
+    const result = await backend.fetchEventPhotoDrops(currentEventId);
+    if (result.ok && Array.isArray(result.data) && result.data.length > 0) {
+      feed.innerHTML = '';
+      result.data.forEach(function (drop) {
+        feed.appendChild(makeDropCard(drop));
+      });
+    }
+
+    updateDropCount();
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach((el) => io.observe(el));
+
+  // Ticket type select
+  function selectTicket(el) {
+    document.querySelectorAll('.ev-ticket-type').forEach(function (ticket) { ticket.classList.remove('selected'); });
+    el.classList.add('selected');
+    const nameEl = el.querySelector('.ev-ticket-type-name');
+    selectedTicketType = nameEl ? nameEl.textContent.trim() : 'Early Bird';
+  }
+
+  // RSVP
+  async function handleRSVP() {
+    const card = document.getElementById('rsvp-card');
+    if (!card || card.classList.contains('rsvp-active')) return;
+
+    if (backend && typeof backend.submitEventRsvp === 'function') {
+      await backend.submitEventRsvp({
+        event_id: currentEventId,
+        ticket_type: selectedTicketType,
+        attendee_name: null,
+        attendee_email: null,
+        source_page: 'event-detail.html'
+      });
+    }
+
+    card.classList.add('rsvp-active');
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Add to calendar
+  function addToCalendar() {
+    const start = '20260419T183000';
+    const end = '20260419T223000';
+    const title = encodeURIComponent(document.querySelector('.ev-title') ? document.querySelector('.ev-title').textContent.trim() : 'Event');
+    const loc = encodeURIComponent('Vadodara');
+    window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + title + '&dates=' + start + '/' + end + '&location=' + loc, '_blank');
+  }
+
+  // Share
+  function shareEvent(platform) {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent('Joining this event in Vadodara — you should come!');
+    if (platform === 'whatsapp') window.open('https://wa.me/?text=' + text + '%20' + url, '_blank');
+    if (platform === 'twitter') window.open('https://twitter.com/intent/tweet?text=' + text + '&url=' + url, '_blank');
+    if (backend && typeof backend.recordEventShare === 'function') {
+      backend.recordEventShare(currentEventId, platform || 'link');
+    }
+  }
+
+  // Mobile RSVP
+  async function handleMobileRSVP() {
+    await handleRSVP();
+    const bar = document.getElementById('mobile-bar');
+    if (!bar) return;
+    const btn = bar.querySelector('.mobile-rsvp-btn');
+    const note = bar.querySelector('.mobile-rsvp-note');
+    if (!btn || !note) return;
+    btn.textContent = 'You\'re in! 🎉';
+    btn.style.background = 'var(--accent)';
+    btn.style.color = '#000';
+    note.textContent = 'Confirmation sent to your email';
+    btn.disabled = true;
+  }
+
+  function copyLink(btn) {
+    navigator.clipboard.writeText(window.location.href).then(function () {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<svg width="15" height="15" fill="none" stroke="var(--accent)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>';
+      setTimeout(function () { btn.innerHTML = orig; }, 2000);
+      if (backend && typeof backend.recordEventShare === 'function') {
+        backend.recordEventShare(currentEventId, 'link');
+      }
+    });
+  }
+
+  function toggleHostMode() {
+    if (isHostMode) {
+      exitHostMode();
+      return;
+    }
+    document.getElementById('pin-modal').classList.add('open');
+    setTimeout(function () { document.getElementById('pin-input').focus(); }, 300);
+  }
+
+  function onPinInput() {
+    document.getElementById('pin-input').classList.remove('error');
+  }
+
+  function submitPin() {
+    const val = document.getElementById('pin-input').value;
+    if (val === HOST_PIN) {
+      document.getElementById('pin-modal').classList.remove('open');
+      document.getElementById('pin-input').value = '';
+      enterHostMode();
+    } else {
+      const input = document.getElementById('pin-input');
+      input.classList.add('error');
+      input.value = '';
+      setTimeout(function () { input.classList.remove('error'); }, 600);
+    }
+  }
+
+  function enterHostMode() {
+    isHostMode = true;
+    document.getElementById('drops-sec').classList.add('host-mode');
+    const btn = document.getElementById('host-toggle-btn');
+    btn.classList.add('active');
+    btn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Host Mode On';
+    document.getElementById('host-fab').style.display = 'flex';
+  }
+
+  function exitHostMode() {
+    isHostMode = false;
+    document.getElementById('drops-sec').classList.remove('host-mode');
+    const btn = document.getElementById('host-toggle-btn');
+    btn.classList.remove('active');
+    btn.innerHTML = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Host Mode';
+    document.getElementById('host-fab').style.display = 'none';
+  }
+
+  function openUploadModal() {
+    pendingFiles = [];
+    document.getElementById('drop-previews').innerHTML = '';
+    document.getElementById('drop-caption').value = '';
+    document.getElementById('drop-post-btn').disabled = true;
+    document.getElementById('upload-modal').classList.add('open');
+  }
+
+  function closeUploadModal() {
+    document.getElementById('upload-modal').classList.remove('open');
+    pendingFiles = [];
+  }
+
+  document.getElementById('upload-modal').addEventListener('click', function (event) {
+    if (event.target === this) closeUploadModal();
+  });
+
+  document.getElementById('pin-modal').addEventListener('click', function (event) {
+    if (event.target === this) this.classList.remove('open');
+  });
+
+  const dz = document.getElementById('drop-zone');
+  dz.addEventListener('dragover', function (event) {
+    event.preventDefault();
+    dz.classList.add('drag-over');
+  });
+  dz.addEventListener('dragleave', function () { dz.classList.remove('drag-over'); });
+  dz.addEventListener('drop', function (event) {
+    event.preventDefault();
+    dz.classList.remove('drag-over');
+    handleFiles(event.dataTransfer.files);
+  });
+
+  function handleFiles(files) {
+    const valid = Array.from(files).filter(function (file) {
+      return file.type.startsWith('image/') && file.size < 10 * 1024 * 1024;
+    });
+    pendingFiles = pendingFiles.concat(valid);
+    renderPreviews();
+    document.getElementById('drop-post-btn').disabled = pendingFiles.length === 0;
+  }
+
+  function renderPreviews() {
+    const strip = document.getElementById('drop-previews');
+    strip.innerHTML = '';
+    pendingFiles.forEach(function (file) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = document.createElement('img');
+        img.src = event.target.result;
+        img.className = 'drop-preview-thumb';
+        img.title = file.name;
+        strip.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function postDrops() {
+    if (pendingFiles.length === 0) return;
+    const caption = document.getElementById('drop-caption').value.trim();
+    const feed = document.getElementById('drops-feed');
+
+    const tasks = pendingFiles.map(function (file) {
+      return new Promise(function (resolve) {
+        const reader = new FileReader();
+        reader.onload = async function (event) {
+          let drop = {
+            id: 'drop_' + Date.now() + '_' + Math.random().toString(16).slice(2),
+            event_id: currentEventId,
+            image_url: event.target.result,
+            caption: caption || file.name.replace(/\.[^.]+$/, ''),
+            created_at: new Date().toISOString()
+          };
+
+          if (backend && typeof backend.createEventPhotoDrop === 'function') {
+            const result = await backend.createEventPhotoDrop({
+              event_id: currentEventId,
+              image_url: event.target.result,
+              caption: caption || file.name.replace(/\.[^.]+$/, ''),
+              posted_by: 'host',
+              source_page: 'event-detail.html'
+            });
+            if (result.ok && result.data) drop = result.data;
+          }
+
+          const card = makeDropCard(drop);
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(16px)';
+          feed.prepend(card);
+          requestAnimationFrame(function () {
+            card.style.transition = 'opacity .5s ease-out, transform .5s ease-out';
+            card.style.opacity = '1';
+            card.style.transform = 'none';
+          });
+
+          updateDropCount();
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    await Promise.all(tasks);
+    closeUploadModal();
+  }
+
+  async function removeDrop(removeBtn) {
+    const card = removeBtn.closest('.drop-item');
+    if (!card) return;
+
+    const dropId = card.getAttribute('data-drop-id');
+    if (backend && typeof backend.deleteEventPhotoDrop === 'function' && dropId) {
+      await backend.deleteEventPhotoDrop(currentEventId, dropId);
+    }
+
+    card.style.transition = 'opacity .3s, transform .3s';
+    card.style.opacity = '0';
+    card.style.transform = 'scale(.95)';
+    setTimeout(function () {
+      card.remove();
+      updateDropCount();
+    }, 300);
+  }
+
+  function updateDropCount() {
+    const n = document.getElementById('drops-feed').querySelectorAll('.drop-item').length;
+    document.getElementById('drops-count').textContent = n + (n === 1 ? ' photo' : ' photos') + ' shared';
+  }
+
+  function openLightbox(card) {
+    const imgEl = card.querySelector('img');
+    const caption = card.getAttribute('data-caption') || '';
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbCap = document.getElementById('lightbox-caption');
+
+    if (imgEl) {
+      lbImg.src = imgEl.src;
+      lbImg.style.display = 'block';
+    } else {
+      lbImg.style.display = 'none';
+    }
+
+    lbCap.textContent = caption;
+    lbCap.style.display = caption ? 'block' : 'none';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  async function resolveCurrentEvent() {
+    const requestedId = queryParam('event');
+    const requestedNameSlug = queryParam('name');
+
+    let eventRow = null;
+    if (backend && typeof backend.fetchEventPublicById === 'function' && requestedId) {
+      const byId = await backend.fetchEventPublicById(requestedId);
+      if (byId.ok && byId.data) eventRow = byId.data;
+    }
+
+    if (!eventRow && backend && typeof backend.fetchEventPublicByName === 'function' && requestedNameSlug) {
+      const byName = await backend.fetchEventPublicByName(requestedNameSlug.replace(/-/g, ' '));
+      if (byName.ok && byName.data) eventRow = byName.data;
+    }
+
+    if (!eventRow && backend && typeof backend.fetchEventsPublic === 'function') {
+      const list = await backend.fetchEventsPublic();
+      if (list.ok && Array.isArray(list.data) && list.data.length > 0) {
+        if (requestedId) {
+          eventRow = list.data.find(function (row) { return String(row.id || '') === String(requestedId); }) || null;
+        }
+        if (!eventRow && requestedNameSlug) {
+          eventRow = list.data.find(function (row) { return slugify(row.name) === requestedNameSlug; }) || null;
+        }
+        if (!eventRow) eventRow = list.data[0];
+      }
+    }
+
+    if (!eventRow) {
+      currentEventId = normalizeEventKey(requestedId || requestedNameSlug);
+      return;
+    }
+
+    updateEventShell(eventRow);
+  }
+
+  (async function initEventDetailPage() {
+    await resolveCurrentEvent();
+
+    if (backend && typeof backend.recordEventView === 'function') {
+      backend.recordEventView(currentEventId, 'event-detail');
+    }
+
+    await hydrateDrops();
+    updateDropCount();
+  })();
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      closeLightbox();
+      closeUploadModal();
+    }
+  });
+</script>
+</body>
+</html>

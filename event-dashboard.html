@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dashboard — Sundowner Sessions Vol.3 · HUNTERS</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080808;--bg1:#0d0d0d;--bg2:#111111;--bg3:#161616;--ink:#f2ede6;--ink60:rgba(242,237,230,.6);--ink30:rgba(242,237,230,.3);--ink10:rgba(242,237,230,.1);--ink06:rgba(242,237,230,.06);--accent:#c8f06e;--accent-dim:rgba(200,240,110,.1);--red:#ff6060;--green:#4ade80;--ease:cubic-bezier(.22,1,.36,1);--spring:cubic-bezier(.34,1.4,.64,1);--sidebar:240px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;display:flex;min-height:100vh;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* GRAIN */
+#grain{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.18;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.06'/%3E%3C/svg%3E");animation:gs 8s steps(1) infinite}
+@keyframes gs{0%{background-position:0 0}20%{background-position:-50px 30px}40%{background-position:80px -20px}60%{background-position:-30px 60px}80%{background-position:50px -50px}}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);background:var(--bg1);border-right:1px solid var(--ink10);position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sb-top{padding:24px 20px 20px;border-bottom:1px solid var(--ink10)}
+.sb-brand{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.sb-logo{width:28px;height:28px;border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:11px;color:#000;flex-shrink:0}
+.sb-name{font-weight:900;font-size:13px;letter-spacing:.1em}
+.sb-event{background:var(--bg2);border:1px solid var(--ink10);border-radius:12px;padding:10px 12px}
+.sb-event-label{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ink30);margin-bottom:4px}
+.sb-event-name{font-size:12px;font-weight:600;line-height:1.3}
+.sb-event-date{font-size:11px;color:var(--ink30);margin-top:3px}
+.sb-nav{padding:12px 12px;flex:1}
+.sb-section{font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ink30);padding:8px 8px 6px;margin-top:8px}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;font-size:13px;font-weight:500;color:var(--ink60);cursor:pointer;transition:background .2s,color .2s;margin-bottom:2px}
+.sb-link:hover{background:var(--ink06);color:var(--ink)}
+.sb-link.active{background:var(--ink06);color:var(--ink);font-weight:600}
+.sb-link svg{opacity:.6;flex-shrink:0}
+.sb-link.active svg{opacity:1}
+.sb-bottom{padding:16px 12px;border-top:1px solid var(--ink10)}
+.sb-go-live{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--accent-dim);border:1px solid rgba(200,240,110,.2);border-radius:12px;font-size:13px;font-weight:600;color:var(--accent);cursor:pointer;transition:background .2s}
+.sb-go-live:hover{background:rgba(200,240,110,.15)}
+.live-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:blink 1.6s ease-in-out infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+
+/* MAIN */
+.main{margin-left:var(--sidebar);flex:1;padding:32px 32px 60px;max-width:calc(100vw - var(--sidebar))}
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:32px;gap:16px;flex-wrap:wrap}
+.page-title{font-family:'Instrument Serif',serif;font-size:clamp(24px,3vw,36px);letter-spacing:-.02em}
+.page-sub{font-size:13px;color:var(--ink30);margin-top:4px}
+.header-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-outline{padding:9px 18px;border-radius:100px;background:transparent;color:var(--ink60);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;border:1px solid var(--ink10);cursor:pointer;transition:border-color .2s,color .2s}
+.btn-outline:hover{border-color:rgba(242,237,230,.22);color:var(--ink)}
+.btn-primary{padding:10px 20px;border-radius:100px;background:#fff;color:#000;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;border:none;cursor:pointer;transition:background .2s,transform .15s var(--spring)}
+.btn-primary:hover{background:#e0e0e0;transform:translateY(-1px)}
+
+/* STAT CARDS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:var(--bg1);border:1px solid var(--ink10);border-radius:20px;padding:20px 22px;transition:border-color .2s}
+.stat-card:hover{border-color:rgba(242,237,230,.18)}
+.stat-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink30);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.stat-value{font-family:'Instrument Serif',serif;font-size:36px;letter-spacing:-.03em;line-height:1;margin-bottom:8px}
+.stat-change{font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:100px}
+.stat-change.up{background:rgba(74,222,128,.12);color:#4ade80}
+.stat-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:12px}
+
+/* 2-COL GRID */
+.two-col{display:grid;grid-template-columns:1fr 380px;gap:20px;margin-bottom:28px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:28px}
+
+/* PANEL */
+.panel{background:var(--bg1);border:1px solid var(--ink10);border-radius:20px;overflow:hidden}
+.panel-head{padding:18px 22px 14px;border-bottom:1px solid var(--ink10);display:flex;align-items:center;justify-content:space-between}
+.panel-title{font-size:14px;font-weight:700}
+.panel-sub{font-size:11px;color:var(--ink30);margin-top:2px}
+.panel-action{font-size:12px;color:var(--ink30);cursor:pointer;transition:color .2s;border:1px solid var(--ink10);padding:5px 12px;border-radius:100px;font-weight:500}
+.panel-action:hover{color:var(--ink);border-color:rgba(242,237,230,.22)}
+
+/* ATTENDEES */
+.attendee-list{max-height:380px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--ink10) transparent}
+.attendee-row{display:flex;align-items:center;gap:12px;padding:12px 22px;border-bottom:1px solid var(--ink06);transition:background .15s;cursor:default}
+.attendee-row:last-child{border-bottom:none}
+.attendee-row:hover{background:var(--ink06)}
+.av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.attendee-info{flex:1;min-width:0}
+.attendee-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.attendee-meta{font-size:11px;color:var(--ink30);margin-top:1px}
+.ticket-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;white-space:nowrap;flex-shrink:0}
+.ticket-badge.early{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(200,240,110,.2)}
+.ticket-badge.premium{background:rgba(180,140,255,.1);color:#c4a0ff;border:1px solid rgba(180,140,255,.2)}
+.check-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+.check-icon.checked{background:rgba(74,222,128,.15);color:#4ade80}
+.check-icon.pending{background:var(--ink06);color:var(--ink30)}
+
+/* CHART */
+.chart-wrap{padding:20px 22px}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:120px;margin-bottom:12px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{border-radius:6px 6px 0 0;width:100%;transition:opacity .2s}
+.bar:hover{opacity:.8}
+.bar-label{font-size:10px;color:var(--ink30);font-weight:500}
+.chart-legend{display:flex;gap:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ink60)}
+.legend-dot{width:8px;height:8px;border-radius:2px}
+
+/* SOURCES */
+.sources-list{padding:4px 0}
+.source-row{display:flex;align-items:center;gap:12px;padding:11px 22px}
+.source-name{font-size:13px;font-weight:500;flex:1}
+.source-bar-wrap{flex:2;height:6px;background:var(--ink06);border-radius:3px;overflow:hidden}
+.source-bar{height:100%;border-radius:3px;transition:width .8s var(--ease)}
+.source-count{font-size:12px;font-weight:600;color:var(--ink60);min-width:40px;text-align:right}
+.source-pct{font-size:11px;color:var(--ink30);min-width:36px;text-align:right}
+
+/* ACTIVITY FEED */
+.activity-feed{max-height:320px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--ink10) transparent}
+.activity-item{display:flex;gap:12px;padding:12px 22px;border-bottom:1px solid var(--ink06);align-items:flex-start}
+.activity-item:last-child{border-bottom:none}
+.activity-icon{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px}
+.activity-text{flex:1;font-size:13px;color:var(--ink60);line-height:1.5}
+.activity-text strong{color:var(--ink);font-weight:600}
+.activity-time{font-size:11px;color:var(--ink30);white-space:nowrap;margin-top:2px}
+
+/* REVENUE */
+.rev-row{display:flex;align-items:center;justify-content:space-between;padding:13px 22px;border-bottom:1px solid var(--ink06)}
+.rev-row:last-child{border-bottom:none}
+.rev-label{font-size:13px;color:var(--ink60)}
+.rev-val{font-size:14px;font-weight:700}
+.rev-val.green{color:var(--green)}
+.rev-total{padding:16px 22px;background:var(--ink06);display:flex;align-items:center;justify-content:space-between}
+.rev-total-label{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink30)}
+.rev-total-val{font-family:'Instrument Serif',serif;font-size:28px;letter-spacing:-.02em}
+
+/* DROPS PANEL */
+.drop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px}
+.drop-thumb{border-radius:10px;overflow:hidden;background:var(--bg2);aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:28px;border:1px solid var(--ink10);position:relative;cursor:pointer;transition:border-color .2s}
+.drop-thumb:hover{border-color:rgba(242,237,230,.22)}
+.drop-thumb-del{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:rgba(8,8,8,.85);border:none;color:var(--ink60);font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .15s}
+.drop-thumb:hover .drop-thumb-del{opacity:1}
+.drop-thumb-del:hover{color:#ff6060}
+
+/* CAPACITY RING */
+.cap-ring-wrap{padding:22px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.cap-ring{position:relative;width:120px;height:120px}
+.cap-ring svg{width:120px;height:120px;transform:rotate(-90deg)}
+.cap-ring-bg{fill:none;stroke:var(--ink06);stroke-width:8}
+.cap-ring-fill{fill:none;stroke:var(--accent);stroke-width:8;stroke-linecap:round;stroke-dasharray:339;stroke-dashoffset:85;transition:stroke-dashoffset 1s var(--ease)}
+.cap-ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cap-ring-pct{font-family:'Instrument Serif',serif;font-size:26px;letter-spacing:-.03em}
+.cap-ring-sub{font-size:10px;color:var(--ink30)}
+.cap-detail{text-align:center}
+.cap-detail-val{font-size:15px;font-weight:700}
+.cap-detail-label{font-size:11px;color:var(--ink30)}
+
+/* STATUS BADGE */
+.status-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.06em}
+.status-badge.open{background:rgba(200,240,110,.1);color:var(--accent);border:1px solid rgba(200,240,110,.2)}
+.status-badge.sold-out{background:rgba(255,96,96,.1);color:var(--red);border:1px solid rgba(255,96,96,.2)}
+
+/* QUICK ACTIONS */
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px}
+.qa-btn{display:flex;align-items:center;gap:10px;padding:13px 14px;border-radius:14px;background:var(--bg2);border:1px solid var(--ink10);cursor:pointer;transition:border-color .2s,background .2s;font-size:13px;font-weight:600;color:var(--ink60)}
+.qa-btn:hover{border-color:rgba(242,237,230,.22);background:var(--bg3);color:var(--ink)}
+.qa-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}}
+@media(max-width:860px){
+  .sidebar{transform:translateX(-100%);transition:transform .3s var(--ease);z-index:300}.sidebar.open{transform:none}
+  .sb-overlay{display:block}
+  .main{margin-left:0;padding:70px 14px 60px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .three-col{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr}
+  .mobile-menu-btn{display:flex}
+  .share-grid{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .share-grid-inner{display:flex;min-width:520px}
+  .share-grid-inner > div{flex:0 0 120px;border-right:1px solid var(--ink10)}
+  .share-grid-inner > div:last-child{border-right:none}
+  .attendee-list{max-height:280px}
+  .activity-feed{max-height:240px}
+  .page-header{flex-direction:column;gap:10px}
+  .header-actions{width:100%;justify-content:flex-start}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr}
+  .main{padding:64px 12px 60px}
+}
+.mobile-menu-btn{display:none;position:fixed;top:16px;left:16px;z-index:400;width:40px;height:40px;border-radius:50%;background:var(--bg2);border:1px solid var(--ink10);align-items:center;justify-content:center;cursor:pointer;color:var(--ink)}
+/* Sidebar backdrop */
+.sb-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+</style>
+</head>
+<body>
+<div id="grain"></div>
+
+<!-- SIDEBAR BACKDROP -->
+<div class="sb-overlay" id="sb-overlay" onclick="closeSidebar()"></div>
+
+<!-- MOBILE MENU BUTTON -->
+<button class="mobile-menu-btn" id="mob-menu" onclick="toggleSidebar()">
+  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+</button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-top">
+    <div class="sb-brand"><div class="sb-logo">H</div><span class="sb-name">HUNTERS</span></div>
+    <div class="sb-event">
+      <div class="sb-event-label">Managing</div>
+      <div class="sb-event-name">Sundowner Sessions Vol.3</div>
+      <div class="sb-event-date">Sat, 19 Apr 2026 · The Terrace</div>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">Overview</div>
+    <a class="sb-link active" href="#overview">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <div class="sb-section">Event</div>
+    <a class="sb-link" href="#attendees">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Attendees
+    </a>
+    <a class="sb-link" href="#revenue">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Revenue
+    </a>
+    <a class="sb-link" href="#drops">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      Photo Drops
+    </a>
+    <div class="sb-section">Analytics</div>
+    <a class="sb-link" href="#traffic">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Traffic
+    </a>
+    <a class="sb-link" href="#activity">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Activity Feed
+    </a>
+  </nav>
+  <div class="sb-bottom">
+    <div class="sb-go-live"><div class="live-dot"></div>Event is Live Now</div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+  <!-- Header -->
+  <div class="page-header" id="overview">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="page-title">Event Dashboard</div>
+        <div class="status-badge open"><div class="live-dot"></div>Open</div>
+      </div>
+      <div class="page-sub">Last updated 2 minutes ago · Sat, 19 Apr 2026</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-outline">↗ View Event</button>
+      <button class="btn-outline">⬇ Export CSV</button>
+      <button class="btn-primary">+ Share Update</button>
+    </div>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(200,240,110,.1)">👁</div>
+      <div class="stat-label">Page Views</div>
+      <div class="stat-value">2,841</div>
+      <div class="stat-change up">↑ 34% vs last event</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(74,222,128,.1)">✅</div>
+      <div class="stat-label">RSVPs Confirmed</div>
+      <div class="stat-value">62</div>
+      <div class="stat-change up">↑ 18 this week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(180,140,255,.1)">📤</div>
+      <div class="stat-label">Shares</div>
+      <div class="stat-value">187</div>
+      <div class="stat-change up">↑ 52% vs last event</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:rgba(255,180,80,.1)">₹</div>
+      <div class="stat-label">Revenue</div>
+      <div class="stat-value">₹47.2k</div>
+      <div class="stat-change up">↑ ₹12k today</div>
+    </div>
+  </div>
+
+  <!-- ROW 1: Attendees + Capacity -->
+  <div class="two-col" id="attendees">
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">Attendee RSVP List</div>
+          <div class="panel-sub">62 confirmed · 18 spots remaining</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input placeholder="Search…" style="background:var(--bg2);border:1px solid var(--ink10);border-radius:100px;padding:6px 14px;font-size:12px;color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;width:140px;outline:none" onfocus="this.style.borderColor='rgba(242,237,230,.25)'" onblur="this.style.borderColor='var(--ink10)'">
+          <div class="panel-action">Export</div>
+        </div>
+      </div>
+      <div class="attendee-list" id="attendees">
+        <!-- rows generated by JS -->
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <!-- Capacity Ring -->
+      <div class="panel">
+        <div class="panel-head"><div><div class="panel-title">Capacity</div><div class="panel-sub">80 total spots</div></div></div>
+        <div class="cap-ring-wrap">
+          <div class="cap-ring">
+            <svg viewBox="0 0 120 120"><circle class="cap-ring-bg" cx="60" cy="60" r="54"/><circle class="cap-ring-fill" id="cap-fill" cx="60" cy="60" r="54"/></svg>
+            <div class="cap-ring-label"><div class="cap-ring-pct">78%</div><div class="cap-ring-sub">filled</div></div>
+          </div>
+          <div class="cap-detail" style="margin-top:12px">
+            <div class="cap-detail-val">62 <span style="font-size:13px;color:var(--ink30)">/ 80</span></div>
+            <div class="cap-detail-label">Spots sold</div>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--ink10);display:grid;grid-template-columns:1fr 1fr">
+          <div style="padding:12px 16px;border-right:1px solid var(--ink10)">
+            <div style="font-size:11px;color:var(--ink30);margin-bottom:3px">Early Bird</div>
+            <div style="font-size:16px;font-weight:700">44</div>
+          </div>
+          <div style="padding:12px 16px">
+            <div style="font-size:11px;color:var(--ink30);margin-bottom:3px">Premium</div>
+            <div style="font-size:16px;font-weight:700">18</div>
+          </div>
+        </div>
+      </div>
+      <!-- Quick Actions -->
+      <div class="panel">
+        <div class="panel-head"><div class="panel-title">Quick Actions</div></div>
+        <div class="qa-grid">
+          <div class="qa-btn"><div class="qa-icon" style="background:rgba(200,240,110,.1)">📸</div>Drop Photo</div>
+          <div class="qa-btn"><div class="qa-icon" style="background:rgba(100,180,255,.1)">📢</div>Announcement</div>
+          <div class="qa-btn"><div class="qa-icon" style="background:rgba(255,180,80,.1)">🎟</div>Add Guest</div>
+          <div class="qa-btn"><div class="qa-icon" style="background:rgba(180,140,255,.1)">✉️</div>Email All</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2: Ticket Sales Chart + Revenue + Drops -->
+  <div class="three-col" id="revenue">
+    <!-- Bar Chart -->
+    <div class="panel">
+      <div class="panel-head">
+        <div><div class="panel-title">Ticket Sales Over Time</div><div class="panel-sub">Last 7 days</div></div>
+      </div>
+      <div class="chart-wrap">
+        <div class="bar-chart" id="bar-chart"></div>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div>Early Bird</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#c4a0ff"></div>Premium</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revenue -->
+    <div class="panel">
+      <div class="panel-head"><div><div class="panel-title">Revenue Breakdown</div><div class="panel-sub">Net after platform fee</div></div></div>
+      <div class="rev-row"><div class="rev-label">44 × Early Bird (₹599)</div><div class="rev-val">₹26,356</div></div>
+      <div class="rev-row"><div class="rev-label">18 × Premium (₹999)</div><div class="rev-val">₹17,982</div></div>
+      <div class="rev-row"><div class="rev-label">Platform Fee (5%)</div><div class="rev-val" style="color:var(--red)">−₹2,217</div></div>
+      <div class="rev-row"><div class="rev-label">Payment Gateway</div><div class="rev-val" style="color:var(--red)">−₹883</div></div>
+      <div class="rev-total">
+        <div class="rev-total-label">Net Payout</div>
+        <div class="rev-total-val">₹41,238</div>
+      </div>
+    </div>
+
+    <!-- Photo Drops -->
+    <div class="panel" id="drops">
+      <div class="panel-head">
+        <div><div class="panel-title">Photo Drops</div><div class="panel-sub">3 live · tap to remove</div></div>
+        <div class="panel-action" onclick="alert('Open upload modal on event page')">+ Add</div>
+      </div>
+      <div class="drop-grid">
+        <div class="drop-thumb" style="background:linear-gradient(135deg,#1a2a10,#0a1a06)">🌅<button class="drop-thumb-del">×</button></div>
+        <div class="drop-thumb" style="background:linear-gradient(135deg,#1a0a2a,#0a0614)">🎷<button class="drop-thumb-del">×</button></div>
+        <div class="drop-thumb" style="background:linear-gradient(135deg,#2a1a08,#1a0a04)">🍹<button class="drop-thumb-del">×</button></div>
+        <div class="drop-thumb" style="border-style:dashed;cursor:pointer;color:var(--ink30);font-size:20px" onclick="alert('Upload on event page')">+</div>
+      </div>
+      <div style="padding:10px 14px;border-top:1px solid var(--ink10)">
+        <div style="font-size:11px;color:var(--ink30)">Most recent · 6:45 PM today</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: Traffic Sources + Activity Feed -->
+  <div class="two-col" id="traffic">
+    <div class="panel">
+      <div class="panel-head">
+        <div><div class="panel-title">Traffic Sources</div><div class="panel-sub">Where your visitors came from</div></div>
+      </div>
+      <div class="sources-list" id="sources-list"></div>
+    </div>
+    <div class="panel" id="activity">
+      <div class="panel-head">
+        <div><div class="panel-title">Live Activity Feed</div><div class="panel-sub">Real-time event actions</div></div>
+        <div class="panel-action">Clear</div>
+      </div>
+      <div class="activity-feed" id="activity-feed"></div>
+    </div>
+  </div>
+
+  <!-- ROW 4: Shares Breakdown (full width) -->
+  <div class="panel" style="margin-bottom:28px">
+    <div class="panel-head">
+      <div><div class="panel-title">Share & Referral Breakdown</div><div class="panel-sub">187 total shares</div></div>
+    </div>
+    <div class="share-grid" style="border-top:1px solid var(--ink10)">
+      <div class="share-grid-inner" style="display:grid;grid-template-columns:repeat(5,1fr)">
+        <div style="padding:18px 20px;border-right:1px solid var(--ink10);text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">💬</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:24px;margin-bottom:4px">81</div>
+          <div style="font-size:11px;color:var(--ink30)">WhatsApp</div>
+        </div>
+        <div style="padding:18px 20px;border-right:1px solid var(--ink10);text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">𝕏</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:24px;margin-bottom:4px">44</div>
+          <div style="font-size:11px;color:var(--ink30)">Twitter / X</div>
+        </div>
+        <div style="padding:18px 20px;border-right:1px solid var(--ink10);text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">🔗</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:24px;margin-bottom:4px">37</div>
+          <div style="font-size:11px;color:var(--ink30)">Copied Link</div>
+        </div>
+        <div style="padding:18px 20px;border-right:1px solid var(--ink10);text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">📸</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:24px;margin-bottom:4px">21</div>
+          <div style="font-size:11px;color:var(--ink30)">Instagram Story</div>
+        </div>
+        <div style="padding:18px 20px;text-align:center">
+          <div style="font-size:22px;margin-bottom:6px">📧</div>
+          <div style="font-family:'Instrument Serif',serif;font-size:24px;margin-bottom:4px">4</div>
+          <div style="font-size:11px;color:var(--ink30)">Email</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="files/hunters-supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="files/hunters-backend.js"></script>
+<script>
+const backend = window.HuntersBackend;
+const params = new URLSearchParams(window.location.search);
+const requestedEvent = params.get('event');
+const requestedName = params.get('name');
+
+const fallbackAttendees = [
+  {name:'Rohan Kapoor',meta:'Registered 2h ago · rohan@email.com',ticket:'early',checked:true,color:'#1a2a10',text:'#c8f06e'},
+  {name:'Ananya Nair',meta:'Registered 3h ago · ananya@email.com',ticket:'premium',checked:true,color:'#2a1a2a',text:'#c4a0ff'},
+  {name:'Mihir Shah',meta:'Registered 5h ago · mihir@email.com',ticket:'early',checked:false,color:'#1a1a2a',text:'#80aaff'},
+  {name:'Priya Desai',meta:'Registered 6h ago · priya@email.com',ticket:'premium',checked:true,color:'#2a1a10',text:'#ffb380'},
+  {name:'Zara Khan',meta:'Registered 8h ago · zara@email.com',ticket:'early',checked:false,color:'#0a1a1a',text:'#80ffee'}
+];
+
+const fallbackSources = [
+  {name:'Instagram',count:894,pct:31,color:'#c4a0ff'},
+  {name:'Direct / Link',count:712,pct:25,color:'var(--accent)'},
+  {name:'WhatsApp',count:568,pct:20,color:'#4ade80'},
+  {name:'Twitter / X',count:269,pct:10,color:'#80c0ff'},
+  {name:'Email',count:37,pct:14,color:'#ff9966'}
+];
+
+const fallbackActivity = [
+  {icon:'🎟',text:'<strong>Aarav Singh</strong> booked a Premium ticket',time:'Just now'},
+  {icon:'📸',text:'Host shared a new photo drop — <strong>"Cocktail bar is ready 🍹"</strong>',time:'2 min ago'},
+  {icon:'👁',text:'<strong>47 people</strong> viewed the event page in the last hour',time:'5 min ago'}
+];
+
+const fallbackDrops = [
+  {id:'drop-a',photo_text:'Sunset setup'},
+  {id:'drop-b',photo_text:'Jazz warmup'},
+  {id:'drop-c',photo_text:'Cocktail bar'}
+];
+
+const fallbackSeries = { labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], early:[4,6,8,10,7,9,0], premium:[1,2,3,4,2,6,0] };
+
+function escapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function initials(name) {
+  const parts = String(name || 'Guest').trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return 'GU';
+  return (parts[0][0] + (parts[1] ? parts[1][0] : parts[0][1] || '')).toUpperCase();
+}
+
+function formatCurrency(value) {
+  const amount = Number(value || 0);
+  if (!Number.isFinite(amount)) return '₹0';
+  return '₹' + amount.toLocaleString('en-IN');
+}
+
+function formatRelativeTime(value) {
+  const date = value ? new Date(value) : null;
+  if (!date || Number.isNaN(date.getTime())) return 'Just now';
+  const diff = Math.max(0, Date.now() - date.getTime());
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return mins + ' min ago';
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return hours + 'h ago';
+  const days = Math.floor(hours / 24);
+  return days + 'd ago';
+}
+
+function renderAttendees(rows) {
+  const listEl = document.querySelector('.attendee-list');
+  if (!listEl) return;
+
+  listEl.innerHTML = '';
+  const data = Array.isArray(rows) && rows.length > 0 ? rows : fallbackAttendees;
+
+  data.forEach((row, index) => {
+    const ticketRaw = String((row && row.ticket_type) || (row && row.ticket) || 'early').toLowerCase();
+    const ticket = ticketRaw.indexOf('premium') !== -1 ? 'premium' : 'early';
+    const checked = !!(row && (row.checked_in || row.checked));
+    const name = (row && row.attendee_name) || (row && row.name) || ('Guest ' + String(index + 1).padStart(2, '0'));
+    const meta = (row && row.meta) || ((row && row.attendee_email) ? row.attendee_email : 'Registered recently');
+    const bg = (row && row.color) || '#1a1a1a';
+    const fg = (row && row.text) || '#f2ede6';
+
+    listEl.innerHTML += ''
+      + '<div class="attendee-row">'
+      + '<div class="av" style="background:' + escapeHtml(bg) + ';color:' + escapeHtml(fg) + '">' + escapeHtml(initials(name)) + '</div>'
+      + '<div class="attendee-info">'
+      + '<div class="attendee-name">' + escapeHtml(name) + '</div>'
+      + '<div class="attendee-meta">' + escapeHtml(meta) + '</div>'
+      + '</div>'
+      + '<div class="ticket-badge ' + ticket + '">' + (ticket === 'early' ? 'Early Bird' : 'Premium') + '</div>'
+      + '<div class="check-icon ' + (checked ? 'checked' : 'pending') + '">' + (checked ? '✓' : '–') + '</div>'
+      + '</div>';
+  });
+}
+
+function renderBarChart(series) {
+  const chart = document.getElementById('bar-chart');
+  if (!chart) return;
+
+  const labels = (series && Array.isArray(series.labels) && series.labels.length === 7) ? series.labels : fallbackSeries.labels;
+  const early = (series && Array.isArray(series.early) && series.early.length === 7) ? series.early : fallbackSeries.early;
+  const premium = (series && Array.isArray(series.premium) && series.premium.length === 7) ? series.premium : fallbackSeries.premium;
+
+  chart.innerHTML = '';
+  const max = Math.max(1, ...early.map((value, idx) => Number(value || 0) + Number(premium[idx] || 0)));
+
+  labels.forEach((label, index) => {
+    const eValue = Number(early[index] || 0);
+    const pValue = Number(premium[index] || 0);
+    const eH = Math.round((eValue / max) * 100);
+    const pH = Math.round((pValue / max) * 100);
+
+    chart.innerHTML += ''
+      + '<div class="bar-col">'
+      + '<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;width:100%;gap:2px">'
+      + '<div class="bar" style="height:' + pH + '%;background:#c4a0ff;min-height:' + (pValue ? 4 : 0) + 'px"></div>'
+      + '<div class="bar" style="height:' + eH + '%;background:var(--accent);min-height:' + (eValue ? 4 : 0) + 'px"></div>'
+      + '</div>'
+      + '<div class="bar-label">' + escapeHtml(label) + '</div>'
+      + '</div>';
+  });
+}
+
+function renderSources(rows) {
+  const sourceEl = document.getElementById('sources-list');
+  if (!sourceEl) return;
+
+  sourceEl.innerHTML = '';
+  const data = Array.isArray(rows) && rows.length > 0 ? rows : fallbackSources;
+
+  data.forEach((row) => {
+    sourceEl.innerHTML += ''
+      + '<div class="source-row">'
+      + '<div class="source-name">' + escapeHtml(row.name || 'Source') + '</div>'
+      + '<div class="source-bar-wrap"><div class="source-bar" style="width:' + Number(row.pct || 0) + '%;background:' + escapeHtml(row.color || 'var(--accent)') + '"></div></div>'
+      + '<div class="source-count">' + Number(row.count || 0) + '</div>'
+      + '<div class="source-pct">' + Number(row.pct || 0) + '%</div>'
+      + '</div>';
+  });
+}
+
+function renderActivity(rows) {
+  const feedEl = document.getElementById('activity-feed');
+  if (!feedEl) return;
+
+  feedEl.innerHTML = '';
+  const data = Array.isArray(rows) && rows.length > 0 ? rows : fallbackActivity;
+
+  data.slice(0, 12).forEach((row) => {
+    const text = row.text || escapeHtml(row.message || 'Activity');
+    const time = row.time || formatRelativeTime(row.created_at);
+    const bg = row.bg || 'rgba(242,237,230,.06)';
+    const icon = row.icon || '•';
+    feedEl.innerHTML += ''
+      + '<div class="activity-item">'
+      + '<div class="activity-icon" style="background:' + escapeHtml(bg) + '">' + escapeHtml(icon) + '</div>'
+      + '<div style="flex:1">'
+      + '<div class="activity-text">' + text + '</div>'
+      + '<div class="activity-time">' + escapeHtml(time) + '</div>'
+      + '</div>'
+      + '</div>';
+  });
+}
+
+function setStatValue(index, valueText, changeText) {
+  const card = document.querySelectorAll('.stats-grid .stat-card')[index];
+  if (!card) return;
+  const value = card.querySelector('.stat-value');
+  const change = card.querySelector('.stat-change');
+  if (value) value.textContent = valueText;
+  if (change && changeText) change.textContent = changeText;
+}
+
+function setCapacity(metrics) {
+  const fill = Number(metrics.fill_percent || 0);
+  const pct = Math.max(0, Math.min(100, fill));
+
+  const ringOffset = Math.round(339 - (339 * pct / 100));
+  const ring = document.getElementById('cap-fill');
+  if (ring) ring.style.strokeDashoffset = String(ringOffset);
+
+  const pctLabel = document.querySelector('.cap-ring-pct');
+  if (pctLabel) pctLabel.textContent = pct + '%';
+
+  const detailVal = document.querySelector('.cap-detail-val');
+  if (detailVal) detailVal.innerHTML = Number(metrics.confirmed_rsvps || 0) + ' <span style="font-size:13px;color:var(--ink30)">/ ' + Number(metrics.capacity || 80) + '</span>';
+
+  const statCells = document.querySelectorAll('.cap-ring-wrap + div > div');
+  if (statCells[0]) {
+    const val = statCells[0].querySelector('div:last-child');
+    if (val) val.textContent = String(Number(metrics.early_count || 0));
+  }
+  if (statCells[1]) {
+    const val = statCells[1].querySelector('div:last-child');
+    if (val) val.textContent = String(Number(metrics.premium_count || 0));
+  }
+
+  const sub = document.querySelector('#attendees .panel-sub');
+  if (sub && sub.textContent.includes('confirmed')) {
+    sub.textContent = Number(metrics.confirmed_rsvps || 0) + ' confirmed · ' + Number(metrics.spots_left || 0) + ' spots remaining';
+  }
+}
+
+function setRevenue(metrics) {
+  const rows = document.querySelectorAll('.rev-row');
+  const earlyCount = Number(metrics.early_count || 0);
+  const premiumCount = Number(metrics.premium_count || 0);
+
+  if (rows[0]) {
+    rows[0].querySelector('.rev-label').textContent = earlyCount + ' × Early Bird (₹599)';
+    rows[0].querySelector('.rev-val').textContent = formatCurrency(earlyCount * 599);
+  }
+  if (rows[1]) {
+    rows[1].querySelector('.rev-label').textContent = premiumCount + ' × Premium (₹999)';
+    rows[1].querySelector('.rev-val').textContent = formatCurrency(premiumCount * 999);
+  }
+  if (rows[2]) rows[2].querySelector('.rev-val').textContent = '−' + formatCurrency(metrics.platform_fee || 0);
+  if (rows[3]) rows[3].querySelector('.rev-val').textContent = '−' + formatCurrency(metrics.payment_fee || 0);
+
+  const total = document.querySelector('.rev-total-val');
+  if (total) total.textContent = formatCurrency(metrics.net_revenue || 0);
+}
+
+function dropGlyph(text) {
+  const value = String(text || '').toLowerCase();
+  if (value.includes('cocktail') || value.includes('drink') || value.includes('bar')) return '🍹';
+  if (value.includes('jazz') || value.includes('music') || value.includes('band')) return '🎷';
+  if (value.includes('sun') || value.includes('sunset')) return '🌅';
+  return '📸';
+}
+
+function dropGradient(index) {
+  const gradients = [
+    'linear-gradient(135deg,#1a2a10,#0a1a06)',
+    'linear-gradient(135deg,#1a0a2a,#0a0614)',
+    'linear-gradient(135deg,#2a1a08,#1a0a04)',
+    'linear-gradient(135deg,#0f182a,#090f1f)',
+    'linear-gradient(135deg,#1f1414,#110909)'
+  ];
+  return gradients[index % gradients.length];
+}
+
+async function removeDrop(dropId, eventId) {
+  if (!dropId || !eventId) return;
+  if (!(backend && typeof backend.deleteEventPhotoDrop === 'function')) return;
+
+  const result = await backend.deleteEventPhotoDrop(eventId, dropId);
+  if (result.ok) {
+    await loadDashboard();
+  }
+}
+
+function renderDrops(rows, eventId) {
+  const panel = document.getElementById('drops');
+  if (!panel) return;
+
+  const grid = panel.querySelector('.drop-grid');
+  if (!grid) return;
+
+  const data = Array.isArray(rows) && rows.length > 0 ? rows : fallbackDrops;
+  grid.innerHTML = '';
+
+  data.slice(0, 6).forEach((row, index) => {
+    const text = row.photo_text || row.message || 'Photo drop';
+    const idAttr = row.id ? ' data-drop-id="' + escapeHtml(String(row.id)) + '"' : '';
+    const removeBtn = row.id ? '<button class="drop-thumb-del" type="button">×</button>' : '';
+    grid.innerHTML += ''
+      + '<div class="drop-thumb" title="' + escapeHtml(text) + '" style="background:' + dropGradient(index) + '"' + idAttr + '>'
+      + escapeHtml(dropGlyph(text))
+      + removeBtn
+      + '</div>';
+  });
+
+  grid.innerHTML += '<div class="drop-thumb" style="border-style:dashed;cursor:pointer;color:var(--ink30);font-size:20px" data-add-drop>+</div>';
+
+  const sub = panel.querySelector('.panel-sub');
+  if (sub) sub.textContent = data.length + ' live · tap to remove';
+
+  const recentLabel = panel.querySelector('div[style*="Most recent"]');
+  if (recentLabel && data[0] && data[0].created_at) {
+    recentLabel.textContent = 'Most recent · ' + formatRelativeTime(data[0].created_at);
+  }
+
+  grid.querySelectorAll('.drop-thumb-del').forEach((button) => {
+    button.addEventListener('click', async function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const parent = this.closest('.drop-thumb');
+      if (!parent) return;
+      const dropId = parent.getAttribute('data-drop-id');
+      await removeDrop(dropId, eventId);
+    });
+  });
+
+  const addTile = grid.querySelector('[data-add-drop]');
+  if (addTile) {
+    addTile.addEventListener('click', function () {
+      const nextUrl = 'event-detail.html?event=' + encodeURIComponent(String(eventId || requestedEvent || 'default')) + '&host=1';
+      window.location.href = nextUrl;
+    });
+  }
+}
+
+function setShareBreakdown(shareBreakdown) {
+  const breakdown = shareBreakdown || {};
+  const counts = [
+    Number(breakdown.whatsapp || 0),
+    Number(breakdown.twitter || 0),
+    Number(breakdown.link || 0),
+    Number(breakdown.instagram || 0),
+    Number(breakdown.email || 0)
+  ];
+  const nodes = document.querySelectorAll('.share-grid-inner > div');
+  nodes.forEach((node, idx) => {
+    const val = node.querySelector("div[style*='font-family']");
+    if (val && Number.isFinite(counts[idx])) val.textContent = String(counts[idx]);
+  });
+
+  const total = counts.reduce((acc, value) => acc + value, 0);
+  const sharePanel = document.querySelector('.share-grid');
+  if (sharePanel) {
+    const sub = sharePanel.closest('.panel').querySelector('.panel-sub');
+    if (sub) sub.textContent = total + ' total shares';
+  }
+}
+
+function setHeader(snapshot) {
+  const eventData = snapshot.event || {};
+  const eventName = eventData.name || 'Sundowner Sessions Vol.3';
+  const eventVenue = eventData.venue || 'Vadodara';
+  const freq = eventData.event_frequency || 'Live';
+
+  const sbName = document.querySelector('.sb-event-name');
+  if (sbName) sbName.textContent = eventName;
+
+  const sbDate = document.querySelector('.sb-event-date');
+  if (sbDate) sbDate.textContent = freq + ' · ' + eventVenue;
+
+  document.title = 'Dashboard — ' + eventName + ' · HUNTERS';
+
+  const pageSub = document.querySelector('.page-sub');
+  if (pageSub) pageSub.textContent = 'Last updated just now · ' + freq;
+}
+
+function animateSourceBars() {
+  document.querySelectorAll('.source-bar').forEach((bar) => {
+    const w = bar.style.width;
+    bar.style.width = '0';
+    setTimeout(() => { bar.style.width = w; }, 150);
+  });
+}
+
+function bindSidebarLinks() {
+  document.querySelectorAll('.sb-link').forEach((link) => {
+    link.addEventListener('click', function () {
+      document.querySelectorAll('.sb-link').forEach((item) => item.classList.remove('active'));
+      this.classList.add('active');
+      closeSidebar();
+    });
+  });
+}
+
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sb-overlay');
+  const isOpen = sidebar.classList.toggle('open');
+  overlay.style.display = isOpen ? 'block' : 'none';
+}
+
+function closeSidebar() {
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sb-overlay').style.display = 'none';
+}
+
+function buildFallbackSnapshot() {
+  return {
+    event: {
+      id: requestedEvent || 'default',
+      name: requestedName || 'Sundowner Sessions Vol.3',
+      venue: 'The Terrace',
+      event_frequency: 'Sat, 19 Apr 2026'
+    },
+    attendees: fallbackAttendees,
+    recent_drops: fallbackDrops,
+    series: fallbackSeries,
+    sources: fallbackSources,
+    activity: fallbackActivity,
+    share_breakdown: {
+      whatsapp: 81,
+      twitter: 44,
+      link: 37,
+      instagram: 21,
+      email: 4
+    },
+    metrics: {
+      views: 2841,
+      confirmed_rsvps: 62,
+      shares: 187,
+      net_revenue: 41238,
+      early_count: 44,
+      premium_count: 18,
+      capacity: 80,
+      spots_left: 18,
+      fill_percent: 78,
+      platform_fee: 2217,
+      payment_fee: 883
+    }
+  };
+}
+
+async function loadDashboard() {
+  let snapshot = null;
+
+  try {
+    let targetEventId = requestedEvent;
+
+    if (!targetEventId && requestedName && backend && typeof backend.fetchEventPublicByName === 'function') {
+      const eventResult = await backend.fetchEventPublicByName(requestedName);
+      if (eventResult.ok && eventResult.data && eventResult.data.id) {
+        targetEventId = eventResult.data.id;
+      }
+    }
+
+    if (backend && typeof backend.fetchEventDashboardSnapshot === 'function') {
+      const result = await backend.fetchEventDashboardSnapshot(targetEventId || 'default');
+      if (result.ok && result.data) snapshot = result.data;
+    }
+  } catch (error) {
+    snapshot = null;
+  }
+
+  if (!snapshot) snapshot = buildFallbackSnapshot();
+
+  setHeader(snapshot);
+
+  const metrics = snapshot.metrics || {};
+  setStatValue(0, Number(metrics.views || 0).toLocaleString('en-IN'), '↑ live');
+  setStatValue(1, String(Number(metrics.confirmed_rsvps || 0)), '↑ live');
+  setStatValue(2, String(Number(metrics.shares || 0)), '↑ live');
+  setStatValue(3, formatCurrency(metrics.net_revenue || 0), '↑ live');
+
+  renderAttendees(snapshot.attendees || []);
+  renderDrops(snapshot.recent_drops || [], snapshot.event && snapshot.event.id);
+  renderBarChart(snapshot.series || fallbackSeries);
+  renderSources(snapshot.sources || fallbackSources);
+  renderActivity(snapshot.activity || fallbackActivity);
+  setCapacity(metrics);
+  setRevenue(metrics);
+  setShareBreakdown(snapshot.share_breakdown || {});
+  animateSourceBars();
+
+  const viewBtn = document.querySelector('.btn-outline');
+  if (viewBtn && snapshot.event && snapshot.event.id) {
+    viewBtn.addEventListener('click', function () {
+      window.location.href = 'event-detail.html?event=' + encodeURIComponent(String(snapshot.event.id));
+    });
+  }
+}
+
+bindSidebarLinks();
+loadDashboard();
+</script>
+</body>
+</html>
