@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard - Hunters</title>
+  <meta name="description" content="Your Hunters dashboard with RSVPed and attended events." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #000;
+      --ink: #f2ede6;
+      --dim: rgba(242, 237, 230, 0.64);
+      --dimmer: rgba(242, 237, 230, 0.35);
+      --border: rgba(242, 237, 230, 0.14);
+      --panel: rgba(242, 237, 230, 0.04);
+      --good: #8ff3b4;
+    }
+
+    html, body { min-height: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Plus Jakarta Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(90% 60% at 50% 0%, rgba(255,255,255,0.08), transparent 62%),
+        radial-gradient(70% 40% at 15% 88%, rgba(255,255,255,0.03), transparent 75%);
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.025'/%3E%3C/svg%3E");
+    }
+
+    .wrap {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 32px 24px 90px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .brand-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: #000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
+
+    .brand-name {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      height: 40px;
+      border-radius: 999px;
+      padding: 0 16px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn:hover { border-color: rgba(242,237,230,0.32); background: rgba(242,237,230,0.06); }
+
+    .btn-solid {
+      border: none;
+      color: #000;
+      background: var(--ink);
+    }
+
+    .btn-solid:hover { background: #ddd7ce; }
+
+    .hero {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--panel);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    h1 em {
+      font-family: "Instrument Serif", serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .sub {
+      color: var(--dim);
+      line-height: 1.65;
+      max-width: 60ch;
+    }
+
+    .stats {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(242,237,230,0.03);
+    }
+
+    .stat-label {
+      color: var(--dimmer);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: clamp(22px, 3.5vw, 34px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-family: "Instrument Serif", serif;
+    }
+
+    .status {
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 11px 14px;
+      margin-bottom: 16px;
+      display: none;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .status.ok {
+      display: block;
+      border-color: rgba(143,243,180,0.35);
+      background: rgba(143,243,180,0.12);
+      color: var(--good);
+    }
+
+    .status.err {
+      display: block;
+      border-color: rgba(255,125,125,0.35);
+      background: rgba(255,125,125,0.12);
+      color: #ffd2d2;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: rgba(242,237,230,0.04);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .pill {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 5px 9px;
+      border: 1px solid var(--border);
+      color: var(--dim);
+      white-space: nowrap;
+    }
+
+    .name {
+      font-size: 19px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--dim);
+      line-height: 1.6;
+    }
+
+    .card-foot {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .time {
+      color: var(--dimmer);
+      font-size: 12px;
+    }
+
+    .link {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .link:hover { border-color: var(--ink); }
+
+    .empty {
+      border: 1px dashed var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      color: var(--dim);
+    }
+
+    @media (max-width: 900px) {
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cards { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .wrap { padding: 18px 14px 80px; }
+      .hero { padding: 20px 16px; }
+      .stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <a href="index.html" class="brand" aria-label="Back to homepage">
+        <span class="brand-badge">H</span>
+        <span class="brand-name">Hunters</span>
+      </a>
+      <div class="actions">
+        <a class="btn" href="event.html">Browse Events</a>
+        <button class="btn" id="refreshBtn" type="button">Refresh</button>
+        <button class="btn btn-solid" id="logoutBtn" type="button">Logout</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Personal Dashboard</div>
+      <h1>Your event <em>history</em></h1>
+      <p class="sub" id="subText">Sign in to see events you RSVPed for and quickly jump back to details.</p>
+
+      <div class="stats">
+        <article class="stat">
+          <div class="stat-label">Total RSVPs</div>
+          <div class="stat-value" id="statTotal">0</div>
+        </article>
+        <article class="stat">
+          <div class="stat-label">Unique Events</div>
+          <div class="stat-value" id="statUnique">0</div>
+        </article>
+        <article class="stat">
+          <div class="stat-label">Checked In</div>
+          <div class="stat-value" id="statChecked">0</div>
+        </article>
+        <article class="stat">
+          <div class="stat-label">Most Recent</div>
+          <div class="stat-value" id="statRecent">-</div>
+        </article>
+      </div>
+    </section>
+
+    <div class="status" id="statusBox" role="status" aria-live="polite"></div>
+
+    <section class="cards" id="eventCards"></section>
+  </div>
+
+  <script src="files/hunters-supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="files/hunters-backend.js"></script>
+  <script src="files/hunters-auth.js"></script>
+  <script>
+    (function () {
+      var backend = window.HuntersBackend;
+      var auth = window.HuntersAuth;
+      var statusBox = document.getElementById("statusBox");
+      var cardsRoot = document.getElementById("eventCards");
+      var subText = document.getElementById("subText");
+
+      function setStatus(type, text) {
+        statusBox.className = "status " + (type || "");
+        statusBox.textContent = text || "";
+      }
+
+      function slugify(value) {
+        return String(value || "")
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9\s-]/g, "")
+          .replace(/\s+/g, "-")
+          .replace(/-+/g, "-");
+      }
+
+      function fmtDate(value) {
+        var date = value ? new Date(value) : null;
+        if (!date || Number.isNaN(date.getTime())) return "-";
+        return date.toLocaleDateString("en-IN", { day: "2-digit", month: "short" });
+      }
+
+      function fmtRelative(value) {
+        var date = value ? new Date(value) : null;
+        if (!date || Number.isNaN(date.getTime())) return "Just now";
+
+        var diff = Math.max(0, Date.now() - date.getTime());
+        var mins = Math.floor(diff / 60000);
+        if (mins < 1) return "Just now";
+        if (mins < 60) return mins + "m ago";
+        var hrs = Math.floor(mins / 60);
+        if (hrs < 24) return hrs + "h ago";
+        var days = Math.floor(hrs / 24);
+        return days + "d ago";
+      }
+
+      function buildEventUrl(historyRow, eventRow) {
+        var params = new URLSearchParams();
+        var eventId = historyRow && historyRow.event_id ? historyRow.event_id : (eventRow && eventRow.id);
+        var eventName = eventRow && eventRow.name ? eventRow.name : null;
+
+        if (eventId) params.set("event", String(eventId));
+        if (eventName) params.set("name", slugify(eventName));
+
+        return "event-detail.html?" + params.toString();
+      }
+
+      function renderCards(rows, eventsMap) {
+        cardsRoot.innerHTML = "";
+
+        if (!Array.isArray(rows) || rows.length === 0) {
+          cardsRoot.innerHTML = ''
+            + '<article class="empty">'
+            + '<p>No RSVPs tied to this account yet.</p>'
+            + '<p style="margin-top:8px"><a class="link" href="event.html">Explore events and reserve a spot</a></p>'
+            + '</article>';
+          return;
+        }
+
+        rows.forEach(function (row) {
+          var eventRow = eventsMap.get(String(row.event_id || "")) || null;
+          var eventName = (eventRow && eventRow.name) || "Event";
+          var venue = (eventRow && eventRow.venue) || "Vadodara";
+          var freq = (eventRow && eventRow.event_frequency) || "Upcoming";
+          var ticket = row.ticket_type || "Early Bird";
+          var status = row.checked_in ? "Checked In" : (row.status || "Confirmed");
+          var url = buildEventUrl(row, eventRow);
+
+          cardsRoot.innerHTML += ''
+            + '<article class="card">'
+            + '<div class="card-head">'
+            + '<div>'
+            + '<div class="name">' + eventName + '</div>'
+            + '<div class="meta">' + venue + ' · ' + freq + '</div>'
+            + '</div>'
+            + '<span class="pill">' + status + '</span>'
+            + '</div>'
+            + '<div class="meta">Ticket: <strong style="color:var(--ink)">' + ticket + '</strong></div>'
+            + '<div class="card-foot">'
+            + '<span class="time">RSVPed ' + fmtRelative(row.created_at) + '</span>'
+            + '<a class="link" href="' + url + '">View event</a>'
+            + '</div>'
+            + '</article>';
+        });
+      }
+
+      function updateStats(rows) {
+        var total = Array.isArray(rows) ? rows.length : 0;
+        var uniqueSet = new Set();
+        var checkedIn = 0;
+        var newest = null;
+
+        rows.forEach(function (row) {
+          if (row && row.event_id) uniqueSet.add(String(row.event_id));
+          if (row && row.checked_in) checkedIn += 1;
+          if (row && row.created_at) {
+            var d = new Date(row.created_at);
+            if (!Number.isNaN(d.getTime()) && (!newest || d > newest)) newest = d;
+          }
+        });
+
+        document.getElementById("statTotal").textContent = String(total);
+        document.getElementById("statUnique").textContent = String(uniqueSet.size);
+        document.getElementById("statChecked").textContent = String(checkedIn);
+        document.getElementById("statRecent").textContent = newest ? fmtDate(newest.toISOString()) : "-";
+      }
+
+      async function loadDashboard() {
+        if (!backend || !auth || !backend.isConfigured()) {
+          setStatus("err", "Dashboard backend is not configured.");
+          cardsRoot.innerHTML = "";
+          return;
+        }
+
+        var access = await auth.requireAuth();
+        if (!access.ok) return;
+
+        var user = access.user;
+        var userName = auth.getDisplayName(user);
+        var userEmail = String((user && user.email) || "");
+        subText.textContent = "Welcome back, " + userName + ". Account: " + userEmail;
+
+        var results = await Promise.all([
+          backend.fetchMyEventHistory(),
+          backend.fetchEventsPublic()
+        ]);
+
+        var historyResult = results[0] || { ok: false, data: [] };
+        var eventsResult = results[1] || { ok: false, data: [] };
+
+        var rows = historyResult.ok && Array.isArray(historyResult.data) ? historyResult.data : [];
+        var events = eventsResult.ok && Array.isArray(eventsResult.data) ? eventsResult.data : [];
+
+        var eventsMap = new Map();
+        events.forEach(function (row) {
+          if (row && row.id) eventsMap.set(String(row.id), row);
+        });
+
+        updateStats(rows);
+        renderCards(rows, eventsMap);
+
+        if (!historyResult.ok) {
+          setStatus("err", "Could not load event history right now. Showing saved local data if available.");
+        } else if (historyResult.source === "local") {
+          setStatus("ok", "Loaded local event history backup.");
+        } else {
+          setStatus("ok", "Dashboard synced with live RSVP data.");
+        }
+      }
+
+      document.getElementById("refreshBtn").addEventListener("click", function () {
+        loadDashboard();
+      });
+
+      document.getElementById("logoutBtn").addEventListener("click", async function () {
+        if (!auth) return;
+        await auth.signOut("index.html");
+      });
+
+      loadDashboard();
+    })();
+  </script>
+</body>
+</html>

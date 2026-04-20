@@ -779,11 +779,23 @@
         .replace(/-+/g, '-');
     }
 
+    function canUsePrettyEventPath() {
+      const host = String(window.location.hostname || '').toLowerCase();
+      return host && host !== 'localhost' && host !== '127.0.0.1';
+    }
+
     function buildEventDetailUrl(eventRow) {
       const params = new URLSearchParams();
+      const slug = eventRow && eventRow.name ? slugify(eventRow.name) : 'event';
       if (eventRow && eventRow.id) params.set('event', String(eventRow.id));
-      if (eventRow && eventRow.name) params.set('name', slugify(eventRow.name));
-      return 'event-detail.html?' + params.toString();
+      if (eventRow && eventRow.name) params.set('name', slug);
+
+      const query = params.toString();
+      if (canUsePrettyEventPath()) {
+        return '/event/' + encodeURIComponent(slug) + (query ? ('?' + query) : '');
+      }
+
+      return 'event-detail.html' + (query ? ('?' + query) : '');
     }
 
     async function hydrateEventsFromBackend() {

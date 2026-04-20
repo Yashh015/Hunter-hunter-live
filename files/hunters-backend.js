@@ -1,6 +1,7 @@
 (function (global) {
   var STORAGE_KEY = "hunters_device_token_v1";
   var RSVP_STORAGE_KEY = "hunters_event_rsvps_v1";
+  var MY_RSVP_STORAGE_KEY = "hunters_user_rsvps_v1";
   var DROP_STORAGE_KEY = "hunters_event_drops_v1";
   var ACTIVITY_STORAGE_KEY = "hunters_event_activity_v1";
   var METRICS_STORAGE_KEY = "hunters_event_metrics_v1";
@@ -61,6 +62,52 @@
     }
   }
 
+  function normalizeEmail(value) {
+    return String(value || "").trim().toLowerCase();
+  }
+
+  function readUserRsvpCollection(email) {
+    var normalizedEmail = normalizeEmail(email);
+    if (!normalizedEmail) return [];
+    var map = readJson(MY_RSVP_STORAGE_KEY, {});
+    var rows = map[normalizedEmail];
+    return Array.isArray(rows) ? rows.slice() : [];
+  }
+
+  function writeUserRsvpCollection(email, rows) {
+    var normalizedEmail = normalizeEmail(email);
+    if (!normalizedEmail) return;
+    var map = readJson(MY_RSVP_STORAGE_KEY, {});
+    map[normalizedEmail] = Array.isArray(rows) ? rows : [];
+    writeJson(MY_RSVP_STORAGE_KEY, map);
+  }
+
+  function rememberUserRsvp(email, row) {
+    var normalizedEmail = normalizeEmail(email);
+    if (!normalizedEmail || !row || typeof row !== "object") return;
+
+    var rows = readUserRsvpCollection(normalizedEmail);
+    var rowId = String(row.id || "");
+    var replaced = false;
+
+    for (var i = 0; i < rows.length; i += 1) {
+      var existing = rows[i] || {};
+      var existingId = String(existing.id || "");
+
+      if (rowId && existingId && rowId === existingId) {
+        rows[i] = row;
+        replaced = true;
+        break;
+      }
+    }
+
+    if (!replaced) {
+      rows.unshift(row);
+    }
+
+    writeUserRsvpCollection(normalizedEmail, rows.slice(0, 300));
+  }
+
   function normalizeEventId(eventId) {
     var value = String(eventId || "default").trim();
     return value || "default";
@@ -72,6 +119,18 @@
 
   function buildLocalId(prefix) {
     return prefix + "_" + randomHex(12);
+  }
+
+  function deriveUserDisplayName(user) {
+    if (!user || typeof user !== "object") return null;
+
+    var meta = user.user_metadata || {};
+    var fromMeta = String(meta.full_name || meta.name || "").trim();
+    if (fromMeta) return fromMeta;
+
+    var email = normalizeEmail(user.email);
+    if (!email) return null;
+    return email.split("@")[0] || null;
   }
 
   function readEventCollection(storageKey, eventId) {
@@ -275,6 +334,11 @@
     return response.data.user;
   }
 
+  async function getCurrentUser() {
+    var client = createClient(null);
+    return resolveUser(client);
+  }
+
   async function insertOne(table, payload, extraHeaders) {
     var client = createClient(extraHeaders);
     if (!client) {
@@ -310,6 +374,42 @@
     }
 
     return result;
+  }
+
+  async function fetchSiteContent(contentKey) {
+    var key = String(contentKey || "").trim().toLowerCase();
+    if (!key) {
+      return { ok: false, reason: "invalid_key", error: null, data: null, row: null };
+    }
+
+    var client = createClient(null);
+    if (!client) {
+      return { ok: false, reason: "not_configured", error: null, data: null, row: null };
+    }
+
+    var response = await client
+      .from("site_content")
+      .select("*")
+      .eq("content_key", key)
+      .limit(1)
+      .maybeSingle();
+
+    if (response.error) {
+      if (response.error.code === "PGRST116") {
+        return { ok: true, reason: null, error: null, data: null, row: null };
+      }
+      return { ok: false, reason: "db_error", error: response.error, data: null, row: null };
+    }
+
+    var row = response.data || null;
+    var content = null;
+    if (row && typeof row === "object") {
+      if (row.content_json && typeof row.content_json === "object") content = row.content_json;
+      else if (row.content && typeof row.content === "object") content = row.content;
+      else if (row.payload && typeof row.payload === "object") content = row.payload;
+    }
+
+    return { ok: true, reason: null, error: null, data: content, row: row };
   }
 
   async function fetchEventPublicById(eventId) {
@@ -399,13 +499,23 @@
       event_id: key,
       ticket_type: (payload && payload.ticket_type) || "Early Bird",
       attendee_name: (payload && payload.attendee_name) || null,
-      attendee_email: (payload && payload.attendee_email) || null,
+      attendee_email: normalizeEmail((payload && payload.attendee_email) || null),
       checked_in: false,
       status: "confirmed",
       source_page: (payload && payload.source_page) || "event-detail.html"
     };
 
     var client = createClient(null);
+    var currentUser = await resolveUser(client);
+
+    if (!cleanPayload.attendee_email && currentUser && currentUser.email) {
+      cleanPayload.attendee_email = normalizeEmail(currentUser.email);
+    }
+
+    if (!cleanPayload.attendee_name && currentUser) {
+      cleanPayload.attendee_name = deriveUserDisplayName(currentUser);
+    }
+
     if (client && key !== "default") {
       var dbInsert = await client
         .from("event_rsvps")
@@ -415,6 +525,9 @@
         .maybeSingle();
 
       if (!dbInsert.error) {
+        if (cleanPayload.attendee_email) {
+          rememberUserRsvp(cleanPayload.attendee_email, dbInsert.data || cleanPayload);
+        }
         addLocalActivity(key, "🎟", "New RSVP confirmed");
         return {
           ok: true,
@@ -439,9 +552,71 @@
     };
 
     addEventRecord(RSVP_STORAGE_KEY, key, localRow);
+    if (cleanPayload.attendee_email) {
+      rememberUserRsvp(cleanPayload.attendee_email, localRow);
+    }
     addLocalActivity(key, "🎟", "New RSVP confirmed");
 
     return { ok: true, reason: "stored_local", error: null, source: "local", data: localRow };
+  }
+
+  async function fetchMyEventHistory() {
+    var client = createClient(null);
+    var user = await resolveUser(client);
+
+    if (!user || !user.email) {
+      return {
+        ok: false,
+        reason: "not_authenticated",
+        error: null,
+        source: "none",
+        data: [],
+        user: null
+      };
+    }
+
+    var email = normalizeEmail(user.email);
+    var localRows = readUserRsvpCollection(email);
+
+    if (!client) {
+      return {
+        ok: true,
+        reason: "fallback_local",
+        error: null,
+        source: "local",
+        data: localRows,
+        user: user
+      };
+    }
+
+    var response = await client
+      .from("event_rsvps")
+      .select("id,event_id,ticket_type,status,checked_in,created_at,attendee_name,attendee_email")
+      .ilike("attendee_email", email)
+      .order("created_at", { ascending: false });
+
+    if (response.error) {
+      return {
+        ok: true,
+        reason: "fallback_local",
+        error: response.error,
+        source: "local",
+        data: localRows,
+        user: user
+      };
+    }
+
+    var rows = Array.isArray(response.data) ? response.data : [];
+    writeUserRsvpCollection(email, rows);
+
+    return {
+      ok: true,
+      reason: null,
+      error: null,
+      source: "db",
+      data: rows,
+      user: user
+    };
   }
 
   async function fetchEventPhotoDrops(eventId) {
@@ -788,10 +963,12 @@
     isConfigured: isConfigured,
     ensureDeviceToken: ensureDeviceToken,
     createClient: createClient,
+    getCurrentUser: getCurrentUser,
     fetchEventPublicById: fetchEventPublicById,
     fetchEventPublicByName: fetchEventPublicByName,
     fetchCafesPublic: fetchCafesPublic,
     fetchEventsPublic: fetchEventsPublic,
+    fetchMyEventHistory: fetchMyEventHistory,
     fetchEventRsvps: fetchEventRsvps,
     submitEventRsvp: submitEventRsvp,
     fetchEventPhotoDrops: fetchEventPhotoDrops,
@@ -805,6 +982,7 @@
     toggleVote: toggleVote,
     submitEventSubmission: submitEventSubmission,
     submitCafeSubmission: submitCafeSubmission,
-    submitEmailSubscription: submitEmailSubscription
+    submitEmailSubscription: submitEmailSubscription,
+    fetchSiteContent: fetchSiteContent
   };
 })(window);

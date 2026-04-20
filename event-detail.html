@@ -832,6 +832,13 @@
     return new URLSearchParams(window.location.search).get(name);
   }
 
+  function getEventSlugFromPath() {
+    const parts = String(window.location.pathname || '').split('/').filter(Boolean);
+    if (parts.length < 2) return '';
+    if (String(parts[0]).toLowerCase() !== 'event') return '';
+    return String(parts.slice(1).join('-') || '').toLowerCase();
+  }
+
   function updateEventShell(eventRow) {
     if (!eventRow) return;
 
@@ -970,15 +977,29 @@
     const card = document.getElementById('rsvp-card');
     if (!card || card.classList.contains('rsvp-active')) return;
 
-    if (backend && typeof backend.submitEventRsvp === 'function') {
-      await backend.submitEventRsvp({
-        event_id: currentEventId,
-        ticket_type: selectedTicketType,
-        attendee_name: null,
-        attendee_email: null,
-        source_page: 'event-detail.html'
-      });
+    if (!(backend && typeof backend.submitEventRsvp === 'function')) return;
+
+    let user = null;
+    if (typeof backend.getCurrentUser === 'function') {
+      user = await backend.getCurrentUser();
     }
+
+    if (!user || !user.email) {
+      const next = encodeURIComponent((window.location.pathname || 'event-detail.html') + (window.location.search || ''));
+      window.location.href = 'login.html?next=' + next;
+      return;
+    }
+
+    const userMeta = user.user_metadata || {};
+    const attendeeName = String(userMeta.full_name || userMeta.name || user.email.split('@')[0] || '').trim() || null;
+
+    await backend.submitEventRsvp({
+      event_id: currentEventId,
+      ticket_type: selectedTicketType,
+      attendee_name: attendeeName,
+      attendee_email: user.email,
+      source_page: 'event-detail.html'
+    });
 
     card.classList.add('rsvp-active');
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1007,6 +1028,8 @@
   // Mobile RSVP
   async function handleMobileRSVP() {
     await handleRSVP();
+    const rsvpCard = document.getElementById('rsvp-card');
+    if (!rsvpCard || !rsvpCard.classList.contains('rsvp-active')) return;
     const bar = document.getElementById('mobile-bar');
     if (!bar) return;
     const btn = bar.querySelector('.mobile-rsvp-btn');
@@ -1232,7 +1255,7 @@
 
   async function resolveCurrentEvent() {
     const requestedId = queryParam('event');
-    const requestedNameSlug = queryParam('name');
+    const requestedNameSlug = queryParam('name') || getEventSlugFromPath();
 
     let eventRow = null;
     if (backend && typeof backend.fetchEventPublicById === 'function' && requestedId) {

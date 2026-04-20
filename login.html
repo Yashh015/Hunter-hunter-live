@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Hunters</title>
+  <meta name="description" content="Login to Hunters and track your RSVPs and attended events." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #000;
+      --ink: #f2ede6;
+      --dim: rgba(242, 237, 230, 0.62);
+      --dimmer: rgba(242, 237, 230, 0.38);
+      --border: rgba(242, 237, 230, 0.14);
+      --panel: rgba(242, 237, 230, 0.05);
+      --accent: #f2ede6;
+      --danger: #ff7b7b;
+    }
+
+    html, body { min-height: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Plus Jakarta Sans", sans-serif;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(90% 55% at 50% 25%, rgba(255,255,255,0.07), transparent 65%),
+        radial-gradient(70% 45% at 70% 80%, rgba(255,255,255,0.03), transparent 75%);
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.68' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.03'/%3E%3C/svg%3E");
+    }
+
+    .card {
+      width: min(520px, 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      box-shadow: 0 24px 40px rgba(0,0,0,0.45);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .brand-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: #000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
+
+    .brand-name {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    h1 em {
+      font-family: "Instrument Serif", serif;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .sub {
+      color: var(--dim);
+      line-height: 1.65;
+      margin-bottom: 24px;
+      max-width: 44ch;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .input {
+      flex: 1;
+      min-width: 0;
+      height: 48px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(242, 237, 230, 0.03);
+      color: var(--ink);
+      font-size: 15px;
+      padding: 0 18px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input:focus { border-color: rgba(242, 237, 230, 0.35); }
+
+    .btn {
+      height: 48px;
+      border: none;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #000;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0 20px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .hint {
+      color: var(--dimmer);
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    .status {
+      margin-top: 14px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.45;
+      border: 1px solid transparent;
+      display: none;
+    }
+
+    .status.ok {
+      display: block;
+      border-color: rgba(130, 240, 165, 0.35);
+      background: rgba(130, 240, 165, 0.12);
+      color: #b8ffd1;
+    }
+
+    .status.err {
+      display: block;
+      border-color: rgba(255, 123, 123, 0.35);
+      background: rgba(255, 123, 123, 0.12);
+      color: #ffd0d0;
+    }
+
+    .links {
+      margin-top: 18px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .links a {
+      color: var(--dim);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .links a:hover { color: var(--ink); }
+
+    @media (max-width: 580px) {
+      .card { padding: 24px 18px; border-radius: 20px; }
+      .row { flex-direction: column; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <a href="index.html" class="brand" aria-label="Back to homepage">
+      <span class="brand-badge">H</span>
+      <span class="brand-name">Hunters</span>
+    </a>
+
+    <h1>Login to <em>your events</em></h1>
+    <p class="sub">Use a magic link to sign in. Once logged in, you can track your RSVPs and quickly reopen events you joined.</p>
+
+    <form id="loginForm" novalidate>
+      <div class="row">
+        <input class="input" id="emailInput" type="email" placeholder="you@example.com" autocomplete="email" required />
+        <button class="btn" id="submitBtn" type="submit">Send Link</button>
+      </div>
+      <p class="hint">MVP mode: passwordless login only. The email link will bring you back here and redirect to your dashboard.</p>
+    </form>
+
+    <div class="status" id="statusBox" role="status" aria-live="polite"></div>
+
+    <div class="links">
+      <a href="dashboard.html">Go to dashboard</a>
+      <a href="event.html">Browse events</a>
+      <a href="pricing.html">Pricing</a>
+    </div>
+  </main>
+
+  <script src="files/hunters-supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="files/hunters-backend.js"></script>
+  <script src="files/hunters-auth.js"></script>
+  <script>
+    (function () {
+      var auth = window.HuntersAuth;
+      var backend = window.HuntersBackend;
+      var form = document.getElementById("loginForm");
+      var emailInput = document.getElementById("emailInput");
+      var submitBtn = document.getElementById("submitBtn");
+      var statusBox = document.getElementById("statusBox");
+      var params = new URLSearchParams(window.location.search || "");
+      var nextPath = auth ? auth.normalizeNextPath(params.get("next") || "dashboard.html") : "dashboard.html";
+
+      function setStatus(type, text) {
+        statusBox.className = "status " + (type || "");
+        statusBox.textContent = text || "";
+      }
+
+      async function init() {
+        if (!auth || !backend || !backend.isConfigured()) {
+          setStatus("err", "Login backend is not configured yet. Add your Supabase keys first.");
+          submitBtn.disabled = true;
+          return;
+        }
+
+        var alreadyAuthed = await auth.redirectIfAuthenticated(nextPath);
+        if (alreadyAuthed) return;
+      }
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        if (!auth) return;
+
+        var email = String(emailInput.value || "").trim();
+        if (!email) {
+          setStatus("err", "Enter your email to continue.");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        setStatus("", "");
+
+        var result = await auth.signInWithMagicLink(email, nextPath);
+        submitBtn.disabled = false;
+
+        if (!result.ok) {
+          var message = "Could not send login link. Please try again.";
+          if (result.reason === "invalid_email") {
+            message = "Enter a valid email address.";
+          }
+          setStatus("err", message);
+          return;
+        }
+
+        setStatus("ok", "Magic link sent. Check your inbox and open the link on this device.");
+      });
+
+      init();
+    })();
+  </script>
+</body>
+</html>

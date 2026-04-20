@@ -1,8 +1,12 @@
 # Cafes and events listing routes
 /cafes  /cafes.html  200
 /event  /event.html  200
+/event/*  /event-detail.html  200
 /event-detail  /event-detail.html  200
 /event-dashboard  /event-dashboard.html  200
+/pricing  /pricing.html  200
+/login  /login.html  200
+/dashboard  /dashboard.html  200
 
 # Host event form route
 /events  /events.html  200

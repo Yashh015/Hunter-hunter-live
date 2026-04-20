@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing - Hunters</title>
+  <meta name="description" content="Hunters pricing plans. Free for now, paid creator plans coming soon." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #000;
+      --ink: #f2ede6;
+      --dim: rgba(242, 237, 230, 0.64);
+      --dimmer: rgba(242, 237, 230, 0.35);
+      --border: rgba(242, 237, 230, 0.14);
+      --panel: rgba(242, 237, 230, 0.04);
+      --accent: #f2ede6;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Plus Jakarta Sans", sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(90% 62% at 50% -10%, rgba(255,255,255,0.12), transparent 60%),
+        radial-gradient(60% 40% at 80% 88%, rgba(255,255,255,0.04), transparent 75%);
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.024'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 24px 88px;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 46px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .brand-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: #000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
+
+    .brand-name {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .nav {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--dim);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .nav a:hover { color: var(--ink); }
+
+    .hero {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--panel);
+      padding: 32px;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dimmer);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 6vw, 66px);
+      line-height: 0.98;
+      letter-spacing: -0.035em;
+      margin-bottom: 14px;
+    }
+
+    h1 em {
+      font-family: "Instrument Serif", serif;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .sub {
+      color: var(--dim);
+      max-width: 68ch;
+      line-height: 1.7;
+    }
+
+    .grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: rgba(242,237,230,0.04);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 340px;
+    }
+
+    .card.featured {
+      border-color: rgba(242,237,230,0.32);
+      background: rgba(242,237,230,0.08);
+      transform: translateY(-4px);
+    }
+
+    .chip {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--dimmer);
+      margin-bottom: 10px;
+    }
+
+    .name {
+      font-size: 24px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      font-family: "Instrument Serif", serif;
+      font-size: 40px;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+
+    .price small {
+      font-size: 14px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      color: var(--dimmer);
+      letter-spacing: 0;
+      margin-left: 4px;
+    }
+
+    .desc {
+      color: var(--dim);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+      min-height: 66px;
+    }
+
+    .list {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 18px;
+      color: var(--dim);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .item::before {
+      content: "\2713";
+      margin-right: 8px;
+      color: var(--ink);
+    }
+
+    .cta {
+      margin-top: auto;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--ink);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .cta:hover { border-color: rgba(242,237,230,0.35); background: rgba(242,237,230,0.08); }
+
+    .cta.solid {
+      background: var(--ink);
+      border: none;
+      color: #000;
+    }
+
+    .cta.solid:hover { background: #ddd7ce; }
+
+    .foot-note {
+      margin-top: 18px;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      color: var(--dim);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .card.featured { transform: none; }
+    }
+
+    @media (max-width: 560px) {
+      .wrap { padding: 18px 14px 70px; }
+      .hero { padding: 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="top">
+      <a class="brand" href="index.html" aria-label="Back to homepage">
+        <span class="brand-badge">H</span>
+        <span class="brand-name">Hunters</span>
+      </a>
+      <nav class="nav" aria-label="Secondary navigation">
+        <a href="index.html">Home</a>
+        <a href="cafes.html">Cafes</a>
+        <a href="event.html">Events</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Pricing</div>
+      <h1>Simple now.<br><em>Main pricing soon.</em></h1>
+      <p class="sub">Hunters is currently free while we stabilize product and onboarding. We are shipping SaaS plans next, with creator-first pricing and no lock-in contracts.</p>
+
+      <div class="grid">
+        <article class="card">
+          <div class="chip">Live Today</div>
+          <h2 class="name">Community</h2>
+          <div class="price">Free<small>for now</small></div>
+          <p class="desc">Perfect for launching and testing your first event page with RSVP support.</p>
+          <div class="list">
+            <div class="item">Event listing and detail page</div>
+            <div class="item">Basic RSVP tracking</div>
+            <div class="item">Host event submission flow</div>
+          </div>
+          <a class="cta solid" href="events.html">Start for free</a>
+        </article>
+
+        <article class="card featured">
+          <div class="chip">Coming Soon</div>
+          <h2 class="name">Creator</h2>
+          <div class="price">Main Pricing<small>Q2 launch</small></div>
+          <p class="desc">Our first paid SaaS plan for recurring hosts who need deeper conversion and audience tools.</p>
+          <div class="list">
+            <div class="item">Advanced attendee analytics</div>
+            <div class="item">Custom branding and links</div>
+            <div class="item">Priority event placement</div>
+          </div>
+          <a class="cta" href="mailto:connectwyashraj@gmail.com?subject=Hunters%20Creator%20Plan%20Waitlist">Join waitlist</a>
+        </article>
+
+        <article class="card">
+          <div class="chip">Planned</div>
+          <h2 class="name">Studio</h2>
+          <div class="price">Custom<small>by volume</small></div>
+          <p class="desc">For brands and teams running multiple events with operator workflows and account support.</p>
+          <div class="list">
+            <div class="item">Multi-event management</div>
+            <div class="item">Dedicated onboarding support</div>
+            <div class="item">Ops and performance review</div>
+          </div>
+          <a class="cta" href="mailto:connectwyashraj@gmail.com?subject=Hunters%20Studio%20Plan%20Inquiry">Talk to us</a>
+        </article>
+      </div>
+
+      <div class="foot-note">Main pricing and billing rollout is intentionally delayed until the dashboard and attendee history are stable. You can use everything for free right now.</div>
+    </section>
+  </main>
+</body>
+</html>
